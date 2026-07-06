@@ -108,7 +108,7 @@ namespace Calloatti.SyncModsPro
               TargetPriority = -1,
               CurrentState = ModState.Missing,
               SavedState = ModState.Enabled,
-              TargetState = ModState.Missing,
+              TargetState = ModState.Disabled,
               Description = "This mod is missing from your hard drive.",
               MinimumGameVersion = "-",
               RequiredMods = new List<VersionedMod>(),

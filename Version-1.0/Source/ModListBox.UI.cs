@@ -44,7 +44,7 @@ namespace Calloatti.SyncModsPro
 
     private int GetTotalTableWidth()
     {
-      return IconWidth + NameWidth + IdWidth + FolderWidth + MinVerWidth + SavedVerWidth + CurrentVerWidth + StatusWidth + (StateColWidth * 3) + BasePadding + 5;
+      return IconWidth + NameWidth + IdWidth + FolderWidth + MinVerWidth + SavedVerWidth + CurrentVerWidth + StatusWidth + (StateColWidth * 3) + BasePadding + 10;
     }
 
     private VisualElement CreateTopBar()
@@ -220,7 +220,7 @@ namespace Calloatti.SyncModsPro
       if (rowUI.StatusLabel != null)
       {
         rowUI.Data.UpdateStatus();
-        rowUI.StatusLabel.text = rowUI.Data.Status == ModStatus.NotApplicable ? "" : _loc.T($"Calloatti.SyncModsPro.Status.{rowUI.Data.Status}");
+        rowUI.StatusLabel.text = _loc.T($"Calloatti.SyncModsPro.Status.{rowUI.Data.Status}");
       }
 
       UnityEngine.Color freshStatusColor = rowUI.Data.GetStatusColor();
@@ -360,7 +360,7 @@ namespace Calloatti.SyncModsPro
 
           cTarget.RegisterCallback<ClickEvent>(evt =>
           {
-            if (data.Source == ModSource.Missing || data.TargetState == ModState.Missing) return;
+            if (data.Source == ModSource.Missing) return;
 
             bool isEnabling = data.TargetState == ModState.Disabled;
             data.TargetState = isEnabling ? ModState.Enabled : ModState.Disabled;
