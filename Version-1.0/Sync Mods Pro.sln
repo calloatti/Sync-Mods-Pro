@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11828.311 oobstable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sync Mods Pro", "Sync Mods Pro.csproj", "{AC6F2947-BD80-399D-F5F3-DA4AB9E86753}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC6F2947-BD80-399D-F5F3-DA4AB9E86753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC6F2947-BD80-399D-F5F3-DA4AB9E86753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC6F2947-BD80-399D-F5F3-DA4AB9E86753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC6F2947-BD80-399D-F5F3-DA4AB9E86753}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AFE64B95-A131-4373-A497-F1E48076B662}
+	EndGlobalSection
+EndGlobal

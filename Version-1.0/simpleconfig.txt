@@ -1,0 +1,22 @@
+ConfigFileName = "SyncModsPro.txt"
+
+Key = "ShowIdColumn"
+Type = "bool"
+DefaultValue = true
+Label = "Show ID Column"
+Tooltip = "Display the unique Mod ID column in the validator list."
+AvailableIn = ["MainMenu", "Game"]
+
+Key = "ShowFolderColumn"
+Type = "bool"
+DefaultValue = true
+Label = "Show Version Folder Column"
+Tooltip = "Display the directory/subfolder path where the mod is located."
+AvailableIn = ["MainMenu", "Game"]
+
+Key = "ShowMinVerColumn"
+Type = "bool"
+DefaultValue = false
+Label = "Show Min Game Ver Column"
+Tooltip = "Display the Minimum Game Version required by the mod manifest."
+AvailableIn = ["MainMenu", "Game"]
