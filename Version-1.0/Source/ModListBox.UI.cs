@@ -32,19 +32,19 @@ namespace Calloatti.SyncModsPro
     private Dictionary<string, List<RowUIElements>> _duplicateGroups = new Dictionary<string, List<RowUIElements>>();
     private List<RowUIElements> _orderedRows = new List<RowUIElements>();
     private HashSet<ModStatus> _activeFilters = new HashSet<ModStatus>();
-    private bool _hideNotApplicable = false;
+    private bool _hideNotApplicable = true;
 
     private class RowUIElements
     {
       public RowData Data;
       public VisualElement Root;
-      public Label TargetLabel;
+      public Toggle TargetToggle; // Upgraded to Toggle
       public Label StatusLabel;
     }
 
     private int GetTotalTableWidth()
     {
-      return IconWidth + NameWidth + IdWidth + FolderWidth + MinVerWidth + SavedVerWidth + CurrentVerWidth + StatusWidth + (StateColWidth * 3) + BasePadding + 10;
+      return IconWidth + NameWidth + IdWidth + FolderWidth + MinVerWidth + SavedVerWidth + CurrentVerWidth + StatusWidth + (StateColWidth * 3) + BasePadding + 5;
     }
 
     private VisualElement CreateTopBar()
@@ -52,8 +52,44 @@ namespace Calloatti.SyncModsPro
       VisualElement topBar = new VisualElement();
       topBar.style.flexDirection = FlexDirection.Row;
       topBar.style.alignItems = Align.Center;
-      topBar.style.justifyContent = Justify.FlexEnd;
+      topBar.style.justifyContent = Justify.SpaceBetween; // Space left and right aligned items
       topBar.style.marginBottom = TopBarMarginBottom;
+
+      // Label logic
+      string saveText = "Unknown Save";
+      if (_currentSaveReference != null && _currentSaveReference.SettlementReference != null)
+      {
+        saveText = $"{_currentSaveReference.SettlementReference.SettlementName} - {_currentSaveReference.SaveName}";
+      }
+
+      Label saveLabel = new Label(saveText);
+      saveLabel.AddToClassList("text--default");
+      saveLabel.style.fontSize = 14;
+      saveLabel.style.unityFontStyleAndWeight = FontStyle.Normal;
+      saveLabel.pickingMode = PickingMode.Position;
+      // ADDED: Align with "Mod Name" (8px row padding + 40px IconWidth)
+      saveLabel.style.marginLeft = 20;
+
+      Color hoverColor = new Color(0.4f, 0.7f, 1.0f);
+      Color storedColor = Color.white;
+
+      saveLabel.RegisterCallback<PointerEnterEvent>(evt =>
+      {
+        storedColor = saveLabel.resolvedStyle.color;
+        saveLabel.style.color = new StyleColor(hoverColor);
+      });
+
+      saveLabel.RegisterCallback<PointerLeaveEvent>(evt =>
+      {
+        saveLabel.style.color = new StyleColor(storedColor);
+      });
+
+      saveLabel.RegisterCallback<ClickEvent>(evt =>
+      {
+        HandleSaveLabelClick();
+      });
+
+      topBar.Add(saveLabel);
 
       VisualElement filtersContainer = new VisualElement();
       filtersContainer.style.flexDirection = FlexDirection.Row;
@@ -88,6 +124,8 @@ namespace Calloatti.SyncModsPro
 
         Toggle statusToggle = new Toggle();
         statusToggle.AddToClassList("game-toggle");
+        // Scale down to 90%
+        statusToggle.style.scale = new StyleScale(new Vector2(0.9f, 0.9f));
         statusToggle.viewDataKey = statusKey;
         statusToggle.value = false;
 
@@ -117,6 +155,8 @@ namespace Calloatti.SyncModsPro
 
       Toggle hideNaToggle = new Toggle();
       hideNaToggle.AddToClassList("game-toggle");
+      // Scale down to 90%
+      hideNaToggle.style.scale = new StyleScale(new Vector2(0.9f, 0.9f));
       hideNaToggle.viewDataKey = "Calloatti.SyncModsPro.Status.HideNotApplicable";
       hideNaToggle.value = true;
 
@@ -212,9 +252,10 @@ namespace Calloatti.SyncModsPro
 
     private void RepaintRow(RowUIElements rowUI)
     {
-      if (rowUI.TargetLabel != null)
+      if (rowUI.TargetToggle != null)
       {
-        rowUI.TargetLabel.text = GetStateString(rowUI.Data.TargetState);
+        // Using SetValueWithoutNotify ensures repainting doesn't trigger an infinite update loop
+        rowUI.TargetToggle.SetValueWithoutNotify(rowUI.Data.TargetState == ModState.Enabled);
       }
 
       if (rowUI.StatusLabel != null)
@@ -229,7 +270,6 @@ namespace Calloatti.SyncModsPro
 
     private VisualElement CreateRow(string name, string id, string verFolder, string minVer, string savVer, string curVer, string status, string currentStr, string savedStr, string targetStr, Color color, bool isHeader, RowData data, bool isEven = false)
     {
-
       VisualElement row = new VisualElement();
       row.style.flexDirection = FlexDirection.Row;
       row.style.borderBottomWidth = 1;
@@ -339,30 +379,47 @@ namespace Calloatti.SyncModsPro
 
       Label cCurrent = CreateCell(currentStr, StateColWidth, color);
       Label cSaved = CreateCell(savedStr, StateColWidth, color);
-      Label cTarget = CreateCell(targetStr, StateColWidth, color);
 
       cCurrent.style.unityTextAlign = TextAnchor.MiddleCenter;
       cSaved.style.unityTextAlign = TextAnchor.MiddleCenter;
-      cTarget.style.unityTextAlign = TextAnchor.MiddleCenter;
 
-      if (!isHeader)
+      VisualElement cTarget;
+
+      if (isHeader)
+      {
+        Label cTargetLabel = CreateCell(targetStr, StateColWidth, color);
+        cTargetLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+        cTarget = cTargetLabel;
+      }
+      else
       {
         cCurrent.style.marginTop = TextVerticalOffset;
         cSaved.style.marginTop = TextVerticalOffset;
-        cTarget.style.marginTop = TextVerticalOffset;
 
-        if (data.Source != ModSource.Missing)
+        VisualElement toggleContainer = new VisualElement();
+        toggleContainer.style.width = StateColWidth;
+        toggleContainer.style.flexShrink = 0;
+        toggleContainer.style.alignItems = Align.Center;
+        toggleContainer.style.justifyContent = Justify.Center;
+
+        Toggle targetToggle = new Toggle();
+        targetToggle.AddToClassList("game-toggle");
+
+        // Scale the toggle down to 90% of its original size
+        targetToggle.style.scale = new StyleScale(new Vector2(0.9f, 0.9f));
+
+        targetToggle.SetValueWithoutNotify(data.TargetState == ModState.Enabled);
+
+        // Missing mods cannot be interacted with
+        if (data.Source == ModSource.Missing || data.TargetState == ModState.Missing)
         {
-          cTarget.pickingMode = PickingMode.Position;
-          cTarget.style.unityFontStyleAndWeight = FontStyle.Bold;
-
-          if (rowElements != null) rowElements.TargetLabel = cTarget;
-
-          cTarget.RegisterCallback<ClickEvent>(evt =>
+          targetToggle.SetEnabled(false);
+        }
+        else
+        {
+          targetToggle.RegisterValueChangedCallback(evt =>
           {
-            if (data.Source == ModSource.Missing) return;
-
-            bool isEnabling = data.TargetState == ModState.Disabled;
+            bool isEnabling = evt.newValue;
             data.TargetState = isEnabling ? ModState.Enabled : ModState.Disabled;
 
             if (isEnabling)
@@ -387,10 +444,11 @@ namespace Calloatti.SyncModsPro
             }
             if (rowElements != null) RepaintRow(rowElements);
           });
-
-          cTarget.RegisterCallback<PointerEnterEvent>(evt => cTarget.style.color = new StyleColor(Color.white));
-          cTarget.RegisterCallback<PointerLeaveEvent>(evt => cTarget.style.color = new StyleColor(data.GetStatusColor()));
         }
+
+        if (rowElements != null) rowElements.TargetToggle = targetToggle;
+        toggleContainer.Add(targetToggle);
+        cTarget = toggleContainer;
       }
 
       row.Add(cCurrent);

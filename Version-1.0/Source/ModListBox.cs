@@ -18,6 +18,8 @@ namespace Calloatti.SyncModsPro
   {
     public static ModListBox Instance;
 
+    private SaveReference _currentSaveReference; // Cached class-level reference
+
     private readonly ILoc _loc;
     private readonly ModRepository _modRepository;
     private readonly DialogBoxShower _dialogBoxShower;
@@ -42,6 +44,8 @@ namespace Calloatti.SyncModsPro
 
     public void ShowDialog(SaveMetadata metadata, SaveReference saveReference, Action continueCallback = null)
     {
+      _currentSaveReference = saveReference; // Store it immediately for partial-class use
+
       _duplicateGroups.Clear();
       _orderedRows.Clear();
       _activeFilters.Clear();
@@ -54,7 +58,7 @@ namespace Calloatti.SyncModsPro
 
       List<RowData> rowsData = GenerateUnifiedList(metadata);
 
-      // Clean, unburdened top bar with just the filter toggles
+      // Clean, unburdened top bar with just the filter toggles and save label
       VisualElement topBar = CreateTopBar();
       root.Add(topBar);
 
@@ -120,9 +124,11 @@ namespace Calloatti.SyncModsPro
 
       DialogBox dialogBox = builder.Show();
 
-      InjectToolbarButtons(root, dialogBox, metadata, saveReference, continueCallback, rowsData);
+      // Param saveReference removed
+      InjectToolbarButtons(root, dialogBox, metadata, continueCallback, rowsData);
     }
-    private void InjectToolbarButtons(VisualElement root, DialogBox dialogBox, SaveMetadata metadata, SaveReference saveReference, Action continueCallback, List<RowData> rowsData)
+
+    private void InjectToolbarButtons(VisualElement root, DialogBox dialogBox, SaveMetadata metadata, Action continueCallback, List<RowData> rowsData)
     {
       if (root.panel == null) return;
 
@@ -176,11 +182,11 @@ namespace Calloatti.SyncModsPro
 
       EventCallback<ClickEvent>[] buttonActions = new EventCallback<ClickEvent>[]
       {
-        evt => HandleSaveProfileClick(saveReference),
+        evt => HandleSaveProfileClick(),
         evt => HandleStrictFlipClick(createdButtons[1]),
         evt => HandleSyncClick(rowsData),
         evt => HandleRestartClick(),
-        evt => HandleRestartLoadClick(rowsData, saveReference),
+        evt => HandleRestartLoadClick(rowsData),
         evt => HandleLoadGameClick(dialogBox, continueCallback)
       };
 

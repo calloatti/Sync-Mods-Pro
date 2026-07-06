@@ -11,10 +11,10 @@ namespace Calloatti.SyncModsPro
   {
     private bool _isStrictOn = false;
 
-    private void HandleSaveProfileClick(SaveReference saveReference)
+    private void HandleSaveProfileClick()
     {
       Debug.Log("[SyncModsPro] Save Profile clicked.");
-      ModProfileManager.SaveProfile(saveReference, _modRepository);
+      ModProfileManager.SaveProfile(_currentSaveReference, _modRepository);
     }
 
     private void HandleStrictFlipClick(Button strictButton)
@@ -54,9 +54,9 @@ namespace Calloatti.SyncModsPro
       ModExecutionController.RequestStandardRestart();
     }
 
-    private void HandleRestartLoadClick(List<RowData> rowsData, SaveReference saveReference)
+    private void HandleRestartLoadClick(List<RowData> rowsData)
     {
-      ApplyMatrixAndRestart(rowsData, saveReference);
+      ApplyMatrixAndRestart(rowsData, _currentSaveReference);
     }
 
     private void HandleLoadGameClick(DialogBox dialogBox, Action continueCallback)
@@ -65,6 +65,15 @@ namespace Calloatti.SyncModsPro
       {
         dialogBox.OnUICancelled();
         continueCallback.Invoke();
+      }
+    }
+
+    private void HandleSaveLabelClick()
+    {
+      if (_currentSaveReference != null && _currentSaveReference.SettlementReference != null)
+      {
+        Debug.Log($"[SyncModsPro] Save label clicked: {_currentSaveReference.SettlementReference.SettlementName} - {_currentSaveReference.SaveName}");
+        TouchSaveFile(_currentSaveReference);
       }
     }
   }
