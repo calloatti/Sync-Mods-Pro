@@ -14,11 +14,22 @@ using UnityEngine.UIElements;
 
 namespace Calloatti.SyncModsPro
 {
-  public partial class ModListBox : ILoadableSingleton
+  public partial class ModListBox : IPanelController, ILoadableSingleton
   {
     public static ModListBox Instance;
 
     private SaveReference _currentSaveReference; // Cached class-level reference
+    private SaveMetadata _cachedMetadata;
+    private Action _cachedCallback;
+
+    private VisualElement _rootElement;
+    private NineSliceVisualElement _mainWindow;
+    private NineSliceVisualElement _bottomDock;
+
+    // The 3 major views
+    private VisualElement _mainView;
+    private VisualElement _historyView;
+    private VisualElement _dependencyView;
 
     private readonly ILoc _loc;
     private readonly ModRepository _modRepository;
@@ -26,8 +37,9 @@ namespace Calloatti.SyncModsPro
     private readonly GameSceneLoader _gameSceneLoader;
     private readonly GameSaveRepository _gameSaveRepository;
     private readonly ValidatingGameLoader _validatingGameLoader;
+    private readonly PanelStack _panelStack;
 
-    public ModListBox(ILoc loc, ModRepository modRepository, DialogBoxShower dialogBoxShower, GameSceneLoader gameSceneLoader, GameSaveRepository gameSaveRepository, ValidatingGameLoader validatingGameLoader)
+    public ModListBox(ILoc loc, ModRepository modRepository, DialogBoxShower dialogBoxShower, GameSceneLoader gameSceneLoader, GameSaveRepository gameSaveRepository, ValidatingGameLoader validatingGameLoader, PanelStack panelStack)
     {
       _loc = loc;
       _modRepository = modRepository;
@@ -35,6 +47,7 @@ namespace Calloatti.SyncModsPro
       _gameSceneLoader = gameSceneLoader;
       _gameSaveRepository = gameSaveRepository;
       _validatingGameLoader = validatingGameLoader;
+      _panelStack = panelStack;
     }
 
     public void Load()
@@ -42,10 +55,27 @@ namespace Calloatti.SyncModsPro
       Instance = this;
     }
 
-    public void ShowDialog(SaveMetadata metadata, SaveReference saveReference, Action continueCallback = null)
+    public void Open(SaveMetadata metadata, SaveReference saveReference, Action continueCallback = null)
     {
-      _currentSaveReference = saveReference; // Store it immediately for partial-class use
+      _currentSaveReference = saveReference;
+      _cachedMetadata = metadata;
+      _cachedCallback = continueCallback;
 
+      _panelStack.HideAndPushOverlay(this);
+    }
+
+    public bool OnUIConfirmed()
+    {
+      return false;
+    }
+
+    public void OnUICancelled()
+    {
+      _panelStack.Pop(this);
+    }
+
+    public VisualElement GetPanel()
+    {
       _duplicateGroups.Clear();
       _orderedRows.Clear();
       _activeFilters.Clear();
@@ -53,14 +83,56 @@ namespace Calloatti.SyncModsPro
       _hideNotApplicable = true;
 
       int calculatedTotalWidth = GetTotalTableWidth();
-      VisualElement root = new VisualElement();
-      root.style.width = calculatedTotalWidth;
 
-      List<RowData> rowsData = GenerateUnifiedList(metadata);
+      // 1. Transparent Root Wrapper
+      _rootElement = new VisualElement();
+      _rootElement.style.flexDirection = FlexDirection.Column;
+      _rootElement.style.alignItems = Align.Center;
+      _rootElement.style.justifyContent = Justify.Center;
+      _rootElement.style.width = Length.Percent(100);
+      _rootElement.style.height = Length.Percent(100);
 
-      // Clean, unburdened top bar with just the filter toggles and save label
+      // 2. Main Window (Native NineSlice Implementation)
+      _mainWindow = new NineSliceVisualElement();
+      _mainWindow.AddToClassList("content-centered");
+      _mainWindow.AddToClassList("sliced-border");
+      _mainWindow.AddToClassList("sliced-border--nontransparent");
+
+      // Native inner box container required for padding
+      VisualElement windowBox = new VisualElement();
+      windowBox.AddToClassList("box");
+      // Override the native 650px max width for our wide matrix
+      windowBox.style.maxWidth = StyleKeyword.None;
+      windowBox.style.width = calculatedTotalWidth + 100;
+      windowBox.style.minHeight = 694;
+
+      // Override the native .box bottom padding (which defaults to 45px) 
+      // to perfectly balance the 10px top margin of the lower buttons.
+      windowBox.style.paddingBottom = 0f;
+
+      // Initialize the view containers using native margin classes
+      _mainView = new VisualElement();
+      _mainView.AddToClassList("box__content-margin");
+      _mainView.style.marginBottom = 0f; // Overrides the 20px from .box__content-margin
+
+      _historyView = new VisualElement();
+      _historyView.AddToClassList("box__content-margin");
+      _historyView.style.marginBottom = 0f;
+
+      _dependencyView = new VisualElement();
+      _dependencyView.AddToClassList("box__content-margin");
+      _dependencyView.style.marginBottom = 0f;
+
+      // Set initial states
+      _mainView.style.display = DisplayStyle.Flex;
+      _historyView.style.display = DisplayStyle.None;
+      _dependencyView.style.display = DisplayStyle.None;
+
+      List<RowData> rowsData = GenerateUnifiedList(_cachedMetadata);
+
+      // --- POPULATE MAIN VIEW ---
       VisualElement topBar = CreateTopBar();
-      root.Add(topBar);
+      _mainView.Add(topBar);
 
       VisualElement listContainer = new VisualElement();
 
@@ -82,13 +154,11 @@ namespace Calloatti.SyncModsPro
       listContainer.Add(headerRow);
 
       ScrollView scrollView = CreateScrollView();
-
       int rowIndex = 0;
 
       foreach (var rowData in rowsData)
       {
         bool isEven = (rowIndex % 2 == 0);
-
         rowData.UpdateStatus();
         UnityEngine.Color dynamicRowColor = rowData.GetStatusColor();
 
@@ -111,55 +181,89 @@ namespace Calloatti.SyncModsPro
         scrollView.Add(entryRow);
         rowIndex++;
       }
+
       listContainer.Add(scrollView);
-      root.Add(listContainer);
+      _mainView.Add(listContainer);
 
-      // Execute initial pass to calculate zebra-striping against only visible elements
-      ApplyFilters();
+      // Dedicated container for legacy utility buttons
+      VisualElement legacyButtonContainer = new VisualElement();
+      legacyButtonContainer.style.flexDirection = FlexDirection.Row;
+      legacyButtonContainer.style.justifyContent = Justify.Center;
 
-      var builder = _dialogBoxShower.Create().AddContent(root).SetMaxWidth(calculatedTotalWidth + 100);
+      legacyButtonContainer.style.marginTop = 20f;
+      legacyButtonContainer.style.marginBottom = 42f;
+      _mainView.Add(legacyButtonContainer);
 
-      builder.SetConfirmButton(() => { }, "HiddenConfirm")
-             .SetCancelButton(() => { }, _loc.T("Calloatti.SyncModsPro.Button.Cancel"));
+      InjectToolbarButtons(legacyButtonContainer, rowsData);
 
-      DialogBox dialogBox = builder.Show();
+      // Bundle views into the window box
+      windowBox.Add(_mainView);
+      windowBox.Add(_historyView);
+      windowBox.Add(_dependencyView);
+      _mainWindow.Add(windowBox);
 
-      // Param saveReference removed
-      InjectToolbarButtons(root, dialogBox, metadata, continueCallback, rowsData);
-    }
-
-    private void InjectToolbarButtons(VisualElement root, DialogBox dialogBox, SaveMetadata metadata, Action continueCallback, List<RowData> rowsData)
-    {
-      if (root.panel == null) return;
-
-      List<Button> dialogButtons = root.panel.visualTree.Query<Button>().ToList();
-
+      // Native close button placed directly on the sliced border frame
       Button closeButton = new Button();
       closeButton.AddToClassList("close-button");
-      VisualElement trueWindowFrame = root.parent?.parent ?? root;
-      trueWindowFrame.Add(closeButton);
-      closeButton.RegisterCallback<ClickEvent>(evt => dialogBox.OnUICancelled());
+      _mainWindow.Add(closeButton);
+      closeButton.RegisterCallback<ClickEvent>(evt => _panelStack.Pop(this));
 
-      Button nativeCancel = dialogButtons.FirstOrDefault(b => b.name == "CancelButton");
-      if (nativeCancel != null) nativeCancel.style.display = DisplayStyle.None;
+      _rootElement.Add(_mainWindow);
 
-      Button nativeConfirm = dialogButtons.FirstOrDefault(b => b.name == "ConfirmButton");
-      if (nativeConfirm != null) nativeConfirm.style.display = DisplayStyle.None;
+      // 3. Bottom Dock (Native NineSlice Implementation)
+      _bottomDock = new NineSliceVisualElement();
+      _bottomDock.AddToClassList("content-row-centered--no-grow");
+      _bottomDock.AddToClassList("sliced-border");
+      _bottomDock.AddToClassList("sliced-border--nontransparent");
+      _bottomDock.style.marginTop = 10f;
 
-      Button referenceNativeButton = nativeConfirm ?? nativeCancel;
-      if (referenceNativeButton == null) return;
+      // Increased padding to make the bar taller and more substantial
+      _bottomDock.style.paddingTop = 36f;
+      _bottomDock.style.paddingBottom = 36f;
+      _bottomDock.style.paddingLeft = 36f;
+      _bottomDock.style.paddingRight = 36f;
 
-      Type nativeButtonType = referenceNativeButton.GetType();
-      VisualElement nativeButtonContainer = referenceNativeButton.parent;
+      _bottomDock.style.flexGrow = 0; // Explicitly stop growth
+      _bottomDock.style.flexShrink = 0;
 
-      if (nativeButtonContainer != null)
-      {
-        nativeButtonContainer.style.flexDirection = FlexDirection.Row;
-        nativeButtonContainer.style.justifyContent = Justify.Center;
-      }
+      NineSliceButton btnMain = new NineSliceButton { text = "Mods List" };
+      btnMain.RegisterCallback<ClickEvent>(evt => SwitchView(0));
+      ApplyStandardButtonStyles(btnMain);
+      btnMain.style.marginLeft = 5f;
+      btnMain.style.marginRight = 5f;
 
-      List<Button> createdButtons = new List<Button>();
+      NineSliceButton btnHistory = new NineSliceButton { text = "Steam History" };
+      btnHistory.RegisterCallback<ClickEvent>(evt => SwitchView(1));
+      ApplyStandardButtonStyles(btnHistory);
+      btnHistory.style.marginLeft = 5f;
+      btnHistory.style.marginRight = 5f;
 
+      NineSliceButton btnAudit = new NineSliceButton { text = "Dependencies" };
+      btnAudit.RegisterCallback<ClickEvent>(evt => SwitchView(2));
+      ApplyStandardButtonStyles(btnAudit);
+      btnAudit.style.marginLeft = 5f;
+      btnAudit.style.marginRight = 5f;
+
+      _bottomDock.Add(btnMain);
+      _bottomDock.Add(btnHistory);
+      _bottomDock.Add(btnAudit);
+
+      _rootElement.Add(_bottomDock);
+
+      ApplyFilters();
+
+      return _rootElement;
+    }
+
+    private void SwitchView(int viewIndex)
+    {
+      _mainView.style.display = viewIndex == 0 ? DisplayStyle.Flex : DisplayStyle.None;
+      _historyView.style.display = viewIndex == 1 ? DisplayStyle.Flex : DisplayStyle.None;
+      _dependencyView.style.display = viewIndex == 2 ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    private void InjectToolbarButtons(VisualElement container, List<RowData> rowsData)
+    {
       string[] buttonTexts = new string[]
       {
         _loc.T("Calloatti.SyncModsPro.Button.SaveProfile"),
@@ -180,6 +284,8 @@ namespace Calloatti.SyncModsPro
         "Calloatti.SyncModsPro.Tooltip.LoadGame"
       };
 
+      List<NineSliceButton> createdButtons = new List<NineSliceButton>();
+
       EventCallback<ClickEvent>[] buttonActions = new EventCallback<ClickEvent>[]
       {
         evt => HandleSaveProfileClick(),
@@ -187,32 +293,17 @@ namespace Calloatti.SyncModsPro
         evt => HandleSyncClick(rowsData),
         evt => HandleRestartClick(),
         evt => HandleRestartLoadClick(rowsData),
-        evt => HandleLoadGameClick(dialogBox, continueCallback)
+        evt => HandleLoadGameClick(_cachedCallback)
       };
 
       for (int i = 0; i < buttonTexts.Length; i++)
       {
-        Button utilityBtn = (Button)Activator.CreateInstance(nativeButtonType);
+        NineSliceButton utilityBtn = new NineSliceButton();
         utilityBtn.text = buttonTexts[i];
 
-        foreach (var className in referenceNativeButton.GetClasses())
-        {
-          utilityBtn.AddToClassList(className);
-        }
+        ApplyStandardButtonStyles(utilityBtn);
 
-        utilityBtn.style.minWidth = 150;
-        utilityBtn.style.width = StyleKeyword.Auto;
-        utilityBtn.style.maxWidth = 150;
-        utilityBtn.style.overflow = Overflow.Hidden;
-        utilityBtn.style.textOverflow = TextOverflow.Ellipsis;
-
-        utilityBtn.style.paddingLeft = 14;
-        utilityBtn.style.paddingRight = 14;
-        utilityBtn.style.height = referenceNativeButton.style.height;
-        utilityBtn.style.marginLeft = 4;
-        utilityBtn.style.marginRight = 4;
-
-        if (i == buttonTexts.Length - 1 && continueCallback == null)
+        if (i == buttonTexts.Length - 1 && _cachedCallback == null)
         {
           utilityBtn.SetEnabled(false);
         }
@@ -221,12 +312,21 @@ namespace Calloatti.SyncModsPro
         AttachButtonTooltipBehavior(utilityBtn, tooltipKeys[i]);
 
         createdButtons.Add(utilityBtn);
-
-        if (nativeButtonContainer != null)
-        {
-          nativeButtonContainer.Add(utilityBtn);
-        }
+        container.Add(utilityBtn);
       }
+    }
+
+    private void ApplyStandardButtonStyles(NineSliceButton btn)
+    {
+      btn.AddToClassList("menu-button");
+      btn.AddToClassList("menu-button--medium");
+
+      btn.style.minWidth = 150;
+      btn.style.maxWidth = 150;
+      btn.style.marginLeft = 5;
+      btn.style.marginRight = 5;
+      btn.style.overflow = Overflow.Hidden;
+      btn.style.textOverflow = TextOverflow.Ellipsis;
     }
   }
 }

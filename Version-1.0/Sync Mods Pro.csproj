@@ -8,6 +8,10 @@
   <Import Project="CommonModSettings.props" />
 
   <ItemGroup>
+    <Publicize Include="Timberborn.CoreUI" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Update="Data\save_metadata.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

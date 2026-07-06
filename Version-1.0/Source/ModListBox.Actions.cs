@@ -59,11 +59,12 @@ namespace Calloatti.SyncModsPro
       ApplyMatrixAndRestart(rowsData, _currentSaveReference);
     }
 
-    private void HandleLoadGameClick(DialogBox dialogBox, Action continueCallback)
+    // CHANGED: Replaced DialogBox reference with native PanelStack popping logic
+    private void HandleLoadGameClick(Action continueCallback)
     {
       if (continueCallback != null)
       {
-        dialogBox.OnUICancelled();
+        _panelStack.Pop(this);
         continueCallback.Invoke();
       }
     }

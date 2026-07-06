@@ -19,7 +19,7 @@ namespace Calloatti.SyncModsPro
     private const int BasePadding = 28;
     private const float ScrollViewHeight = 480f;
     private const float TopBarMarginBottom = 10f;
-    private const float ScrollViewMarginBottom = 15f;
+    private const float ScrollViewMarginBottom = 0f;
     private const float HeaderRowHeight = 28f;
     private const float DataRowHeight = 32f;
     private const float TextVerticalOffset = -3f;

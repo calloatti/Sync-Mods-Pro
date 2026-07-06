@@ -24,10 +24,10 @@ namespace Calloatti.SyncModsPro
 
         SaveMetadata metadata = deserializer.ReadFromSaveFile(saveReference, serializer);
 
-        // Pass the callback directly to the dialog so it can resume the native load sequence
-        ModListBox.Instance.ShowDialog(metadata, saveReference, continueCallback);
+        // Pass the callback directly to the panel so it can resume the native load sequence
+        ModListBox.Instance.Open(metadata, saveReference, continueCallback);
 
-        // Return false to block vanilla ONLY when our dialog successfully triggers
+        // Return false to block vanilla ONLY when our panel successfully triggers
         return false;
       }
 
@@ -48,9 +48,9 @@ namespace Calloatti.SyncModsPro
         SaveMetadata metadata = deserializer.ReadFromSaveFile(gameSaveItem.SaveReference, serializer);
 
         // Pass null for the callback since we are just looking at the mods, not loading the game
-        ModListBox.Instance.ShowDialog(metadata, gameSaveItem.SaveReference, null);
+        ModListBox.Instance.Open(metadata, gameSaveItem.SaveReference, null);
 
-        // Return false to block vanilla ONLY when our dialog successfully triggers
+        // Return false to block vanilla ONLY when our panel successfully triggers
         return false;
       }
 
