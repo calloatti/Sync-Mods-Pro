@@ -46,6 +46,7 @@ namespace Calloatti.SyncModsPro
       _orderedRows.Clear();
       _activeFilters.Clear();
       _isStrictOn = false;
+      _hideNotApplicable = true;
 
       int calculatedTotalWidth = GetTotalTableWidth();
       VisualElement root = new VisualElement();
@@ -70,7 +71,6 @@ namespace Calloatti.SyncModsPro
         _loc.T("Calloatti.SyncModsPro.Column.CurrentState"),
         _loc.T("Calloatti.SyncModsPro.Column.SavedState"),
         _loc.T("Calloatti.SyncModsPro.Column.TargetState"),
-        _loc.T("Calloatti.SyncModsPro.Column.Active"),
         TextNormal, true, null
       );
       headerRow.style.marginTop = 15f;
@@ -95,11 +95,10 @@ namespace Calloatti.SyncModsPro
           rowData.MinimumGameVersion,
           rowData.SavedState == ModState.Enabled ? rowData.SavedVersion : "-",
           rowData.Version,
-          rowData.Status == ModStatus.NotApplicable ? "" : _loc.T($"Calloatti.SyncModsPro.Status.{rowData.Status}"),
+          rowData.Status.ToString(),
           GetStateString(rowData.CurrentState),
           GetStateString(rowData.SavedState),
           GetStateString(rowData.TargetState),
-          "",
           dynamicRowColor,
           false,
           rowData,

@@ -14,7 +14,6 @@ namespace Calloatti.SyncModsPro
     private static readonly int SavedVerWidth = 80;
     private static readonly int CurrentVerWidth = 80;
     private static readonly int StatusWidth = 60;
-    private static readonly int DupWidth = 50;
     private static readonly int StateColWidth = 50;
 
     private const int BasePadding = 28;
@@ -33,19 +32,19 @@ namespace Calloatti.SyncModsPro
     private Dictionary<string, List<RowUIElements>> _duplicateGroups = new Dictionary<string, List<RowUIElements>>();
     private List<RowUIElements> _orderedRows = new List<RowUIElements>();
     private HashSet<ModStatus> _activeFilters = new HashSet<ModStatus>();
+    private bool _hideNotApplicable = false;
 
     private class RowUIElements
     {
       public RowData Data;
       public VisualElement Root;
       public Label TargetLabel;
-      public Label DupLabel;
       public Label StatusLabel;
     }
 
     private int GetTotalTableWidth()
     {
-      return IconWidth + NameWidth + IdWidth + FolderWidth + MinVerWidth + SavedVerWidth + CurrentVerWidth + StatusWidth + (StateColWidth * 3) + DupWidth + BasePadding + 5;
+      return IconWidth + NameWidth + IdWidth + FolderWidth + MinVerWidth + SavedVerWidth + CurrentVerWidth + StatusWidth + (StateColWidth * 3) + BasePadding + 5;
     }
 
     private VisualElement CreateTopBar()
@@ -67,7 +66,8 @@ namespace Calloatti.SyncModsPro
         { "Calloatti.SyncModsPro.Status.Version", ModStatus.Version },
         { "Calloatti.SyncModsPro.Status.Disabled", ModStatus.Disabled },
         { "Calloatti.SyncModsPro.Status.Missing", ModStatus.Missing },
-        { "Calloatti.SyncModsPro.Status.New", ModStatus.New }
+        { "Calloatti.SyncModsPro.Status.New", ModStatus.New },
+        { "Calloatti.SyncModsPro.Status.Duplicate", ModStatus.Duplicate }
       };
 
       foreach (var kvp in masterStatuses)
@@ -103,6 +103,32 @@ namespace Calloatti.SyncModsPro
         filtersContainer.Add(itemWrapper);
       }
 
+      // Add Hide Not Applicable toggle
+      VisualElement hideNaWrapper = new VisualElement();
+      hideNaWrapper.style.flexDirection = FlexDirection.Row;
+      hideNaWrapper.style.alignItems = Align.Center;
+      hideNaWrapper.style.marginLeft = 12;
+
+      Label hideNaLabel = new Label(_loc.T("Calloatti.SyncModsPro.Status.HideNotApplicable"));
+      hideNaLabel.AddToClassList("text--default");
+      hideNaLabel.style.fontSize = 12;
+      hideNaLabel.style.marginRight = 4;
+      hideNaWrapper.Add(hideNaLabel);
+
+      Toggle hideNaToggle = new Toggle();
+      hideNaToggle.AddToClassList("game-toggle");
+      hideNaToggle.viewDataKey = "Calloatti.SyncModsPro.Status.HideNotApplicable";
+      hideNaToggle.value = true;
+
+      hideNaToggle.RegisterValueChangedCallback(evt =>
+      {
+        _hideNotApplicable = evt.newValue;
+        ApplyFilters();
+      });
+
+      hideNaWrapper.Add(hideNaToggle);
+      filtersContainer.Add(hideNaWrapper);
+
       topBar.Add(filtersContainer);
       return topBar;
     }
@@ -113,6 +139,11 @@ namespace Calloatti.SyncModsPro
       foreach (var rowUI in _orderedRows)
       {
         bool isVisible = _activeFilters.Count == 0 || _activeFilters.Contains(rowUI.Data.Status);
+
+        if (_hideNotApplicable && rowUI.Data.Status == ModStatus.NotApplicable)
+        {
+          isVisible = false;
+        }
 
         if (isVisible)
         {
@@ -186,13 +217,6 @@ namespace Calloatti.SyncModsPro
         rowUI.TargetLabel.text = GetStateString(rowUI.Data.TargetState);
       }
 
-      if (rowUI.DupLabel != null)
-      {
-        if (rowUI.Data.DupStatus == 1) rowUI.DupLabel.text = "[A]";
-        else if (rowUI.Data.DupStatus == 0) rowUI.DupLabel.text = "[  ]";
-        else rowUI.DupLabel.text = "";
-      }
-
       if (rowUI.StatusLabel != null)
       {
         rowUI.Data.UpdateStatus();
@@ -203,7 +227,7 @@ namespace Calloatti.SyncModsPro
       rowUI.Root.Query<Label>().ForEach(lbl => lbl.style.color = new StyleColor(freshStatusColor));
     }
 
-    private VisualElement CreateRow(string name, string id, string verFolder, string minVer, string savVer, string curVer, string status, string currentStr, string savedStr, string targetStr, string dupHeader, Color color, bool isHeader, RowData data, bool isEven = false)
+    private VisualElement CreateRow(string name, string id, string verFolder, string minVer, string savVer, string curVer, string status, string currentStr, string savedStr, string targetStr, Color color, bool isHeader, RowData data, bool isEven = false)
     {
 
       VisualElement row = new VisualElement();
@@ -273,6 +297,11 @@ namespace Calloatti.SyncModsPro
           }
         }
         row.Add(iconColumnContainer);
+      }
+
+      if (!isHeader)
+      {
+        status = _loc.T($"Calloatti.SyncModsPro.Status.{status}");
       }
 
       Label cName = CreateCell(name, NameWidth, color);
@@ -368,29 +397,6 @@ namespace Calloatti.SyncModsPro
       row.Add(cSaved);
       row.Add(cTarget);
 
-      Label DupLabel = CreateCell(dupHeader, DupWidth, color);
-      DupLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
-
-      if (!isHeader && data != null)
-      {
-        DupLabel.style.fontSize = 12;
-        DupLabel.style.marginTop = TextVerticalOffset;
-        DupLabel.pickingMode = PickingMode.Ignore;
-
-        if (data.DupStatus == -1)
-        {
-          DupLabel.text = "";
-        }
-        else
-        {
-          DupLabel.text = data.DupStatus == 1 ? "[A]" : "[  ]";
-
-          if (rowElements != null)
-            rowElements.DupLabel = DupLabel;
-        }
-      }
-
-      row.Add(DupLabel);
       return row;
     }
 

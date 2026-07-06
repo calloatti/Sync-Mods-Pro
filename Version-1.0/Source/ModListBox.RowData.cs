@@ -10,7 +10,8 @@ namespace Calloatti.SyncModsPro
     Version,
     Disabled,
     Missing,
-    New
+    New,
+    Duplicate
   }
 
   public enum ModSource
@@ -85,7 +86,7 @@ namespace Calloatti.SyncModsPro
     /// </summary>
     public Mod NativeModReference { get; set; }
 
-    // Static color definitions mapping exactly to the ModStatus enum values (0 to 5)
+    // Static color definitions mapping exactly to the ModStatus enum values (0 to 6)
     public static readonly UnityEngine.Color[] StatusColors = new UnityEngine.Color[]
     {
       new UnityEngine.Color(0.4f, 0.4f, 0.4f), // 0: NotApplicable (Gray)
@@ -93,7 +94,8 @@ namespace Calloatti.SyncModsPro
       new UnityEngine.Color(0.9f, 0.9f, 0.2f), // 2: Version (Yellow)
       new UnityEngine.Color(0.9f, 0.5f, 0.1f), // 3: Disabled (Orange)
       new UnityEngine.Color(0.9f, 0.2f, 0.2f), // 4: Missing (Red)
-      new UnityEngine.Color(0.7f, 0.4f, 0.9f)  // 5: New (Purple)
+      new UnityEngine.Color(0.7f, 0.4f, 0.9f), // 5: New (Purple)
+      new UnityEngine.Color(0.4f, 0.4f, 0.4f)  // 6: Duplicate (Gray)
     };
 
     /// <summary>
@@ -111,10 +113,10 @@ namespace Calloatti.SyncModsPro
 
     public void UpdateStatus()
     {
-      // If the row is an inactive duplicate copy, force status to NotApplicable
+      // If the row is an inactive duplicate copy, force status to Duplicate
       if (DupStatus == 0)
       {
-        Status = ModStatus.NotApplicable;
+        Status = ModStatus.Duplicate;
         return;
       }
 
