@@ -31,6 +31,11 @@ namespace Calloatti.SyncModsPro
     private VisualElement _historyView;
     private VisualElement _dependencyView;
 
+    // Tab Buttons
+    private NineSliceButton _btnMain;
+    private NineSliceButton _btnHistory;
+    private NineSliceButton _btnAudit;
+
     private readonly ILoc _loc;
     private readonly ModRepository _modRepository;
     private readonly DialogBoxShower _dialogBoxShower;
@@ -91,6 +96,13 @@ namespace Calloatti.SyncModsPro
       _rootElement.style.justifyContent = Justify.Center;
       _rootElement.style.width = Length.Percent(100);
       _rootElement.style.height = Length.Percent(100);
+
+      // Load CommonStyle to make the native green "selected" style rule accessible
+      StyleSheet commonStyle = Resources.Load<StyleSheet>("UI/Views/Common/CommonStyle");
+      if (commonStyle != null)
+      {
+        _rootElement.styleSheets.Add(commonStyle);
+      }
 
       // 2. Main Window (Native NineSlice Implementation)
       _mainWindow = new NineSliceVisualElement();
@@ -226,31 +238,34 @@ namespace Calloatti.SyncModsPro
       _bottomDock.style.flexGrow = 0; // Explicitly stop growth
       _bottomDock.style.flexShrink = 0;
 
-      NineSliceButton btnMain = new NineSliceButton { text = "Mods List" };
-      btnMain.RegisterCallback<ClickEvent>(evt => SwitchView(0));
-      ApplyStandardButtonStyles(btnMain);
-      btnMain.style.marginLeft = 5f;
-      btnMain.style.marginRight = 5f;
+      _btnMain = new NineSliceButton { text = "Mods List" };
+      _btnMain.RegisterCallback<ClickEvent>(evt => SwitchView(0));
+      ApplyStandardButtonStyles(_btnMain);
+      _btnMain.style.marginLeft = 5f;
+      _btnMain.style.marginRight = 5f;
 
-      NineSliceButton btnHistory = new NineSliceButton { text = "Steam History" };
-      btnHistory.RegisterCallback<ClickEvent>(evt => SwitchView(1));
-      ApplyStandardButtonStyles(btnHistory);
-      btnHistory.style.marginLeft = 5f;
-      btnHistory.style.marginRight = 5f;
+      _btnHistory = new NineSliceButton { text = "Steam History" };
+      _btnHistory.RegisterCallback<ClickEvent>(evt => SwitchView(1));
+      ApplyStandardButtonStyles(_btnHistory);
+      _btnHistory.style.marginLeft = 5f;
+      _btnHistory.style.marginRight = 5f;
 
-      NineSliceButton btnAudit = new NineSliceButton { text = "Dependencies" };
-      btnAudit.RegisterCallback<ClickEvent>(evt => SwitchView(2));
-      ApplyStandardButtonStyles(btnAudit);
-      btnAudit.style.marginLeft = 5f;
-      btnAudit.style.marginRight = 5f;
+      _btnAudit = new NineSliceButton { text = "Dependencies" };
+      _btnAudit.RegisterCallback<ClickEvent>(evt => SwitchView(2));
+      ApplyStandardButtonStyles(_btnAudit);
+      _btnAudit.style.marginLeft = 5f;
+      _btnAudit.style.marginRight = 5f;
 
-      _bottomDock.Add(btnMain);
-      _bottomDock.Add(btnHistory);
-      _bottomDock.Add(btnAudit);
+      _bottomDock.Add(_btnMain);
+      _bottomDock.Add(_btnHistory);
+      _bottomDock.Add(_btnAudit);
 
       _rootElement.Add(_bottomDock);
 
       ApplyFilters();
+
+      // Trigger this once to correctly highlight the first button at launch
+      SwitchView(0);
 
       return _rootElement;
     }
@@ -260,6 +275,14 @@ namespace Calloatti.SyncModsPro
       _mainView.style.display = viewIndex == 0 ? DisplayStyle.Flex : DisplayStyle.None;
       _historyView.style.display = viewIndex == 1 ? DisplayStyle.Flex : DisplayStyle.None;
       _dependencyView.style.display = viewIndex == 2 ? DisplayStyle.Flex : DisplayStyle.None;
+
+      if (_btnMain != null && _btnHistory != null && _btnAudit != null)
+      {
+        // Toggle only the vanilla "selected" state style onto your standard thick buttons
+        _btnMain.EnableInClassList("selected", viewIndex == 0);
+        _btnHistory.EnableInClassList("selected", viewIndex == 1);
+        _btnAudit.EnableInClassList("selected", viewIndex == 2);
+      }
     }
 
     private void InjectToolbarButtons(VisualElement container, List<RowData> rowsData)
