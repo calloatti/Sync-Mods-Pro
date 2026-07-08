@@ -311,6 +311,7 @@ namespace Calloatti.SyncModsPro
       _rootElement.Add(_bottomDock);
 
       ApplyFilters();
+      UpdateEnabledStats();
 
       // Trigger this once to correctly highlight the first button at launch
       SwitchView(0);

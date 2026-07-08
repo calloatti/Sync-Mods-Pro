@@ -39,6 +39,7 @@ namespace Calloatti.SyncModsPro
       }
 
       ApplyFilters();
+      UpdateEnabledStats();
 
       Debug.Log($"[SyncModsPro] Strict mode toggled: {_isStrictOn}");
     }
