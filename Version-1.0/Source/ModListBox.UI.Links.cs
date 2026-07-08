@@ -17,13 +17,13 @@ namespace Calloatti.SyncModsPro
       {
         storedColor = label.resolvedStyle.color;
         label.style.color = new StyleColor(hoverColor);
-        ShowCustomTooltip(label, data.Url);
+        CustomTooltipManager.ShowTooltip(label, data.Url);
       });
 
       label.RegisterCallback<PointerLeaveEvent>(evt =>
       {
         label.style.color = new StyleColor(storedColor);
-        HideCustomTooltip();
+        CustomTooltipManager.HideTooltip();
       });
 
       label.RegisterCallback<PointerDownEvent>(evt =>
@@ -48,13 +48,13 @@ namespace Calloatti.SyncModsPro
       {
         storedColor = label.resolvedStyle.color;
         label.style.color = new StyleColor(hoverColor);
-        ShowCustomTooltip(label, data.DirectoryPath);
+        CustomTooltipManager.ShowTooltip(label, data.DirectoryPath);
       });
 
       label.RegisterCallback<PointerLeaveEvent>(evt =>
       {
         label.style.color = new StyleColor(storedColor);
-        HideCustomTooltip();
+        CustomTooltipManager.HideTooltip();
       });
 
       label.RegisterCallback<PointerDownEvent>(evt =>
@@ -82,13 +82,13 @@ namespace Calloatti.SyncModsPro
       {
         storedColor = label.resolvedStyle.color;
         label.style.color = new StyleColor(hoverColor);
-        ShowCustomTooltip(label, manifestPath);
+        CustomTooltipManager.ShowTooltip(label, manifestPath);
       });
 
       label.RegisterCallback<PointerLeaveEvent>(evt =>
       {
         label.style.color = new StyleColor(storedColor);
-        HideCustomTooltip();
+        CustomTooltipManager.HideTooltip();
       });
 
       label.RegisterCallback<PointerDownEvent>(evt =>
@@ -105,11 +105,11 @@ namespace Calloatti.SyncModsPro
     // Handles hover states for the bottom layout utility buttons
     private void AttachButtonTooltipBehavior(Button button, string locKey)
     {
-      button.RegisterCallback<PointerEnterEvent>(evt => ShowCustomTooltip(button, _loc.T(locKey)));
-      button.RegisterCallback<PointerLeaveEvent>(evt => HideCustomTooltip());
+      button.RegisterCallback<PointerEnterEvent>(evt => CustomTooltipManager.ShowTooltip(button, _loc.T(locKey)));
+      button.RegisterCallback<PointerLeaveEvent>(evt => CustomTooltipManager.HideTooltip());
 
       // Clear the tooltip instantly if the user clicks the button
-      button.RegisterCallback<ClickEvent>(evt => HideCustomTooltip());
+      button.RegisterCallback<ClickEvent>(evt => CustomTooltipManager.HideTooltip());
     }
   }
 }

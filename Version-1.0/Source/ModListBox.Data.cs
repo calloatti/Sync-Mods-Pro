@@ -41,7 +41,12 @@ namespace Calloatti.SyncModsPro
 
         ModState currentState = isEnabled ? ModState.Enabled : ModState.Disabled;
         ModState savedState = inSave ? ModState.Enabled : ModState.Disabled;
-        ModState targetState = inSave ? ModState.Enabled : currentState;
+
+        // --- UPDATED LOGIC ---
+        // If it's in the save, it defaults to Enabled.
+        // If it's not in the save, and strict mode is ON, force it to Disabled.
+        // Otherwise, keep whatever its current state is.
+        ModState targetState = inSave ? ModState.Enabled : (_isStrictOn ? ModState.Disabled : currentState);
 
         string computedVersionFolder;
         if (mod.ModDirectory.OriginName == mod.ModDirectory.Directory.Name)

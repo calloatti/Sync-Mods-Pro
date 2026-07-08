@@ -9,7 +9,7 @@ namespace Calloatti.SyncModsPro
 {
   public partial class ModListBox
   {
-    private bool _isStrictOn = false;
+    private bool _isStrictOn = true;
 
     private void HandleSaveProfileClick()
     {
@@ -45,28 +45,41 @@ namespace Calloatti.SyncModsPro
 
     private void HandleSyncClick(List<RowData> rowsData)
     {
-      ExecuteAutoSync(rowsData);
+      Debug.Log("[SyncModsPro] Sync clicked. Applying list changes to PlayerPrefs...");
+
+      // Save the target states and priorities directly from your UI list
+      bool success = ModSyncEngine.ApplyModChanges(rowsData);
+
+      if (_dialogBoxShower != null && _loc != null)
+      {
+        if (success)
+        {
+          var builder = _dialogBoxShower.Create()
+            .SetMessage(_loc.T("Calloatti.SyncModsPro.SyncDialogboxText"))
+            .SetConfirmButton(() => { }, _loc.T("Calloatti.SyncModsPro.Button.OK"));
+          builder.Show();
+        }
+        else
+        {
+          // Generic fallback text for an error, so the user knows it failed.
+          var builder = _dialogBoxShower.Create()
+            .SetMessage("An error occurred during synchronization. Check logs for details.")
+            .SetConfirmButton(() => { }, _loc.T("Calloatti.SyncModsPro.Button.OK"));
+          builder.Show();
+        }
+      }
     }
 
     private void HandleRestartClick()
     {
       Debug.Log("[SyncModsPro] Restart clicked.");
-      ModExecutionController.RequestStandardRestart();
+      ModRestarter.RequestStandardRestart();
     }
 
-    private void HandleRestartLoadClick(List<RowData> rowsData)
+    private void HandleRestartLoadClick()
     {
-      ApplyMatrixAndRestart(rowsData, _currentSaveReference);
-    }
-
-    // CHANGED: Replaced DialogBox reference with native PanelStack popping logic
-    private void HandleLoadGameClick(Action continueCallback)
-    {
-      if (continueCallback != null)
-      {
-        _panelStack.Pop(this);
-        continueCallback.Invoke();
-      }
+      Debug.Log("[SyncModsPro] Restart & Load clicked.");
+      ModRestarter.RequestRestartAndLoad(_currentSaveReference);
     }
 
     private void HandleSaveLabelClick()
@@ -74,7 +87,7 @@ namespace Calloatti.SyncModsPro
       if (_currentSaveReference != null && _currentSaveReference.SettlementReference != null)
       {
         Debug.Log($"[SyncModsPro] Save label clicked: {_currentSaveReference.SettlementReference.SettlementName} - {_currentSaveReference.SaveName}");
-        TouchSaveFile(_currentSaveReference);
+        SaveFileUtility.TouchSaveFile(_currentSaveReference);
       }
     }
   }

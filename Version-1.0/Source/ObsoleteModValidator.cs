@@ -13,9 +13,12 @@ namespace Calloatti.SyncModsPro
   /// </summary>
   public class ObsoleteModValidator : ILoadableSingleton
   {
-    private readonly ModRepository _modRepository;
-    private readonly DialogBoxShower _dialogBoxShower;
-    private readonly ILoc _loc;
+    private ModRepository _modRepository;
+    private DialogBoxShower _dialogBoxShower;
+    private ILoc _loc;
+
+    // This static flag persists across Main Menu reloads to ensure single execution per session
+    private static bool _hasRun = false;
 
     // The precise IDs of the mods we want to eradicate
     private readonly string[] _obsoleteIds = new[]
@@ -33,6 +36,14 @@ namespace Calloatti.SyncModsPro
 
     public void Load()
     {
+      // If it has already run this session, safely abort and clean up references immediately
+      if (_hasRun)
+      {
+        return;
+      }
+
+      _hasRun = true;
+
       // Search the entire repository (includes both enabled and disabled mods)
       var foundObsoleteMods = _modRepository.Mods
         .Where(m => _obsoleteIds.Contains(m.Manifest.Id, StringComparer.OrdinalIgnoreCase))
@@ -51,6 +62,11 @@ namespace Calloatti.SyncModsPro
           .SetConfirmButton(() => { }, _loc.T("Calloatti.SyncModsPro.Button.OK"))
           .Show();
       }
+
+      // Nullify references immediately after doing its job to free resources early
+      _modRepository = null;
+      _dialogBoxShower = null;
+      _loc = null;
     }
   }
 

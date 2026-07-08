@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -32,7 +34,10 @@ namespace Calloatti.SyncModsPro
     private Dictionary<string, List<RowUIElements>> _duplicateGroups = new Dictionary<string, List<RowUIElements>>();
     private List<RowUIElements> _orderedRows = new List<RowUIElements>();
     private HashSet<ModStatus> _activeFilters = new HashSet<ModStatus>();
-    private bool _hideNotApplicable = true;
+
+    // Saved references to UI count labels for isolated text updates
+    private Dictionary<ModStatus, Label> _countLabels = new Dictionary<ModStatus, Label>();
+    private Label _allFilterLabel;
 
     private class RowUIElements
     {
@@ -64,11 +69,12 @@ namespace Calloatti.SyncModsPro
 
       Label saveLabel = new Label(saveText);
       saveLabel.AddToClassList("text--default");
-      saveLabel.style.fontSize = 14;
+      saveLabel.style.fontSize = 12;
       saveLabel.style.unityFontStyleAndWeight = FontStyle.Normal;
       saveLabel.pickingMode = PickingMode.Position;
       // ADDED: Align with "Mod Name" (8px row padding + 40px IconWidth)
       saveLabel.style.marginLeft = 20;
+      saveLabel.style.top = 4;
 
       Color hoverColor = new Color(0.4f, 0.7f, 1.0f);
       Color storedColor = Color.white;
@@ -99,12 +105,15 @@ namespace Calloatti.SyncModsPro
       var masterStatuses = new Dictionary<string, ModStatus>
       {
         { "Calloatti.SyncModsPro.Status.Match", ModStatus.Match },
-        { "Calloatti.SyncModsPro.Status.Version", ModStatus.Version },
         { "Calloatti.SyncModsPro.Status.Disabled", ModStatus.Disabled },
         { "Calloatti.SyncModsPro.Status.Missing", ModStatus.Missing },
         { "Calloatti.SyncModsPro.Status.New", ModStatus.New },
-        { "Calloatti.SyncModsPro.Status.Duplicate", ModStatus.Duplicate }
       };
+
+      // We define toggleAll up here so the individual checkboxes can uncheck it if they are manually clicked off
+      Toggle toggleAll = new Toggle();
+      Dictionary<ModStatus, Toggle> toggleMap = new Dictionary<ModStatus, Toggle>();
+      _countLabels.Clear(); // Clear old references on rebuild
 
       foreach (var kvp in masterStatuses)
       {
@@ -114,60 +123,140 @@ namespace Calloatti.SyncModsPro
         VisualElement itemWrapper = new VisualElement();
         itemWrapper.style.flexDirection = FlexDirection.Row;
         itemWrapper.style.alignItems = Align.Center;
-        itemWrapper.style.marginLeft = 12;
-
-        Label label = new Label(_loc.T(statusKey));
-        label.AddToClassList("text--default");
-        label.style.fontSize = 12;
-        label.style.marginRight = 4;
-        itemWrapper.Add(label);
+        itemWrapper.style.marginLeft = 4; // Left margin for checkboxes set to 6
+        itemWrapper.style.top = 4;
 
         Toggle statusToggle = new Toggle();
         statusToggle.AddToClassList("game-toggle");
         // Scale down to 90%
         statusToggle.style.scale = new StyleScale(new Vector2(0.9f, 0.9f));
         statusToggle.viewDataKey = statusKey;
-        statusToggle.value = false;
+
+        // Initialize Default Values (Everything ON except NotApplicable)
+        bool isDefaultOn = targetStatus != ModStatus.NotApplicable;
+        statusToggle.SetValueWithoutNotify(isDefaultOn);
+        if (isDefaultOn)
+        {
+          _activeFilters.Add(targetStatus);
+        }
 
         statusToggle.RegisterValueChangedCallback(evt =>
         {
-          if (evt.newValue) _activeFilters.Add(targetStatus);
-          else _activeFilters.Remove(targetStatus);
+          if (evt.newValue)
+          {
+            _activeFilters.Add(targetStatus);
+          }
+          else
+          {
+            _activeFilters.Remove(targetStatus);
+          }
+
+          // Evaluate if all standard checkboxes are currently checked
+          bool allStandardChecked = true;
+          foreach (var toggleKvp in toggleMap)
+          {
+            if (toggleKvp.Key != ModStatus.NotApplicable && !_activeFilters.Contains(toggleKvp.Key))
+            {
+              allStandardChecked = false;
+              break;
+            }
+          }
+
+          // Silently update the 'All' checkbox to reflect the exact state of the standard filters
+          toggleAll.SetValueWithoutNotify(allStandardChecked);
 
           ApplyFilters();
         });
 
+        toggleMap.Add(targetStatus, statusToggle);
+
+        // Add Toggle FIRST so it aligns to the left
         itemWrapper.Add(statusToggle);
+
+        Label label = new Label(_loc.T(statusKey));
+        label.AddToClassList("text--default");
+        label.style.fontSize = 12;
+        label.style.marginLeft = 2;                          // Margin between checkbox and label set to 2
+        label.style.unityTextAlign = TextAnchor.MiddleLeft;   // Strict left alignment
+
+        // Add Label SECOND so it sits on the right
+        itemWrapper.Add(label);
+
+        // Create an isolated sub-label specifically to contain the numeric string buffer
+        Label countLabel = new Label();
+        countLabel.AddToClassList("text--default");
+        countLabel.style.fontSize = 12;
+        countLabel.style.marginLeft = 2;                      // Margin between label and label set to 2
+        countLabel.style.width = 28;                          // Fixed width set to 24
+        countLabel.style.unityTextAlign = TextAnchor.MiddleLeft;
+
+        _countLabels[targetStatus] = countLabel;
+
+        // Add Count Label THIRD at the absolute end of the item layout block
+        itemWrapper.Add(countLabel);
+
         filtersContainer.Add(itemWrapper);
       }
 
-      // Add Hide Not Applicable toggle
-      VisualElement hideNaWrapper = new VisualElement();
-      hideNaWrapper.style.flexDirection = FlexDirection.Row;
-      hideNaWrapper.style.alignItems = Align.Center;
-      hideNaWrapper.style.marginLeft = 12;
+      // Add the macro "All" checkbox at the very end
+      VisualElement allWrapper = new VisualElement();
+      allWrapper.style.flexDirection = FlexDirection.Row;
+      allWrapper.style.alignItems = Align.Center;
+      allWrapper.style.marginLeft = 12; // Preserved: Kept at 12px left margin for the All wrapper
+      allWrapper.style.width = 72;
+      allWrapper.style.top = 4;
 
-      Label hideNaLabel = new Label(_loc.T("Calloatti.SyncModsPro.Status.HideNotApplicable"));
-      hideNaLabel.AddToClassList("text--default");
-      hideNaLabel.style.fontSize = 12;
-      hideNaLabel.style.marginRight = 4;
-      hideNaWrapper.Add(hideNaLabel);
+      toggleAll.AddToClassList("game-toggle");
+      toggleAll.style.scale = new StyleScale(new Vector2(0.9f, 0.9f));
+      toggleAll.SetValueWithoutNotify(true); // Starts checked by default
 
-      Toggle hideNaToggle = new Toggle();
-      hideNaToggle.AddToClassList("game-toggle");
-      // Scale down to 90%
-      hideNaToggle.style.scale = new StyleScale(new Vector2(0.9f, 0.9f));
-      hideNaToggle.viewDataKey = "Calloatti.SyncModsPro.Status.HideNotApplicable";
-      hideNaToggle.value = true;
-
-      hideNaToggle.RegisterValueChangedCallback(evt =>
+      toggleAll.RegisterValueChangedCallback(evt =>
       {
-        _hideNotApplicable = evt.newValue;
+        bool isCheckingAll = evt.newValue;
+
+        // Wiping all filters ensures we start clean
+        _activeFilters.Clear();
+
+        foreach (var kvp in toggleMap)
+        {
+          ModStatus stat = kvp.Key;
+          Toggle subToggle = kvp.Value;
+
+          if (stat == ModStatus.NotApplicable)
+          {
+            subToggle.SetValueWithoutNotify(false); // Force NotApplicable visual to false
+            continue; // Skip adding it to _activeFilters
+          }
+
+          if (isCheckingAll)
+          {
+            subToggle.SetValueWithoutNotify(true);
+            _activeFilters.Add(stat);
+          }
+          else
+          {
+            subToggle.SetValueWithoutNotify(false);
+          }
+        }
         ApplyFilters();
       });
 
-      hideNaWrapper.Add(hideNaToggle);
-      filtersContainer.Add(hideNaWrapper);
+      // Add Toggle FIRST so it aligns to the left
+      allWrapper.Add(toggleAll);
+
+      Label allLabel = new Label("All"); // Kept hardcoded as requested
+      allLabel.AddToClassList("text--default");
+      allLabel.style.fontSize = 12;
+      allLabel.style.marginLeft = 3;
+      allLabel.style.flexGrow = 1;
+      allLabel.style.unityTextAlign = TextAnchor.MiddleLeft;
+
+      _allFilterLabel = allLabel;
+
+      // Add Label SECOND so it sits on the right
+      allWrapper.Add(allLabel);
+
+      filtersContainer.Add(allWrapper);
 
       topBar.Add(filtersContainer);
       return topBar;
@@ -178,12 +267,8 @@ namespace Calloatti.SyncModsPro
       int visibleCount = 0;
       foreach (var rowUI in _orderedRows)
       {
-        bool isVisible = _activeFilters.Count == 0 || _activeFilters.Contains(rowUI.Data.Status);
-
-        if (_hideNotApplicable && rowUI.Data.Status == ModStatus.NotApplicable)
-        {
-          isVisible = false;
-        }
+        // STRICT INCLUSIVE: Only show if the exact status is checked in the active filters
+        bool isVisible = _activeFilters.Contains(rowUI.Data.Status);
 
         if (isVisible)
         {
@@ -195,6 +280,52 @@ namespace Calloatti.SyncModsPro
         {
           rowUI.Root.style.display = DisplayStyle.None;
         }
+      }
+
+      // Automatically recalculate item allocations whenever filter configurations refresh
+      UpdateFilterCounts();
+    }
+
+    private void UpdateFilterCounts()
+    {
+      // 1. Initialize count dictionary mapping to our target enum entries
+      Dictionary<ModStatus, int> counts = new Dictionary<ModStatus, int>();
+      foreach (ModStatus status in Enum.GetValues(typeof(ModStatus)))
+      {
+        counts[status] = 0;
+      }
+
+      // 2. Aggregate actual allocations from populated physical rows
+      foreach (var rowUI in _orderedRows)
+      {
+        counts[rowUI.Data.Status]++;
+      }
+
+      // 3. Update the isolated numeric text blocks safely without altering main parent container dimensions
+      var masterStatuses = new Dictionary<string, ModStatus>
+      {
+        { "Calloatti.SyncModsPro.Status.Match", ModStatus.Match },
+        { "Calloatti.SyncModsPro.Status.Version", ModStatus.Version },
+        { "Calloatti.SyncModsPro.Status.Disabled", ModStatus.Disabled },
+        { "Calloatti.SyncModsPro.Status.Missing", ModStatus.Missing },
+        { "Calloatti.SyncModsPro.Status.New", ModStatus.New },
+        { "Calloatti.SyncModsPro.Status.Duplicate", ModStatus.Duplicate },
+        { "Calloatti.SyncModsPro.Status.NotApplicable", ModStatus.NotApplicable }
+      };
+
+      foreach (var kvp in masterStatuses)
+      {
+        if (_countLabels.TryGetValue(kvp.Value, out Label lbl))
+        {
+          lbl.text = $"({counts[kvp.Value]})";
+        }
+      }
+
+      // 4. Update the combined master "All" calculation block (excludes NotApplicable mods per design spec)
+      if (_allFilterLabel != null)
+      {
+        int totalAllCount = _orderedRows.Count(r => r.Data.Status != ModStatus.NotApplicable);
+        _allFilterLabel.text = $"All ({totalAllCount})";
       }
     }
 
@@ -443,6 +574,9 @@ namespace Calloatti.SyncModsPro
               }
             }
             if (rowElements != null) RepaintRow(rowElements);
+
+            // ADDED: Triggers automatic top bar count recalculations on active target adjustments
+            UpdateFilterCounts();
           });
         }
 

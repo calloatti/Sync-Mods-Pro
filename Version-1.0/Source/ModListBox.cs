@@ -71,11 +71,24 @@ namespace Calloatti.SyncModsPro
 
     public bool OnUIConfirmed()
     {
-      return false;
+      // Only allow confirm/load if the callback is actually available
+      if (_cachedCallback != null)
+      {
+        CustomTooltipManager.HideTooltip(); // Clean up tooltip before transitioning
+
+        // Inlined the HandleLoadGameClick logic here directly
+        _panelStack.Pop(this);
+        _cachedCallback.Invoke();
+
+        return true; // Tells Timberborn we consumed the Enter key event
+      }
+
+      return false; // Tells Timberborn we didn't do anything
     }
 
     public void OnUICancelled()
     {
+      CustomTooltipManager.HideTooltip(); // Hide tooltip on close
       _panelStack.Pop(this);
     }
 
@@ -84,8 +97,7 @@ namespace Calloatti.SyncModsPro
       _duplicateGroups.Clear();
       _orderedRows.Clear();
       _activeFilters.Clear();
-      _isStrictOn = false;
-      _hideNotApplicable = true;
+      _isStrictOn = true;
 
       int calculatedTotalWidth = GetTotalTableWidth();
 
@@ -110,8 +122,31 @@ namespace Calloatti.SyncModsPro
       _mainWindow.AddToClassList("sliced-border");
       _mainWindow.AddToClassList("sliced-border--nontransparent");
 
+      // --- ADD THE TOP CENTER BANNER ---
+      // Instantiate the container using the native capsule configuration class
+      NineSliceVisualElement headerBackground = new NineSliceVisualElement();
+      headerBackground.AddToClassList("capsule-header");
+
+      // Center the inner text layout perfectly inside the ribbon asset
+      headerBackground.style.justifyContent = Justify.Center;
+      headerBackground.style.alignItems = Align.Center;
+
+      // Apply your -42px layout adjustment to cleanly snap it over the top border
+      headerBackground.style.top = -10;
+
+      // Attach the header text token targeting vanilla layout systems
+      Label headerLabel = new Label("Sync Mods");
+      headerLabel.AddToClassList("capsule-header__text");
+      headerLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+      headerLabel.style.top = -2; // Adjust for visual centering within the capsule
+
+      headerBackground.Add(headerLabel);
+      _mainWindow.Add(headerBackground);
+      // ---------------------------------
+
       // Native inner box container required for padding
       VisualElement windowBox = new VisualElement();
+
       windowBox.AddToClassList("box");
       // Override the native 650px max width for our wide matrix
       windowBox.style.maxWidth = StyleKeyword.None;
@@ -218,7 +253,7 @@ namespace Calloatti.SyncModsPro
       Button closeButton = new Button();
       closeButton.AddToClassList("close-button");
       _mainWindow.Add(closeButton);
-      closeButton.RegisterCallback<ClickEvent>(evt => _panelStack.Pop(this));
+      closeButton.RegisterCallback<ClickEvent>(evt => OnUICancelled());
 
       _rootElement.Add(_mainWindow);
 
@@ -290,7 +325,7 @@ namespace Calloatti.SyncModsPro
       string[] buttonTexts = new string[]
       {
         _loc.T("Calloatti.SyncModsPro.Button.SaveProfile"),
-        _loc.T("Calloatti.SyncModsPro.Button.StrictFlipOff"),
+        _loc.T("Calloatti.SyncModsPro.Button.StrictFlipOn"),
         _loc.T("Calloatti.SyncModsPro.Button.Sync"),
         _loc.T("Calloatti.SyncModsPro.Button.Restart"),
         _loc.T("Calloatti.SyncModsPro.Button.RestartLoad"),
@@ -315,8 +350,8 @@ namespace Calloatti.SyncModsPro
         evt => HandleStrictFlipClick(createdButtons[1]),
         evt => HandleSyncClick(rowsData),
         evt => HandleRestartClick(),
-        evt => HandleRestartLoadClick(rowsData),
-        evt => HandleLoadGameClick(_cachedCallback)
+        evt => HandleRestartLoadClick(), // Removed rowsData parameter here
+        evt => OnUIConfirmed()
       };
 
       for (int i = 0; i < buttonTexts.Length; i++)

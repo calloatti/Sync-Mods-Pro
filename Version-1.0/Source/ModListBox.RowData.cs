@@ -5,7 +5,7 @@ namespace Calloatti.SyncModsPro
 {
   public enum ModStatus
   {
-    NotApplicable, // Restored exactly as you wrote it
+    NotApplicable,
     Match,
     Version,
     Disabled,
@@ -113,11 +113,11 @@ namespace Calloatti.SyncModsPro
 
     public void UpdateStatus()
     {
-      // If the row is an inactive duplicate copy, force status to Duplicate
+      // 1. Structural Traps (Duplicates and Missing files override everything)
       if (DupStatus == 0)
       {
-        Status = ModStatus.Duplicate;
-        return;
+        //Status = ModStatus.Duplicate;
+        //return;
       }
 
       if (Source == ModSource.Missing)
@@ -126,37 +126,35 @@ namespace Calloatti.SyncModsPro
         return;
       }
 
-      if (SavedState == ModState.Enabled && TargetState == ModState.Enabled && Version != SavedVersion)
+      // 2. State Discrepancies (Active current game profile vs. Save data)
+      if (SavedState == ModState.Disabled && CurrentState == ModState.Enabled)
       {
-        Status = ModStatus.Version;
+        Status = ModStatus.New; // Active now, but wasn't in the save
         return;
       }
 
-      if (SavedState == ModState.Disabled && TargetState == ModState.Enabled)
+      if (SavedState == ModState.Enabled && CurrentState == ModState.Disabled)
       {
-        Status = ModStatus.New;
+        Status = ModStatus.Disabled; // Needed by save, but currently turned off in-game
         return;
       }
 
-      if (SavedState == ModState.Enabled && TargetState == ModState.Disabled)
+      // 3. Version Discrepancies (Only evaluated if both profiles are actively running it)
+      if (SavedState == ModState.Enabled && CurrentState == ModState.Enabled && Version != SavedVersion)
       {
-        Status = ModStatus.Disabled;
+        //Status = ModStatus.Version; // Dynamic version mismatch
+        //return;
+      }
+
+      // 4. Perfect Sync Catch-Alls
+      if (SavedState == CurrentState)
+      {
+        Status = ModStatus.Match; // Cleanly disabled on both sides (N/A)
         return;
       }
 
-      if (SavedState == ModState.Enabled && SavedState == TargetState)
-      {
-        Status = ModStatus.Match;
-        return;
-      }
-
-      if (SavedState == ModState.Disabled && SavedState == TargetState)
-      {
-        Status = ModStatus.NotApplicable;
-        return;
-      }
-
-      Status = ModStatus.Match;
+      // If it survives all rules, it's a perfect match
+      //Status = ModStatus.Match;
     }
   }
 }

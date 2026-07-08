@@ -20,7 +20,7 @@ namespace Calloatti.SyncModsPro
       try
       {
         // Targets the application LocalLow storage folder where Player.log sits
-        string logDirectory = Path.Combine(Application.persistentDataPath, "Logs");
+        string logDirectory = Path.Combine(Application.persistentDataPath, "SyncModsPro\\manifests");
         if (!Directory.Exists(logDirectory))
         {
           Directory.CreateDirectory(logDirectory);

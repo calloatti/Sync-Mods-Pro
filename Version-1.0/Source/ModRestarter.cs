@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Calloatti.SyncModsPro
 {
-  public static class ModExecutionController
+  public static class ModRestarter
   {
     private static readonly string LogFilePath = Path.Combine(Application.persistentDataPath, "SyncModsPro.log");
     private const string LogPrefix = "[SyncModsPro]";
