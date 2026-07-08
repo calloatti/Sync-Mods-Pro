@@ -8,9 +8,9 @@ namespace Calloatti.SyncModsPro
 {
   public partial class ModListBox
   {
-    private List<RowData> GenerateUnifiedList(SaveMetadata metadata)
+    private List<ModRecord> GenerateUnifiedList(SaveMetadata metadata)
     {
-      List<RowData> entries = new List<RowData>();
+      List<ModRecord> entries = new List<ModRecord>();
       List<Mod> allMods = _modRepository.Mods.ToList();
       HashSet<string> enabledModPaths = new HashSet<string>(_modRepository.EnabledMods.Select(m => m.ModDirectory.Path));
 
@@ -36,16 +36,11 @@ namespace Calloatti.SyncModsPro
 
         if (inSave) foundSavedModIds.Add(id);
 
-        // Batch Diagnostics Output
         ExportModObjectDiagnostics(mod);
 
         ModState currentState = isEnabled ? ModState.Enabled : ModState.Disabled;
         ModState savedState = inSave ? ModState.Enabled : ModState.Disabled;
 
-        // --- UPDATED LOGIC ---
-        // If it's in the save, it defaults to Enabled.
-        // If it's not in the save, and strict mode is ON, force it to Disabled.
-        // Otherwise, keep whatever its current state is.
         ModState targetState = inSave ? ModState.Enabled : (_isStrictOn ? ModState.Disabled : currentState);
 
         string computedVersionFolder;
@@ -61,11 +56,11 @@ namespace Calloatti.SyncModsPro
         string computedSteamId = ModSteamIdHelper.GetSteamId(mod);
         ModSource originValue = mod.ModDirectory.IsUserMod ? ModSource.Local : ModSource.Steam;
 
-        entries.Add(new RowData
+        entries.Add(new ModRecord
         {
           UniqueRowKey = mod.ModDirectory.Path,
           ModId = id,
-          DisplayName = mod.DisplayName,
+          ModName = mod.Manifest.Name,
           Source = originValue,
           Version = mod.Manifest.Version.ToString(),
           SavedVersion = inSave ? saveFileInfo[id].Version : "-",
@@ -85,7 +80,7 @@ namespace Calloatti.SyncModsPro
           VersionFolder = computedVersionFolder,
           IsUserMod = mod.ModDirectory.IsUserMod,
           TargetGameVersion = mod.ModDirectory.GameVersion.ToString(),
-          DupStatus = 0, // Managed by the duplicate pass below
+          DupStatus = 0,
           Url = string.IsNullOrEmpty(computedSteamId) ? null : $"https://steamcommunity.com/sharedfiles/filedetails/?id={computedSteamId}",
           NativeModReference = mod,
           SteamId = computedSteamId
@@ -100,11 +95,11 @@ namespace Calloatti.SyncModsPro
           if (!foundSavedModIds.Contains(savedMod.Id))
           {
             string computedSteamId = ModSteamIdHelper.GetSteamId(savedMod.Id);
-            entries.Add(new RowData
+            entries.Add(new ModRecord
             {
               UniqueRowKey = savedMod.Id,
               ModId = savedMod.Id,
-              DisplayName = savedMod.Name,
+              ModName = savedMod.Name,
               Source = ModSource.Missing,
               Version = "-",
               SavedVersion = savedMod.Version,
@@ -140,39 +135,55 @@ namespace Calloatti.SyncModsPro
                                .ThenByDescending(e => e.Version)
                                .ToList();
 
+        bool inSave = saveFileInfo.ContainsKey(group.Key);
+        string requestedVersion = inSave ? saveFileInfo[group.Key].Version : null;
+
         if (sortedGroup.Count == 1)
         {
-          sortedGroup[0].DupStatus = -1; // No duplicates exist for this item
+          sortedGroup[0].DupStatus = -1;
         }
         else
         {
-          for (int i = 0; i < sortedGroup.Count; i++)
+          ModRecord master = null;
+          if (inSave) master = sortedGroup.FirstOrDefault(e => e.Version == requestedVersion);
+          if (master == null) master = sortedGroup.First();
+
+          // Initialize a counter to track the duplicate iteration
+          int duplicateCounter = 1;
+
+          foreach (var row in sortedGroup)
           {
-            if (i == 0)
+            // Append the duplicate number dynamically to the ModName
+            row.ModName = $"{row.ModName} ({duplicateCounter})";
+            duplicateCounter++;
+
+            if (row == master)
             {
-              sortedGroup[i].DupStatus = 1; // Prioritized active master item
+              row.DupStatus = 1;
             }
             else
             {
-              sortedGroup[i].DupStatus = 0; // Inactive layout duplicate
+              row.DupStatus = 0;
 
-              if (sortedGroup[i].Source != ModSource.Missing)
+              if (row.Source != ModSource.Missing)
               {
-                sortedGroup[i].TargetState = ModState.Disabled;
+                row.TargetState = ModState.Disabled;
               }
+
+              // Corrects the history: The save file only enabled ONE of these duplicates.
+              row.SavedState = ModState.Disabled;
             }
           }
         }
       }
 
-      // Generate Unique Keys and initialize the Status Matrix immediately for UI updates
-      foreach (var rowData in entries)
+      foreach (var modRecord in entries)
       {
-        rowData.UniqueRowKey = string.IsNullOrEmpty(rowData.DirectoryPath) ? rowData.ModId : rowData.DirectoryPath;
-        rowData.UpdateStatus();
+        modRecord.UniqueRowKey = string.IsNullOrEmpty(modRecord.DirectoryPath) ? modRecord.ModId : modRecord.DirectoryPath;
+        modRecord.UpdateStatus();
       }
 
-      return entries.OrderBy(e => e.DisplayName)
+      return entries.OrderBy(e => e.ModName)
                     .ThenBy(e => e.Source)
                     .ThenByDescending(e => e.Version)
                     .ToList();

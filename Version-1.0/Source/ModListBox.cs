@@ -78,7 +78,14 @@ namespace Calloatti.SyncModsPro
 
         // Inlined the HandleLoadGameClick logic here directly
         _panelStack.Pop(this);
-        _cachedCallback.Invoke();
+
+        // Safely invoke and then immediately dump the references to free memory
+        Action tempCallback = _cachedCallback;
+        _cachedCallback = null;
+        _cachedMetadata = null;
+        _currentSaveReference = null;
+
+        tempCallback.Invoke();
 
         return true; // Tells Timberborn we consumed the Enter key event
       }
@@ -90,6 +97,11 @@ namespace Calloatti.SyncModsPro
     {
       CustomTooltipManager.HideTooltip(); // Hide tooltip on close
       _panelStack.Pop(this);
+
+      // Dump the references so the Garbage Collector can clean up the save data
+      _cachedCallback = null;
+      _cachedMetadata = null;
+      _currentSaveReference = null;
     }
 
     public VisualElement GetPanel()
@@ -98,6 +110,7 @@ namespace Calloatti.SyncModsPro
       _orderedRows.Clear();
       _activeFilters.Clear();
       _isStrictOn = true;
+      _filterBySavedEnabled = false;
 
       int calculatedTotalWidth = GetTotalTableWidth();
 
@@ -175,10 +188,10 @@ namespace Calloatti.SyncModsPro
       _historyView.style.display = DisplayStyle.None;
       _dependencyView.style.display = DisplayStyle.None;
 
-      List<RowData> rowsData = GenerateUnifiedList(_cachedMetadata);
+      List<ModRecord> modTable = GenerateUnifiedList(_cachedMetadata);
 
       // --- POPULATE MAIN VIEW ---
-      VisualElement topBar = CreateTopBar();
+      VisualElement topBar = CreateTopBar(modTable);
       _mainView.Add(topBar);
 
       VisualElement listContainer = new VisualElement();
@@ -203,26 +216,26 @@ namespace Calloatti.SyncModsPro
       ScrollView scrollView = CreateScrollView();
       int rowIndex = 0;
 
-      foreach (var rowData in rowsData)
+      foreach (var modRecord in modTable)
       {
         bool isEven = (rowIndex % 2 == 0);
-        rowData.UpdateStatus();
-        UnityEngine.Color dynamicRowColor = rowData.GetStatusColor();
+        modRecord.UpdateStatus();
+        UnityEngine.Color dynamicRowColor = modRecord.GetStatusColor();
 
         VisualElement entryRow = CreateRow(
-          rowData.DisplayName,
-          rowData.ModId,
-          rowData.VersionFolder,
-          rowData.MinimumGameVersion,
-          rowData.SavedState == ModState.Enabled ? rowData.SavedVersion : "-",
-          rowData.Version,
-          rowData.Status.ToString(),
-          GetStateString(rowData.CurrentState),
-          GetStateString(rowData.SavedState),
-          GetStateString(rowData.TargetState),
+          modRecord.ModName,
+          modRecord.ModId,
+          modRecord.VersionFolder,
+          modRecord.MinimumGameVersion,
+          modRecord.SavedState == ModState.Enabled ? modRecord.SavedVersion : "-",
+          modRecord.Version,
+          modRecord.Status.ToString(),
+          GetStateString(modRecord.CurrentState),
+          GetStateString(modRecord.SavedState),
+          GetStateString(modRecord.TargetState),
           dynamicRowColor,
           false,
-          rowData,
+          modRecord,
           isEven
         );
         scrollView.Add(entryRow);
@@ -241,7 +254,7 @@ namespace Calloatti.SyncModsPro
       legacyButtonContainer.style.marginBottom = 42f;
       _mainView.Add(legacyButtonContainer);
 
-      InjectToolbarButtons(legacyButtonContainer, rowsData);
+      InjectToolbarButtons(legacyButtonContainer, modTable);
 
       // Bundle views into the window box
       windowBox.Add(_mainView);
@@ -320,7 +333,7 @@ namespace Calloatti.SyncModsPro
       }
     }
 
-    private void InjectToolbarButtons(VisualElement container, List<RowData> rowsData)
+    private void InjectToolbarButtons(VisualElement container, List<ModRecord> modTable)
     {
       string[] buttonTexts = new string[]
       {
@@ -348,9 +361,9 @@ namespace Calloatti.SyncModsPro
       {
         evt => HandleSaveProfileClick(),
         evt => HandleStrictFlipClick(createdButtons[1]),
-        evt => HandleSyncClick(rowsData),
+        evt => HandleSyncClick(modTable),
         evt => HandleRestartClick(),
-        evt => HandleRestartLoadClick(), // Removed rowsData parameter here
+        evt => HandleRestartLoadClick(), // Removed modTable parameter here
         evt => OnUIConfirmed()
       };
 

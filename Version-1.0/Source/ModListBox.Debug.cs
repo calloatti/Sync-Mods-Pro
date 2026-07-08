@@ -20,7 +20,7 @@ namespace Calloatti.SyncModsPro
       try
       {
         // Targets the application LocalLow storage folder where Player.log sits
-        string logDirectory = Path.Combine(Application.persistentDataPath, "SyncModsPro\\manifests");
+        string logDirectory = Path.Combine(Application.persistentDataPath, "SyncModsPro\\mod.data");
         if (!Directory.Exists(logDirectory))
         {
           Directory.CreateDirectory(logDirectory);
@@ -115,11 +115,11 @@ namespace Calloatti.SyncModsPro
         }
 
         File.WriteAllText(logPath, report.ToString());
-        Debug.Log($"[SyncModsPro] Diagnostic diagnostics log generated successfully at: {logPath}");
+        Debug.Log($"[SyncModsPro] Generated: {logPath}");
       }
       catch (Exception ex)
       {
-        Debug.LogError($"[SyncModsPro] Failed to output active structural metadata logs on local disk: {ex.Message}");
+        Debug.LogError($"[SyncModsPro] Error generating: {ex.Message}");
       }
     }
   }

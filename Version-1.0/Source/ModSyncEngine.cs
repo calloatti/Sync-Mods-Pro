@@ -26,15 +26,16 @@ namespace Calloatti.SyncModsPro
       "MoreModLogs"
     };
 
-    public static bool ApplyModChanges(List<RowData> rowsData)
+    public static bool ApplyModChanges(List<ModRecord> modTable)
     {
       try
       {
+
         // Using OrdinalIgnoreCase ensures we don't trip over case sensitivity mismatches
         HashSet<string> processedIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         // Filter out missing native references to avoid null errors
-        var validRows = rowsData.Where(r => r.NativeModReference != null).ToList();
+        var validRows = modTable.Where(r => r.NativeModReference != null).ToList();
 
         // ====================================================================
         // PASS 1: SET ALL ENABLED STATES

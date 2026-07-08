@@ -33,7 +33,7 @@ Instead of spawning multiple dialogs or destroying UI elements, we will use a "H
 
 ## 4. Feature: Dependency Audit
 **Goal:** Provide a flat, easy-to-read list of all required dependencies to help users troubleshoot "Dependency Hell".
-* **Data Generation:** Run a background pass over the generated `RowData` list. Parse `Manifest.RequiredMods` and `OptionalMods`.
+* **Data Generation:** Run a background pass over the generated `ModRecord` list. Parse `Manifest.RequiredMods` and `OptionalMods`.
 * **Data Model:** Create a grouped mapping that links a requested Dependency ID to:
     1.  Its current installation status (Match `[E]`, Disabled `[D]`, or Missing `[M]`).
     2.  A list of "Requested By" parent mods.

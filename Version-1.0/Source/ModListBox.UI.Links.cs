@@ -5,7 +5,7 @@ namespace Calloatti.SyncModsPro
 {
   public partial class ModListBox
   {
-    private void AttachLinkBehavior(Label label, RowData data)
+    private void AttachLinkBehavior(Label label, ModRecord data)
     {
       if (data == null || string.IsNullOrEmpty(data.Url)) return;
 
@@ -36,7 +36,7 @@ namespace Calloatti.SyncModsPro
       }, TrickleDown.TrickleDown);
     }
 
-    private void AttachFolderLinkBehavior(Label label, RowData data)
+    private void AttachFolderLinkBehavior(Label label, ModRecord data)
     {
       if (data == null || string.IsNullOrEmpty(data.DirectoryPath)) return;
 
@@ -68,7 +68,7 @@ namespace Calloatti.SyncModsPro
       }, TrickleDown.TrickleDown);
     }
 
-    private void AttachManifestLinkBehavior(Label label, RowData data)
+    private void AttachManifestLinkBehavior(Label label, ModRecord data)
     {
       if (data == null || string.IsNullOrEmpty(data.DirectoryPath)) return;
 

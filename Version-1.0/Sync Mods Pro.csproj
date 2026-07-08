@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Publicize Include="Timberborn.CoreUI" />
+    <Publicize Include="Timberborn.Modding" />
   </ItemGroup>
   
   <ItemGroup>

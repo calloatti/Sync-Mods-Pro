@@ -13,8 +13,8 @@ namespace Calloatti.SyncModsPro
 
     private void HandleSaveProfileClick()
     {
-      Debug.Log("[SyncModsPro] Save Profile clicked.");
-      ModProfileManager.SaveProfile(_currentSaveReference, _modRepository);
+      Debug.Log("[SyncModsPro] Save Profile clicked. Delegating to ModProfileManager.");
+      ModProfileManager.SaveProfile(_currentSaveReference, _modRepository, _dialogBoxShower, _loc);
     }
 
     private void HandleStrictFlipClick(Button strictButton)
@@ -29,10 +29,10 @@ namespace Calloatti.SyncModsPro
         {
           var data = rowUI.Data;
 
+          // TargetState alone handles the user plan without corrupting status facts
           if (data.CurrentState == ModState.Enabled && data.SavedState == ModState.Disabled && data.DupStatus != 0)
           {
             data.TargetState = _isStrictOn ? ModState.Disabled : ModState.Enabled;
-            data.UpdateStatus(); // Sync Enum logic
             RepaintRow(rowUI);
           }
         }
@@ -43,12 +43,13 @@ namespace Calloatti.SyncModsPro
       Debug.Log($"[SyncModsPro] Strict mode toggled: {_isStrictOn}");
     }
 
-    private void HandleSyncClick(List<RowData> rowsData)
+    private void HandleSyncClick(List<ModRecord> modTable)
     {
       Debug.Log("[SyncModsPro] Sync clicked. Applying list changes to PlayerPrefs...");
 
-      // Save the target states and priorities directly from your UI list
-      bool success = ModSyncEngine.ApplyModChanges(rowsData);
+      SaveFileUtility.TouchSaveFile(_currentSaveReference);
+
+      bool success = ModSyncEngine.ApplyModChanges(modTable);
 
       if (_dialogBoxShower != null && _loc != null)
       {
@@ -61,7 +62,6 @@ namespace Calloatti.SyncModsPro
         }
         else
         {
-          // Generic fallback text for an error, so the user knows it failed.
           var builder = _dialogBoxShower.Create()
             .SetMessage("An error occurred during synchronization. Check logs for details.")
             .SetConfirmButton(() => { }, _loc.T("Calloatti.SyncModsPro.Button.OK"));
