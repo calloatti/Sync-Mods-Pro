@@ -6,7 +6,7 @@ namespace Calloatti.SyncModsPro
   public enum ModStatus
   {
     Match,
-    Version,
+    Restart,
     Disabled,
     Missing,
     New
@@ -70,7 +70,7 @@ namespace Calloatti.SyncModsPro
     public static readonly UnityEngine.Color[] StatusColors = new UnityEngine.Color[]
     {
       new UnityEngine.Color(0.2f, 0.8f, 0.2f), // 0: Match (Green)
-      new UnityEngine.Color(0.9f, 0.9f, 0.2f), // 1: Version (Yellow)
+      new UnityEngine.Color(0.9f, 0.9f, 0.2f), // 1: Restart (Yellow)
       new UnityEngine.Color(0.9f, 0.5f, 0.1f), // 2: Disabled (Orange)
       new UnityEngine.Color(0.9f, 0.2f, 0.2f), // 3: Missing (Red)
       new UnityEngine.Color(0.7f, 0.4f, 0.9f)  // 4: New (Purple)
@@ -88,6 +88,18 @@ namespace Calloatti.SyncModsPro
 
     public void UpdateStatus()
     {
+      if (CurrentState == SavedState && SavedState == TargetState)
+      {
+        Status = ModStatus.Match;
+        return;
+      }
+
+      if (SavedState == TargetState)
+      {
+        Status = ModStatus.Restart;
+        return;
+      }
+
       if (Source == ModSource.Missing)
       {
         Status = ModStatus.Missing;
@@ -109,7 +121,7 @@ namespace Calloatti.SyncModsPro
 
       if (SavedState == ModState.Enabled && TargetState == ModState.Enabled && Version != SavedVersion)
       {
-        // Status = ModStatus.Version; 
+        // Status = ModStatus.Restart; 
         // return;
       }
 

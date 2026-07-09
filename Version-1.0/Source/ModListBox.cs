@@ -47,6 +47,8 @@ namespace Calloatti.SyncModsPro
     private readonly PanelStack _panelStack;
     private readonly KeyboardListener _keyboardListener;
 
+    private Label _syncWarningLabel;
+
     public ModListBox(ILoc loc, ModRepository modRepository, DialogBoxShower dialogBoxShower, GameSceneLoader gameSceneLoader, GameSaveRepository gameSaveRepository, ValidatingGameLoader validatingGameLoader, PanelStack panelStack, KeyboardListener keyboardListener)
     {
       _loc = loc;
@@ -239,6 +241,15 @@ namespace Calloatti.SyncModsPro
 
       listContainer.Add(_scrollView);
       _mainView.Add(listContainer);
+
+      // --- NEW LABEL INJECTION ---
+      _syncWarningLabel = new Label();
+      _syncWarningLabel.AddToClassList("text--default");
+      _syncWarningLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+      _syncWarningLabel.style.marginTop = 10f;
+      _syncWarningLabel.style.fontSize = 14;
+      _mainView.Add(_syncWarningLabel);
+      // ---------------------------
 
       VisualElement legacyButtonContainer = new VisualElement();
       legacyButtonContainer.style.flexDirection = FlexDirection.Row;

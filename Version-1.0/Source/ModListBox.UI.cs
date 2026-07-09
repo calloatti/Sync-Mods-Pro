@@ -19,9 +19,10 @@ namespace Calloatti.SyncModsPro
 
     private const int BasePadding = 28;
     private const float ScrollViewHeight = 480f;
-    private const float TopBarMarginBottom = 10f;
+    private const float TopBarMarginBottom = 6f;
+    private const float TopBarMarginTop = 0f;
     private const float ScrollViewMarginBottom = 0f;
-    private const float HeaderRowHeight = 28f;
+    private const float HeaderRowHeight = 32f;
     private const float DataRowHeight = 32f;
     private const float TextVerticalOffset = -3f;
 
@@ -79,7 +80,31 @@ namespace Calloatti.SyncModsPro
       foreach (var kvp in _statusFilterToggles)
       {
         string locKey = $"Calloatti.SyncModsPro.Status.{kvp.Key}";
-        kvp.Value.text = $"{_loc.T(locKey)} ({dynamicStatusCounts[kvp.Key]})";
+        string labelText = _loc.T(locKey);
+
+        // Hide the count for Match to reduce UI noise
+        if (kvp.Key != ModStatus.Match)
+        {
+          labelText += $" ({dynamicStatusCounts[kvp.Key]})";
+        }
+
+        kvp.Value.text = labelText;
+      }
+
+      // --- NEW LABEL LOGIC INJECTION ---
+      if (_syncWarningLabel != null)
+      {
+        // If every single loaded row has reached the "Match" status
+        if (dynamicStatusCounts[ModStatus.Match] == _orderedRows.Count)
+        {
+          _syncWarningLabel.text = "Mod list matches the save file. Ready to load!";
+          _syncWarningLabel.style.color = new StyleColor(new Color(0.9f, 0.9f, 0.9f)); // Default white/grey
+        }
+        else
+        {
+          _syncWarningLabel.text = "Click Sync button and then restart the game";
+          _syncWarningLabel.style.color = new StyleColor(new Color(0.9f, 0.2f, 0.2f)); // Red
+        }
       }
     }
     private int GetTotalTableWidth()
@@ -96,6 +121,7 @@ namespace Calloatti.SyncModsPro
       topBar.style.alignItems = Align.Center;
       topBar.style.justifyContent = Justify.SpaceBetween;
       topBar.style.marginBottom = TopBarMarginBottom;
+      topBar.style.marginTop = TopBarMarginTop;
 
       string saveText = "Unknown Save";
       if (_currentSaveReference != null && _currentSaveReference.SettlementReference != null)
@@ -105,11 +131,11 @@ namespace Calloatti.SyncModsPro
 
       Label saveLabel = new Label(saveText);
       saveLabel.AddToClassList("text--default");
-      saveLabel.style.fontSize = 12;
+      //saveLabel.style.fontSize = 12;
       saveLabel.style.unityFontStyleAndWeight = FontStyle.Normal;
       saveLabel.pickingMode = PickingMode.Position;
       saveLabel.style.marginLeft = 20;
-      saveLabel.style.top = 4;
+      saveLabel.style.top = 0;
 
       Color hoverColor = new Color(0.4f, 0.7f, 1.0f);
       Color storedColor = Color.white;
@@ -167,7 +193,17 @@ namespace Calloatti.SyncModsPro
         statusToggle.style.marginLeft = 4;
         statusToggle.style.fontSize = 13;
         statusToggle.viewDataKey = statusKey;
-        statusToggle.text = $"{_loc.T(statusKey)} ({staticCounts[targetStatus]})";
+
+
+        // Only append the count if it is NOT the Match status
+        string labelText = _loc.T(statusKey);
+        if (targetStatus != ModStatus.Match)
+        {
+          labelText += $" ({staticCounts[targetStatus]})";
+        }
+        statusToggle.text = labelText;
+
+
         statusToggle.SetValueWithoutNotify(false);
 
         statusToggle.RegisterValueChangedCallback(evt =>
@@ -234,9 +270,12 @@ namespace Calloatti.SyncModsPro
       {
         bool matchesStatus = !hasStatusFilter || _activeFilters.Contains(rowUI.Data.Status);
 
+        // Unraveled logic: 
+        // Match/Restart -> SavedState == TargetState
+        // New -> SavedState == Disabled AND TargetState == Enabled
         bool matchesEnabled = !_filterBySavedEnabled ||
-                    rowUI.Data.TargetState == ModState.Enabled ||
-                    rowUI.Data.SavedState == ModState.Enabled;
+                              rowUI.Data.SavedState == rowUI.Data.TargetState ||
+                              (rowUI.Data.SavedState == ModState.Disabled && rowUI.Data.TargetState == ModState.Enabled);
 
         bool isVisible = matchesStatus && matchesEnabled;
 
@@ -400,6 +439,12 @@ namespace Calloatti.SyncModsPro
       {
         row.style.height = HeaderRowHeight;
         row.style.borderBottomWidth = 2;
+
+        // --- ADDED: Top border for the header ---
+        row.style.borderTopWidth = 2;
+        row.style.borderTopColor = new StyleColor(new Color(0.3f, 0.3f, 0.3f, 0.5f));
+        // ----------------------------------------
+
         Label headerIconCell = CreateCell("", IconWidth, color);
         row.Add(headerIconCell);
       }

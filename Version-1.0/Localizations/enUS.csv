@@ -9,34 +9,33 @@ Calloatti.SyncModsPro.Button.SaveProfile,Save Profile,
 Calloatti.SyncModsPro.Button.StrictFlipOff,"Strict OFF",
 Calloatti.SyncModsPro.Button.StrictFlipOn,"Strict ON",
 Calloatti.SyncModsPro.Button.Sync,Sync,
+Calloatti.SyncModsPro.Column.Active,Active,
+Calloatti.SyncModsPro.Column.CurrentState,Current,
 Calloatti.SyncModsPro.Column.CurrentVersion,Mod Ver,
 Calloatti.SyncModsPro.Column.Enabled,Enabled,
 Calloatti.SyncModsPro.Column.Id,Mod Id,
 Calloatti.SyncModsPro.Column.MinGameVer,Game Ver,
 Calloatti.SyncModsPro.Column.Name,Mod Name,
+Calloatti.SyncModsPro.Column.SavedState,Saved,
 Calloatti.SyncModsPro.Column.SavedVersion,Save Ver,
 Calloatti.SyncModsPro.Column.Status,Status,
-Calloatti.SyncModsPro.Column.VersionFolder,Version Folder,
-Calloatti.SyncModsPro.Column.CurrentState,Current,
-Calloatti.SyncModsPro.Column.SavedState,Saved,
 Calloatti.SyncModsPro.Column.TargetState,Target,
-Calloatti.SyncModsPro.Column.Active,Active,
+Calloatti.SyncModsPro.Column.VersionFolder,Version Folder,
 Calloatti.SyncModsPro.Confirmation,"Are you sure you want to load saved game?",
 Calloatti.SyncModsPro.Info,"Current mods list matches the saved game mods list.",
-Calloatti.SyncModsPro.ShowAll,Show All,
-Calloatti.SyncModsPro.Status.HideNotApplicable,"Hide N/A",
-Calloatti.SyncModsPro.Status.NotApplicable,"N/A",
-Calloatti.SyncModsPro.Status.Disabled,Disabled,
-Calloatti.SyncModsPro.Status.Match,Match,
-Calloatti.SyncModsPro.Status.Version,Version,
-Calloatti.SyncModsPro.Status.Missing,Missing,
-Calloatti.SyncModsPro.Status.New,New,
-Calloatti.SyncModsPro.Status.Duplicate,Duplicate,
-Calloatti.SyncModsPro.SyncDialogboxText,"Mods synced, restart the game now.",
 Calloatti.SyncModsPro.MissingMod.Description,"This mod is missing from your hard drive.","Description shown for a saved mod that is not installed locally."
-Calloatti.SyncModsPro.ObsoleteMods.Warning,"Please uninstall the following mods since Sync Mods Pro replaces them: {0}","Warning dialog. {0} is a newline-separated list of obsolete mod display names."
+Calloatti.SyncModsPro.ObsoleteMods.Warning,"The following mods were detected and have been automatically disabled to prevent conflicts. The game must now restart to apply these changes:{0}",
 Calloatti.SyncModsPro.Profile.SaveFailure,"Failed to save mod profile. Check console log files for details.","Dialog message shown when exporting the current mod profile fails."
 Calloatti.SyncModsPro.Profile.SaveSuccess,"Mod profile saved successfully inside the 'Mod Profiles' settlement folder!","Dialog message shown when exporting the current mod profile succeeds."
+Calloatti.SyncModsPro.ShowAll,Show All,
+Calloatti.SyncModsPro.Status.Disabled,Disabled,
+Calloatti.SyncModsPro.Status.Duplicate,Duplicate,
+Calloatti.SyncModsPro.Status.HideNotApplicable,"Hide N/A",
+Calloatti.SyncModsPro.Status.Match,Match,
+Calloatti.SyncModsPro.Status.Missing,Missing,
+Calloatti.SyncModsPro.Status.New,New,
+Calloatti.SyncModsPro.Status.NotApplicable,"N/A",
+Calloatti.SyncModsPro.Status.Restart,Restart,
 Calloatti.SyncModsPro.Steam.DialogTitle,"Steam Workshop Sync","Title for Steam Workshop subscription result dialogs."
 Calloatti.SyncModsPro.Steam.SubscribeIoFailure,"Failed to communicate with Steam servers while subscribing to: <b>{0}</b> ({1})","Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
 Calloatti.SyncModsPro.Steam.SubscribePrompt,"Subscribe to {0}?","Steam confirmation prompt. {0} is the mod name."
@@ -47,6 +46,7 @@ Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,"Failed to communicate with Ste
 Calloatti.SyncModsPro.Steam.UnsubscribePrompt,"Unsubscribe from {0}?","Steam confirmation prompt. {0} is the mod name."
 Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam rejected the unsubscription request for: <b>{0}</b>. Error Code: {1}","Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code."
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Successfully unsubscribed from: <b>{0}</b>. Files will be cleared completely upon <b>Game Restart</b>.","Steam unsubscribe success message. {0} is the mod name."
+Calloatti.SyncModsPro.SyncDialogboxText,"Mods synced, restart the game now.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Load this save file right now with your current active mod configuration. (May cause issues if mods are missing!)",
 Calloatti.SyncModsPro.Tooltip.Restart,"Restart the game immediately. Mod changes will take effect.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Restart the game and automatically load this specific save file when the game finishes booting.",

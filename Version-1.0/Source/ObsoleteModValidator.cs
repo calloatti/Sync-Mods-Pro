@@ -5,6 +5,7 @@ using Timberborn.CoreUI;
 using Timberborn.Localization;
 using Timberborn.Modding;
 using Timberborn.SingletonSystem;
+using UnityEngine; // Required for PlayerPrefs.Save()
 
 namespace Calloatti.SyncModsPro
 {
@@ -44,22 +45,34 @@ namespace Calloatti.SyncModsPro
 
       _hasRun = true;
 
-      // Search the entire repository (includes both enabled and disabled mods)
-      var foundObsoleteMods = _modRepository.Mods
+      // Only search mods that are currently ACTIVE/ENABLED in the game
+      var foundObsoleteMods = _modRepository.EnabledMods
         .Where(m => _obsoleteIds.Contains(m.Manifest.Id, StringComparer.OrdinalIgnoreCase))
         .ToList();
 
       if (foundObsoleteMods.Any())
       {
-        // Format the found mods into a clean bulleted list for the dialog
-        string modList = string.Join("\n", foundObsoleteMods.Select(m => $"- {m.DisplayName}"));
+        // Forcefully disable the obsolete mods immediately
+        foreach (var mod in foundObsoleteMods)
+        {
+          ModPlayerPrefsHelper.ToggleMod(false, mod);
+        }
+
+        // Push the changes to disk so they remain disabled after the restart
+        PlayerPrefs.Save();
+
+        // Format the found mods into a clean bulleted list, starting with a CRLF as requested
+        string modList = Environment.NewLine + string.Join(Environment.NewLine, foundObsoleteMods.Select(m => $"- {m.DisplayName}"));
 
         string message = _loc.T("Calloatti.SyncModsPro.ObsoleteMods.Warning", modList);
 
-        // Spawn the native UI dialog
+        // Spawn the native UI dialog and wire the button to trigger our restart sequence
         _dialogBoxShower.Create()
           .SetMessage(message)
-          .SetConfirmButton(() => { }, _loc.T("Calloatti.SyncModsPro.Button.OK"))
+          .SetConfirmButton(() =>
+          {
+            ModRestarter.RequestStandardRestart();
+          }, _loc.T("Calloatti.SyncModsPro.Button.Restart"))
           .Show();
       }
 
