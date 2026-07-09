@@ -11,9 +11,9 @@ namespace Calloatti.SyncModsPro
     private static readonly int NameWidth = 220;
     private static readonly int IdWidth = 220;
     private static readonly int FolderWidth = 220;
-    private static readonly int MinVerWidth = 80;
-    private static readonly int SavedVerWidth = 80;
-    private static readonly int CurrentVerWidth = 80;
+    private static readonly int MinVerWidth = 70;
+    private static readonly int SavedVerWidth = 60;
+    private static readonly int CurrentVerWidth = 60;
     private static readonly int StatusWidth = 60;
     private static readonly int StateColWidth = 50;
 
@@ -36,6 +36,7 @@ namespace Calloatti.SyncModsPro
     private HashSet<ModStatus> _activeFilters = new HashSet<ModStatus>();
     private bool _filterBySavedEnabled = false;
     private Toggle _enabledStatsToggle;
+    private Dictionary<ModStatus, Toggle> _statusFilterToggles = new Dictionary<ModStatus, Toggle>();
 
     private class RowUIElements
     {
@@ -43,29 +44,44 @@ namespace Calloatti.SyncModsPro
       public VisualElement Root;
       public Toggle TargetToggle;
       public Label StatusLabel;
+      // Added text cell tracking so we can recolor the entire row dynamically
+      public List<Label> TextCells = new List<Label>();
     }
 
     private void UpdateEnabledStats()
     {
       if (_enabledStatsToggle == null) return;
 
-      int x = 0;
-      int y = 0;
-      int z = 0;
-      int t = 0;
+      int savedEnabledCount = 0;
+      int targetEnabledCount = 0;
+
+      // Track dynamic status counts
+      Dictionary<ModStatus, int> dynamicStatusCounts = new Dictionary<ModStatus, int>();
+      foreach (ModStatus status in Enum.GetValues(typeof(ModStatus)))
+      {
+        dynamicStatusCounts[status] = 0;
+      }
 
       foreach (var rowUI in _orderedRows)
       {
         var data = rowUI.Data;
-        if (data.SavedState == ModState.Enabled) x++;
-        if (data.SavedState == ModState.Disabled && data.TargetState == ModState.Enabled) y++;
-        if (data.SavedState == ModState.Enabled && data.TargetState == ModState.Disabled) z++;
-        if (data.TargetState == ModState.Enabled) t++;
+
+        if (data.SavedState == ModState.Enabled) savedEnabledCount++;
+        if (data.TargetState == ModState.Enabled) targetEnabledCount++;
+
+        dynamicStatusCounts[data.Status]++;
       }
 
-      _enabledStatsToggle.text = $"Mods ({x}+{y}-{z}={t})";
-    }
+      // Update the main enabled stats toggle
+      _enabledStatsToggle.text = $"Mods ({savedEnabledCount}/{targetEnabledCount})";
 
+      // Update the specific status filter toggles in the top bar
+      foreach (var kvp in _statusFilterToggles)
+      {
+        string locKey = $"Calloatti.SyncModsPro.Status.{kvp.Key}";
+        kvp.Value.text = $"{_loc.T(locKey)} ({dynamicStatusCounts[kvp.Key]})";
+      }
+    }
     private int GetTotalTableWidth()
     {
       return IconWidth + NameWidth + IdWidth + FolderWidth + MinVerWidth + SavedVerWidth + CurrentVerWidth + StatusWidth + (StateColWidth * 3) + BasePadding + 5;
@@ -73,6 +89,8 @@ namespace Calloatti.SyncModsPro
 
     private VisualElement CreateTopBar(List<ModRecord> modTable)
     {
+      _statusFilterToggles.Clear();
+
       VisualElement topBar = new VisualElement();
       topBar.style.flexDirection = FlexDirection.Row;
       topBar.style.alignItems = Align.Center;
@@ -120,27 +138,22 @@ namespace Calloatti.SyncModsPro
       filtersContainer.style.justifyContent = Justify.FlexEnd;
 
       var masterStatuses = new Dictionary<string, ModStatus>
-    {
-    { "Calloatti.SyncModsPro.Status.Match", ModStatus.Match },
-    { "Calloatti.SyncModsPro.Status.Disabled", ModStatus.Disabled },
-    { "Calloatti.SyncModsPro.Status.Missing", ModStatus.Missing },
-    { "Calloatti.SyncModsPro.Status.New", ModStatus.New },
-    };
+      {
+        { "Calloatti.SyncModsPro.Status.Match", ModStatus.Match },
+        { "Calloatti.SyncModsPro.Status.Disabled", ModStatus.Disabled },
+        { "Calloatti.SyncModsPro.Status.Missing", ModStatus.Missing },
+        { "Calloatti.SyncModsPro.Status.New", ModStatus.New },
+      };
 
       Dictionary<ModStatus, int> staticCounts = new Dictionary<ModStatus, int>();
       foreach (ModStatus status in Enum.GetValues(typeof(ModStatus)))
       {
         staticCounts[status] = 0;
       }
-      int staticEnabledCount = 0;
 
       foreach (var row in modTable)
       {
         staticCounts[row.Status]++;
-        if (row.SavedState == ModState.Enabled)
-        {
-          staticEnabledCount++;
-        }
       }
 
       foreach (var kvp in masterStatuses)
@@ -160,13 +173,28 @@ namespace Calloatti.SyncModsPro
         statusToggle.RegisterValueChangedCallback(evt =>
         {
           if (evt.newValue)
+          {
             _activeFilters.Add(targetStatus);
+
+            // Mutually Exclusive: Turn off the main Mods toggle if any status is checked
+            if (_filterBySavedEnabled)
+            {
+              _filterBySavedEnabled = false;
+              if (_enabledStatsToggle != null)
+              {
+                _enabledStatsToggle.SetValueWithoutNotify(false);
+              }
+            }
+          }
           else
+          {
             _activeFilters.Remove(targetStatus);
+          }
 
           ApplyFilters();
         });
 
+        _statusFilterToggles[targetStatus] = statusToggle;
         filtersContainer.Add(statusToggle);
       }
 
@@ -179,6 +207,17 @@ namespace Calloatti.SyncModsPro
       _enabledStatsToggle.RegisterValueChangedCallback(evt =>
       {
         _filterBySavedEnabled = evt.newValue;
+
+        if (evt.newValue)
+        {
+          // Mutually Exclusive: Turn off all status toggles if the main Mods toggle is checked
+          _activeFilters.Clear();
+          foreach (var toggle in _statusFilterToggles.Values)
+          {
+            toggle.SetValueWithoutNotify(false);
+          }
+        }
+
         ApplyFilters();
       });
 
@@ -186,7 +225,6 @@ namespace Calloatti.SyncModsPro
       topBar.Add(filtersContainer);
       return topBar;
     }
-
     private void ApplyFilters()
     {
       int visibleCount = 0;
@@ -196,7 +234,6 @@ namespace Calloatti.SyncModsPro
       {
         bool matchesStatus = !hasStatusFilter || _activeFilters.Contains(rowUI.Data.Status);
 
-        // Because we corrected SavedState in Generation, the filter is pure.
         bool matchesEnabled = !_filterBySavedEnabled ||
                     rowUI.Data.TargetState == ModState.Enabled ||
                     rowUI.Data.SavedState == ModState.Enabled;
@@ -274,6 +311,23 @@ namespace Calloatti.SyncModsPro
       {
         rowUI.TargetToggle.SetValueWithoutNotify(rowUI.Data.TargetState == ModState.Enabled);
       }
+
+      // Re-evaluate math for the row and update the translated text string
+      rowUI.Data.UpdateStatus();
+      if (rowUI.StatusLabel != null)
+      {
+        rowUI.StatusLabel.text = _loc.T($"Calloatti.SyncModsPro.Status.{rowUI.Data.Status}");
+      }
+
+      // Dynamically repaint all cached text cells to match the new status
+      Color newColor = rowUI.Data.GetStatusColor();
+      if (rowUI.TextCells != null)
+      {
+        foreach (var cell in rowUI.TextCells)
+        {
+          cell.style.color = newColor;
+        }
+      }
     }
 
     private void ProcessDependencies(ModRecord sourceMod, bool isEnabling)
@@ -284,7 +338,6 @@ namespace Calloatti.SyncModsPro
       {
         if (_duplicateGroups.TryGetValue(req.Id, out var depRows))
         {
-          // Find the active/master instance of this dependency
           var depRow = depRows.Find(r => r.Data.DupStatus == 1 || r.Data.DupStatus == -1);
           if (depRow == null) continue;
 
@@ -292,17 +345,13 @@ namespace Calloatti.SyncModsPro
 
           if (isEnabling)
           {
-            // Only auto-enable if it's currently disabled
             if (depData.TargetState == ModState.Disabled)
             {
               depData.TargetState = ModState.Enabled;
               depData.AutoEnabledBy.Add(sourceMod.ModId);
               RepaintRow(depRow);
-
-              // Recursively enable its dependencies
               ProcessDependencies(depData, true);
             }
-            // If it's already enabled but was auto-enabled previously, add this mod to the tracker list
             else if (depData.AutoEnabledBy.Count > 0)
             {
               depData.AutoEnabledBy.Add(sourceMod.ModId);
@@ -310,18 +359,14 @@ namespace Calloatti.SyncModsPro
           }
           else
           {
-            // Only attempt to disable if it was auto-enabled by THIS specific mod
             if (depData.AutoEnabledBy.Contains(sourceMod.ModId))
             {
               depData.AutoEnabledBy.Remove(sourceMod.ModId);
 
-              // The counter (count) reached zero!
               if (depData.AutoEnabledBy.Count == 0)
               {
                 depData.TargetState = ModState.Disabled;
                 RepaintRow(depRow);
-
-                // Recursively process disabling
                 ProcessDependencies(depData, false);
               }
             }
@@ -414,6 +459,9 @@ namespace Calloatti.SyncModsPro
       Label cCurVer = CreateCell(curVer, CurrentVerWidth, color);
       Label cStatus = CreateCell(status, StatusWidth, color);
 
+      Label cCurrent = CreateCell(currentStr, StateColWidth, color);
+      Label cSaved = CreateCell(savedStr, StateColWidth, color);
+
       if (!isHeader)
       {
         cName.style.marginTop = TextVerticalOffset;
@@ -424,32 +472,32 @@ namespace Calloatti.SyncModsPro
         cCurVer.style.marginTop = TextVerticalOffset;
         cStatus.style.marginTop = TextVerticalOffset;
 
-        if (rowElements != null) rowElements.StatusLabel = cStatus;
+        cCurrent.style.marginTop = TextVerticalOffset;
+        cSaved.style.marginTop = TextVerticalOffset;
+
+        if (rowElements != null)
+        {
+          rowElements.StatusLabel = cStatus;
+
+          // Cache references to all text-based cells so RepaintRow can recolor them
+          rowElements.TextCells.Add(cName);
+          rowElements.TextCells.Add(cId);
+          rowElements.TextCells.Add(cFolder);
+          rowElements.TextCells.Add(cMinVer);
+          rowElements.TextCells.Add(cCurVer);
+          rowElements.TextCells.Add(cSavVer);
+          rowElements.TextCells.Add(cCurrent);
+          rowElements.TextCells.Add(cSaved);
+          rowElements.TextCells.Add(cStatus);
+        }
 
         AttachLinkBehavior(cName, data);
         AttachManifestLinkBehavior(cId, data);
         AttachFolderLinkBehavior(cFolder, data);
       }
 
-      row.Add(cName);
-      row.Add(cId);
-      row.Add(cFolder);
-      row.Add(cMinVer);
-      row.Add(cSavVer);
-      row.Add(cCurVer);
-      row.Add(cStatus);
-
-      Label cCurrent = CreateCell(currentStr, StateColWidth, color);
-      Label cSaved = CreateCell(savedStr, StateColWidth, color);
-
       cCurrent.style.unityTextAlign = TextAnchor.MiddleCenter;
       cSaved.style.unityTextAlign = TextAnchor.MiddleCenter;
-
-      if (!isHeader)
-      {
-        cCurrent.style.marginTop = TextVerticalOffset;
-        cSaved.style.marginTop = TextVerticalOffset;
-      }
 
       VisualElement cTarget;
 
@@ -482,10 +530,11 @@ namespace Calloatti.SyncModsPro
           {
             bool isEnabling = evt.newValue;
 
-            // A manual click overrides automation, resetting its tracker.
             data.AutoEnabledBy.Clear();
-
             data.TargetState = isEnabling ? ModState.Enabled : ModState.Disabled;
+
+            // Instantly repaint this specific row's status and color
+            RepaintRow(rowElements);
 
             if (isEnabling)
             {
@@ -507,9 +556,10 @@ namespace Calloatti.SyncModsPro
               }
             }
 
-            // Trigger the dependency chain
             ProcessDependencies(data, isEnabling);
             UpdateEnabledStats();
+
+            // REMOVED: ApplyFilters() here to prevent UX disappearing act on click
           });
         }
 
@@ -518,28 +568,38 @@ namespace Calloatti.SyncModsPro
         cTarget = toggleContainer;
       }
 
+      // Appending to the layout in visual order
+      row.Add(cName);
+      row.Add(cId);
+      row.Add(cFolder);
+      row.Add(cMinVer);
+      row.Add(cCurVer);
+      row.Add(cSavVer);
+
       row.Add(cCurrent);
       row.Add(cSaved);
       row.Add(cTarget);
+
+      // Status column moved completely to the right, after TargetState
+      row.Add(cStatus);
 
       if (!isHeader)
       {
         row.style.height = DataRowHeight;
         row.style.backgroundColor = new StyleColor(isEven ? BgEvenRow : BgOddRow);
 
-        // --- NEW HOVER HIGHLIGHT LOGIC ---
         Color storedRowColor = Color.clear;
-        Color highlightColor = new Color(0.3f, 0.5f, 0.7f, 0.3f); // A soft blue highlight
+        Color highlightColor = new Color(0.3f, 0.5f, 0.7f, 0.3f);
 
         row.RegisterCallback<PointerEnterEvent>(evt =>
         {
-          storedRowColor = row.resolvedStyle.backgroundColor; // Save the current alternating background
+          storedRowColor = row.resolvedStyle.backgroundColor;
           row.style.backgroundColor = new StyleColor(highlightColor);
         });
 
         row.RegisterCallback<PointerLeaveEvent>(evt =>
         {
-          row.style.backgroundColor = new StyleColor(storedRowColor); // Restore original background
+          row.style.backgroundColor = new StyleColor(storedRowColor);
         });
       }
 

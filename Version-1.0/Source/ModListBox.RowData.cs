@@ -69,7 +69,7 @@ namespace Calloatti.SyncModsPro
 
     public static readonly UnityEngine.Color[] StatusColors = new UnityEngine.Color[]
     {
-    new UnityEngine.Color(0.2f, 0.8f, 0.2f), // 0: Match (Green)
+      new UnityEngine.Color(0.2f, 0.8f, 0.2f), // 0: Match (Green)
       new UnityEngine.Color(0.9f, 0.9f, 0.2f), // 1: Version (Yellow)
       new UnityEngine.Color(0.9f, 0.5f, 0.1f), // 2: Disabled (Orange)
       new UnityEngine.Color(0.9f, 0.2f, 0.2f), // 3: Missing (Red)
@@ -94,25 +94,26 @@ namespace Calloatti.SyncModsPro
         return;
       }
 
-      if (SavedState == ModState.Disabled && CurrentState == ModState.Enabled)
+      // Live comparison: How does the player's Target align with the rigid Save requirements?
+      if (SavedState == ModState.Disabled && TargetState == ModState.Enabled)
       {
         Status = ModStatus.New;
         return;
       }
 
-      if (SavedState == ModState.Enabled && CurrentState == ModState.Disabled)
+      if (SavedState == ModState.Enabled && TargetState == ModState.Disabled)
       {
         Status = ModStatus.Disabled;
         return;
       }
 
-      if (SavedState == ModState.Enabled && CurrentState == ModState.Enabled && Version != SavedVersion)
+      if (SavedState == ModState.Enabled && TargetState == ModState.Enabled && Version != SavedVersion)
       {
-        //Status = ModStatus.Version; 
-        //return;
+        // Status = ModStatus.Version; 
+        // return;
       }
 
-      if (SavedState == CurrentState)
+      if (SavedState == TargetState)
       {
         Status = ModStatus.Match;
         return;

@@ -5,6 +5,7 @@ using Timberborn.CoreUI;
 using Timberborn.GameSaveRepositorySystem;
 using Timberborn.GameSaveRepositorySystemUI;
 using Timberborn.GameSceneLoading;
+using Timberborn.InputSystem;
 using Timberborn.Localization;
 using Timberborn.Modding;
 using Timberborn.SaveMetadataSystem;
@@ -25,6 +26,7 @@ namespace Calloatti.SyncModsPro
     private VisualElement _rootElement;
     private NineSliceVisualElement _mainWindow;
     private NineSliceVisualElement _bottomDock;
+    private ScrollView _scrollView;
 
     // The 3 major views
     private VisualElement _mainView;
@@ -43,8 +45,9 @@ namespace Calloatti.SyncModsPro
     private readonly GameSaveRepository _gameSaveRepository;
     private readonly ValidatingGameLoader _validatingGameLoader;
     private readonly PanelStack _panelStack;
+    private readonly KeyboardListener _keyboardListener;
 
-    public ModListBox(ILoc loc, ModRepository modRepository, DialogBoxShower dialogBoxShower, GameSceneLoader gameSceneLoader, GameSaveRepository gameSaveRepository, ValidatingGameLoader validatingGameLoader, PanelStack panelStack)
+    public ModListBox(ILoc loc, ModRepository modRepository, DialogBoxShower dialogBoxShower, GameSceneLoader gameSceneLoader, GameSaveRepository gameSaveRepository, ValidatingGameLoader validatingGameLoader, PanelStack panelStack, KeyboardListener keyboardListener)
     {
       _loc = loc;
       _modRepository = modRepository;
@@ -53,6 +56,7 @@ namespace Calloatti.SyncModsPro
       _gameSaveRepository = gameSaveRepository;
       _validatingGameLoader = validatingGameLoader;
       _panelStack = panelStack;
+      _keyboardListener = keyboardListener;
     }
 
     public void Load()
@@ -66,20 +70,22 @@ namespace Calloatti.SyncModsPro
       _cachedMetadata = metadata;
       _cachedCallback = continueCallback;
 
+      // Hook directly into Timberborn's keyboard listener
+      _keyboardListener.KeyPressed += OnKeyPressed;
+
       _panelStack.HideAndPushOverlay(this);
     }
 
     public bool OnUIConfirmed()
     {
-      // Only allow confirm/load if the callback is actually available
       if (_cachedCallback != null)
       {
-        CustomTooltipManager.HideTooltip(); // Clean up tooltip before transitioning
+        CustomTooltipManager.HideTooltip();
 
-        // Inlined the HandleLoadGameClick logic here directly
+        _keyboardListener.KeyPressed -= OnKeyPressed;
+
         _panelStack.Pop(this);
 
-        // Safely invoke and then immediately dump the references to free memory
         Action tempCallback = _cachedCallback;
         _cachedCallback = null;
         _cachedMetadata = null;
@@ -87,18 +93,20 @@ namespace Calloatti.SyncModsPro
 
         tempCallback.Invoke();
 
-        return true; // Tells Timberborn we consumed the Enter key event
+        return true;
       }
 
-      return false; // Tells Timberborn we didn't do anything
+      return false;
     }
 
     public void OnUICancelled()
     {
-      CustomTooltipManager.HideTooltip(); // Hide tooltip on close
+      CustomTooltipManager.HideTooltip();
+
+      _keyboardListener.KeyPressed -= OnKeyPressed;
+
       _panelStack.Pop(this);
 
-      // Dump the references so the Garbage Collector can clean up the save data
       _cachedCallback = null;
       _cachedMetadata = null;
       _currentSaveReference = null;
@@ -122,7 +130,6 @@ namespace Calloatti.SyncModsPro
       _rootElement.style.width = Length.Percent(100);
       _rootElement.style.height = Length.Percent(100);
 
-      // Load CommonStyle to make the native green "selected" style rule accessible
       StyleSheet commonStyle = Resources.Load<StyleSheet>("UI/Views/Common/CommonStyle");
       if (commonStyle != null)
       {
@@ -136,44 +143,33 @@ namespace Calloatti.SyncModsPro
       _mainWindow.AddToClassList("sliced-border--nontransparent");
 
       // --- ADD THE TOP CENTER BANNER ---
-      // Instantiate the container using the native capsule configuration class
       NineSliceVisualElement headerBackground = new NineSliceVisualElement();
       headerBackground.AddToClassList("capsule-header");
 
-      // Center the inner text layout perfectly inside the ribbon asset
       headerBackground.style.justifyContent = Justify.Center;
       headerBackground.style.alignItems = Align.Center;
-
-      // Apply your -42px layout adjustment to cleanly snap it over the top border
       headerBackground.style.top = -10;
 
-      // Attach the header text token targeting vanilla layout systems
       Label headerLabel = new Label("Sync Mods");
       headerLabel.AddToClassList("capsule-header__text");
       headerLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
-      headerLabel.style.top = -2; // Adjust for visual centering within the capsule
+      headerLabel.style.top = -2;
 
       headerBackground.Add(headerLabel);
       _mainWindow.Add(headerBackground);
       // ---------------------------------
 
-      // Native inner box container required for padding
       VisualElement windowBox = new VisualElement();
 
       windowBox.AddToClassList("box");
-      // Override the native 650px max width for our wide matrix
       windowBox.style.maxWidth = StyleKeyword.None;
       windowBox.style.width = calculatedTotalWidth + 100;
       windowBox.style.minHeight = 694;
-
-      // Override the native .box bottom padding (which defaults to 45px) 
-      // to perfectly balance the 10px top margin of the lower buttons.
       windowBox.style.paddingBottom = 0f;
 
-      // Initialize the view containers using native margin classes
       _mainView = new VisualElement();
       _mainView.AddToClassList("box__content-margin");
-      _mainView.style.marginBottom = 0f; // Overrides the 20px from .box__content-margin
+      _mainView.style.marginBottom = 0f;
 
       _historyView = new VisualElement();
       _historyView.AddToClassList("box__content-margin");
@@ -183,7 +179,6 @@ namespace Calloatti.SyncModsPro
       _dependencyView.AddToClassList("box__content-margin");
       _dependencyView.style.marginBottom = 0f;
 
-      // Set initial states
       _mainView.style.display = DisplayStyle.Flex;
       _historyView.style.display = DisplayStyle.None;
       _dependencyView.style.display = DisplayStyle.None;
@@ -213,7 +208,7 @@ namespace Calloatti.SyncModsPro
       headerRow.style.paddingRight = 20;
       listContainer.Add(headerRow);
 
-      ScrollView scrollView = CreateScrollView();
+      _scrollView = CreateScrollView();
       int rowIndex = 0;
 
       foreach (var modRecord in modTable)
@@ -238,14 +233,13 @@ namespace Calloatti.SyncModsPro
           modRecord,
           isEven
         );
-        scrollView.Add(entryRow);
+        _scrollView.Add(entryRow);
         rowIndex++;
       }
 
-      listContainer.Add(scrollView);
+      listContainer.Add(_scrollView);
       _mainView.Add(listContainer);
 
-      // Dedicated container for legacy utility buttons
       VisualElement legacyButtonContainer = new VisualElement();
       legacyButtonContainer.style.flexDirection = FlexDirection.Row;
       legacyButtonContainer.style.justifyContent = Justify.Center;
@@ -256,13 +250,11 @@ namespace Calloatti.SyncModsPro
 
       InjectToolbarButtons(legacyButtonContainer, modTable);
 
-      // Bundle views into the window box
       windowBox.Add(_mainView);
       windowBox.Add(_historyView);
       windowBox.Add(_dependencyView);
       _mainWindow.Add(windowBox);
 
-      // Native close button placed directly on the sliced border frame
       Button closeButton = new Button();
       closeButton.AddToClassList("close-button");
       _mainWindow.Add(closeButton);
@@ -276,14 +268,11 @@ namespace Calloatti.SyncModsPro
       _bottomDock.AddToClassList("sliced-border");
       _bottomDock.AddToClassList("sliced-border--nontransparent");
       _bottomDock.style.marginTop = 10f;
-
-      // Increased padding to make the bar taller and more substantial
       _bottomDock.style.paddingTop = 36f;
       _bottomDock.style.paddingBottom = 36f;
       _bottomDock.style.paddingLeft = 36f;
       _bottomDock.style.paddingRight = 36f;
-
-      _bottomDock.style.flexGrow = 0; // Explicitly stop growth
+      _bottomDock.style.flexGrow = 0;
       _bottomDock.style.flexShrink = 0;
 
       _btnMain = new NineSliceButton { text = "Mods List" };
@@ -313,7 +302,6 @@ namespace Calloatti.SyncModsPro
       ApplyFilters();
       UpdateEnabledStats();
 
-      // Trigger this once to correctly highlight the first button at launch
       SwitchView(0);
 
       return _rootElement;
@@ -327,7 +315,6 @@ namespace Calloatti.SyncModsPro
 
       if (_btnMain != null && _btnHistory != null && _btnAudit != null)
       {
-        // Toggle only the vanilla "selected" state style onto your standard thick buttons
         _btnMain.EnableInClassList("selected", viewIndex == 0);
         _btnHistory.EnableInClassList("selected", viewIndex == 1);
         _btnAudit.EnableInClassList("selected", viewIndex == 2);
@@ -364,7 +351,7 @@ namespace Calloatti.SyncModsPro
         evt => HandleStrictFlipClick(createdButtons[1]),
         evt => HandleSyncClick(modTable),
         evt => HandleRestartClick(),
-        evt => HandleRestartLoadClick(), // Removed modTable parameter here
+        evt => HandleRestartLoadClick(),
         evt => OnUIConfirmed()
       };
 

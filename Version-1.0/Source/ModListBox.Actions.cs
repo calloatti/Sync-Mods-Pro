@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Timberborn.CoreUI;
 using Timberborn.GameSaveRepositorySystem;
+using Timberborn.InputSystem;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -90,6 +91,46 @@ namespace Calloatti.SyncModsPro
         Debug.Log($"[SyncModsPro] Save label clicked: {_currentSaveReference.SettlementReference.SettlementName} - {_currentSaveReference.SaveName}");
         SaveFileUtility.TouchSaveFile(_currentSaveReference);
       }
+    }
+
+    private void OnKeyPressed(object sender, KeyPressedEvent e)
+    {
+      // Timberborn passes displayName.ToUpper(), we normalize it to lower
+      string key = e.Key.ToLowerInvariant();
+
+      // We only want to process standard single character key presses (letters/numbers)
+      if (key.Length != 1) return;
+
+      char searchChar = key[0];
+
+      foreach (var rowUI in _orderedRows)
+      {
+        // Check if the row is visible and if the first letter matches the pressed key
+        if (rowUI.Root.style.display == DisplayStyle.Flex &&
+            !string.IsNullOrEmpty(rowUI.Data.ModName) &&
+            char.ToLowerInvariant(rowUI.Data.ModName[0]) == searchChar)
+        {
+          ScrollToRowAtTop(rowUI.Root);
+          break; // Stop at the very first match we find
+        }
+      }
+    }
+
+    private void ScrollToRowAtTop(VisualElement row)
+    {
+      if (row.layout.height == 0) return; // Layout hasn't resolved yet
+
+      float targetY = row.layout.y;
+      float viewportHeight = _scrollView.layout.height;
+
+      // Set the scroll offset directly to the row's Y position to place it at the top
+      float scrollY = targetY;
+
+      // Clamp to ensure we don't scroll past the boundaries if the row is near the very bottom
+      float maxScroll = UnityEngine.Mathf.Max(0, _scrollView.contentContainer.layout.height - viewportHeight);
+      scrollY = UnityEngine.Mathf.Clamp(scrollY, 0, maxScroll);
+
+      _scrollView.scrollOffset = new Vector2(0, scrollY);
     }
   }
 }
