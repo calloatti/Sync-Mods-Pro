@@ -138,6 +138,11 @@ namespace Calloatti.SyncModsPro
         _rootElement.styleSheets.Add(commonStyle);
       }
 
+      // --- THE LOGICAL APPROACH ---
+      // We wrap the Main Window and the Side Dock together. 
+      // The Root Element centers this wrapper perfectly.
+      VisualElement alignmentWrapper = new VisualElement();
+
       // 2. Main Window (Native NineSlice Implementation)
       _mainWindow = new NineSliceVisualElement();
       _mainWindow.AddToClassList("content-centered");
@@ -271,14 +276,25 @@ namespace Calloatti.SyncModsPro
       _mainWindow.Add(closeButton);
       closeButton.RegisterCallback<ClickEvent>(evt => OnUICancelled());
 
-      _rootElement.Add(_mainWindow);
+      alignmentWrapper.Add(_mainWindow);
 
-      // 3. Bottom Dock (Native NineSlice Implementation)
+      // 3. Side Dock Wrapper (Absolute Positioning for Vertical Centering)
+      VisualElement absoluteRightContainer = new VisualElement();
+      absoluteRightContainer.style.position = Position.Absolute;
+      absoluteRightContainer.style.left = Length.Percent(100); // Anchor perfectly to the right edge
+      absoluteRightContainer.style.top = 0f;
+      absoluteRightContainer.style.bottom = 0f; // Forces container to match main window height
+      absoluteRightContainer.style.marginLeft = 10f; // Visual gap
+      absoluteRightContainer.style.flexDirection = FlexDirection.Column;
+      absoluteRightContainer.style.justifyContent = Justify.Center; // Vertically center the inner dock!
+
+      // Inner Dock (Maintains strict height)
       _bottomDock = new NineSliceVisualElement();
-      _bottomDock.AddToClassList("content-row-centered--no-grow");
+      _bottomDock.style.flexDirection = FlexDirection.Column;
+      _bottomDock.style.justifyContent = Justify.Center;
+      _bottomDock.style.alignItems = Align.Center;
       _bottomDock.AddToClassList("sliced-border");
       _bottomDock.AddToClassList("sliced-border--nontransparent");
-      _bottomDock.style.marginTop = 10f;
       _bottomDock.style.paddingTop = 36f;
       _bottomDock.style.paddingBottom = 36f;
       _bottomDock.style.paddingLeft = 36f;
@@ -289,26 +305,35 @@ namespace Calloatti.SyncModsPro
       _btnMain = new NineSliceButton { text = "Mods List" };
       _btnMain.RegisterCallback<ClickEvent>(evt => SwitchView(0));
       ApplyStandardButtonStyles(_btnMain);
-      _btnMain.style.marginLeft = 5f;
-      _btnMain.style.marginRight = 5f;
+      _btnMain.style.marginTop = 5f;
+      _btnMain.style.marginBottom = 5f;
+      _btnMain.style.marginLeft = 0f;
+      _btnMain.style.marginRight = 0f;
 
       _btnHistory = new NineSliceButton { text = "Steam History" };
       _btnHistory.RegisterCallback<ClickEvent>(evt => SwitchView(1));
       ApplyStandardButtonStyles(_btnHistory);
-      _btnHistory.style.marginLeft = 5f;
-      _btnHistory.style.marginRight = 5f;
+      _btnHistory.style.marginTop = 5f;
+      _btnHistory.style.marginBottom = 5f;
+      _btnHistory.style.marginLeft = 0f;
+      _btnHistory.style.marginRight = 0f;
 
       _btnAudit = new NineSliceButton { text = "Dependencies" };
       _btnAudit.RegisterCallback<ClickEvent>(evt => SwitchView(2));
       ApplyStandardButtonStyles(_btnAudit);
-      _btnAudit.style.marginLeft = 5f;
-      _btnAudit.style.marginRight = 5f;
+      _btnAudit.style.marginTop = 5f;
+      _btnAudit.style.marginBottom = 5f;
+      _btnAudit.style.marginLeft = 0f;
+      _btnAudit.style.marginRight = 0f;
 
       _bottomDock.Add(_btnMain);
-      _bottomDock.Add(_btnHistory);
       _bottomDock.Add(_btnAudit);
+      _bottomDock.Add(_btnHistory);
 
-      _rootElement.Add(_bottomDock);
+      absoluteRightContainer.Add(_bottomDock);
+      alignmentWrapper.Add(absoluteRightContainer);
+
+      _rootElement.Add(alignmentWrapper);
 
       ApplyFilters();
       UpdateEnabledStats();
