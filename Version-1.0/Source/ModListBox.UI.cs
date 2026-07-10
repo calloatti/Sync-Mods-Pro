@@ -35,8 +35,8 @@ namespace Calloatti.SyncModsPro
     private List<RowUIElements> _orderedRows = new List<RowUIElements>();
 
     private HashSet<ModStatus> _activeFilters = new HashSet<ModStatus>();
-    private bool _filterBySavedEnabled = false;
-    private Toggle _enabledStatsToggle;
+    private bool _filterByTargetState = false;
+    private Toggle _filterByTargetStateToggle;
     private Dictionary<ModStatus, Toggle> _statusFilterToggles = new Dictionary<ModStatus, Toggle>();
 
     private class RowUIElements
@@ -51,7 +51,7 @@ namespace Calloatti.SyncModsPro
 
     private void UpdateEnabledStats()
     {
-      if (_enabledStatsToggle == null) return;
+      if (_filterByTargetStateToggle == null) return;
 
       int savedEnabledCount = 0;
       int targetEnabledCount = 0;
@@ -74,7 +74,7 @@ namespace Calloatti.SyncModsPro
       }
 
       // Update the main enabled stats toggle
-      _enabledStatsToggle.text = $"Mods ({savedEnabledCount}/{targetEnabledCount})";
+      _filterByTargetStateToggle.text = $"Mods ({targetEnabledCount}/{savedEnabledCount})";
 
       // Update the specific status filter toggles in the top bar
       foreach (var kvp in _statusFilterToggles)
@@ -82,11 +82,7 @@ namespace Calloatti.SyncModsPro
         string locKey = $"Calloatti.SyncModsPro.Status.{kvp.Key}";
         string labelText = _loc.T(locKey);
 
-        // Hide the count for Match to reduce UI noise
-        if (kvp.Key != ModStatus.Match)
-        {
-          labelText += $" ({dynamicStatusCounts[kvp.Key]})";
-        }
+        labelText += $" ({dynamicStatusCounts[kvp.Key]})";
 
         kvp.Value.text = labelText;
       }
@@ -94,15 +90,28 @@ namespace Calloatti.SyncModsPro
       // --- NEW LABEL LOGIC INJECTION ---
       if (_syncWarningLabel != null)
       {
-        // If every single loaded row has reached the "Match" status
+        // 1. Perfect Match (Ready to go)
         if (dynamicStatusCounts[ModStatus.Match] == _orderedRows.Count)
         {
-          _syncWarningLabel.text = "Mod list matches the save file. Ready to load!";
+          _syncWarningLabel.text = "Mod list matches the save file. Ready to [Load Game].";
           _syncWarningLabel.style.color = new StyleColor(new Color(0.9f, 0.9f, 0.9f)); // Default white/grey
         }
+        // 2. Only deviations are Missing mods (Nothing left to sync)
+        else if (dynamicStatusCounts[ModStatus.Match] + dynamicStatusCounts[ModStatus.Missing] == _orderedRows.Count)
+        {
+          _syncWarningLabel.text = "Some mods are missing. Syncing won't fix this, but you can [Load Game] anyway.";
+          _syncWarningLabel.style.color = new StyleColor(new Color(0.9f, 0.5f, 0.1f)); // Orange
+        }
+        // 3. Mixed State (They need to sync, BUT they also have missing mods)
+        else if (dynamicStatusCounts[ModStatus.Missing] > 0)
+        {
+          _syncWarningLabel.text = "[Sync] and [Restart] the game. Syncing won't fix missing mods.";
+          _syncWarningLabel.style.color = new StyleColor(new Color(0.9f, 0.3f, 0.3f)); // Slightly softer red
+        }
+        // 4. Standard pending sync (No missing mods)
         else
         {
-          _syncWarningLabel.text = "Click Sync button and then restart the game";
+          _syncWarningLabel.text = "[Sync] and [Restart] the game.";
           _syncWarningLabel.style.color = new StyleColor(new Color(0.9f, 0.2f, 0.2f)); // Red
         }
       }
@@ -165,7 +174,6 @@ namespace Calloatti.SyncModsPro
 
       var masterStatuses = new Dictionary<string, ModStatus>
       {
-        { "Calloatti.SyncModsPro.Status.Match", ModStatus.Match },
         { "Calloatti.SyncModsPro.Status.Disabled", ModStatus.Disabled },
         { "Calloatti.SyncModsPro.Status.Missing", ModStatus.Missing },
         { "Calloatti.SyncModsPro.Status.New", ModStatus.New },
@@ -197,12 +205,10 @@ namespace Calloatti.SyncModsPro
 
         // Only append the count if it is NOT the Match status
         string labelText = _loc.T(statusKey);
-        if (targetStatus != ModStatus.Match)
-        {
-          labelText += $" ({staticCounts[targetStatus]})";
-        }
-        statusToggle.text = labelText;
 
+        labelText += $" ({staticCounts[targetStatus]})";
+   
+        statusToggle.text = labelText;
 
         statusToggle.SetValueWithoutNotify(false);
 
@@ -213,12 +219,12 @@ namespace Calloatti.SyncModsPro
             _activeFilters.Add(targetStatus);
 
             // Mutually Exclusive: Turn off the main Mods toggle if any status is checked
-            if (_filterBySavedEnabled)
+            if (_filterByTargetState)
             {
-              _filterBySavedEnabled = false;
-              if (_enabledStatsToggle != null)
+              _filterByTargetState = false;
+              if (_filterByTargetStateToggle != null)
               {
-                _enabledStatsToggle.SetValueWithoutNotify(false);
+                _filterByTargetStateToggle.SetValueWithoutNotify(false);
               }
             }
           }
@@ -234,15 +240,15 @@ namespace Calloatti.SyncModsPro
         filtersContainer.Add(statusToggle);
       }
 
-      _enabledStatsToggle = new Toggle();
-      _enabledStatsToggle.AddToClassList("game-toggle");
-      _enabledStatsToggle.style.scale = new StyleScale(new Vector2(0.923f, 0.923f));
-      _enabledStatsToggle.style.marginLeft = 4;
-      _enabledStatsToggle.style.fontSize = 13;
-      _enabledStatsToggle.SetValueWithoutNotify(false);
-      _enabledStatsToggle.RegisterValueChangedCallback(evt =>
+      _filterByTargetStateToggle = new Toggle();
+      _filterByTargetStateToggle.AddToClassList("game-toggle");
+      _filterByTargetStateToggle.style.scale = new StyleScale(new Vector2(0.923f, 0.923f));
+      _filterByTargetStateToggle.style.marginLeft = 4;
+      _filterByTargetStateToggle.style.fontSize = 13;
+      _filterByTargetStateToggle.SetValueWithoutNotify(false);
+      _filterByTargetStateToggle.RegisterValueChangedCallback(evt =>
       {
-        _filterBySavedEnabled = evt.newValue;
+        _filterByTargetState = evt.newValue;
 
         if (evt.newValue)
         {
@@ -257,7 +263,7 @@ namespace Calloatti.SyncModsPro
         ApplyFilters();
       });
 
-      filtersContainer.Add(_enabledStatsToggle);
+      filtersContainer.Add(_filterByTargetStateToggle);
       topBar.Add(filtersContainer);
       return topBar;
     }
@@ -268,21 +274,38 @@ namespace Calloatti.SyncModsPro
 
       foreach (var rowUI in _orderedRows)
       {
-        bool matchesStatus = !hasStatusFilter || _activeFilters.Contains(rowUI.Data.Status);
+        bool isVisible = false;
 
-        // Unraveled logic: 
-        // Match/Restart -> SavedState == TargetState
-        // New -> SavedState == Disabled AND TargetState == Enabled
-        bool matchesEnabled = !_filterBySavedEnabled ||
-                              rowUI.Data.SavedState == rowUI.Data.TargetState ||
-                              (rowUI.Data.SavedState == ModState.Disabled && rowUI.Data.TargetState == ModState.Enabled);
-
-        bool isVisible = matchesStatus && matchesEnabled;
+        if (_filterByTargetState)
+        {
+          if (rowUI.Data.TargetState == ModState.Enabled || rowUI.Data.CurrentState == ModState.Missing)
+          {
+            isVisible = true;
+          }
+        }
+        else
+        {
+          if (!hasStatusFilter)
+          {
+            isVisible = true;
+          }
+          else if (_activeFilters.Contains(rowUI.Data.Status))
+          {
+            isVisible = true;
+          }
+        }
 
         if (isVisible)
         {
           rowUI.Root.style.display = DisplayStyle.Flex;
-          rowUI.Root.style.backgroundColor = new StyleColor(visibleCount % 2 == 0 ? BgEvenRow : BgOddRow);
+          if (visibleCount % 2 == 0)
+          {
+            rowUI.Root.style.backgroundColor = new StyleColor(BgEvenRow);
+          }
+          else
+          {
+            rowUI.Root.style.backgroundColor = new StyleColor(BgOddRow);
+          }
           visibleCount++;
         }
         else
@@ -451,7 +474,14 @@ namespace Calloatti.SyncModsPro
       else
       {
         row.style.height = DataRowHeight;
-        row.style.backgroundColor = new StyleColor(isEven ? BgEvenRow : BgOddRow);
+        if (isEven)
+        {
+          row.style.backgroundColor = new StyleColor(BgEvenRow);
+        }
+        else
+        {
+          row.style.backgroundColor = new StyleColor(BgOddRow);
+        }
 
         VisualElement iconColumnContainer = new VisualElement();
         iconColumnContainer.style.width = IconWidth;
@@ -576,7 +606,14 @@ namespace Calloatti.SyncModsPro
             bool isEnabling = evt.newValue;
 
             data.AutoEnabledBy.Clear();
-            data.TargetState = isEnabling ? ModState.Enabled : ModState.Disabled;
+            if (isEnabling)
+            {
+              data.TargetState = ModState.Enabled;
+            }
+            else
+            {
+              data.TargetState = ModState.Disabled;
+            }
 
             // Instantly repaint this specific row's status and color
             RepaintRow(rowElements);
@@ -631,7 +668,14 @@ namespace Calloatti.SyncModsPro
       if (!isHeader)
       {
         row.style.height = DataRowHeight;
-        row.style.backgroundColor = new StyleColor(isEven ? BgEvenRow : BgOddRow);
+        if (isEven)
+        {
+          row.style.backgroundColor = new StyleColor(BgEvenRow);
+        }
+        else
+        {
+          row.style.backgroundColor = new StyleColor(BgOddRow);
+        }
 
         Color storedRowColor = Color.clear;
         Color highlightColor = new Color(0.3f, 0.5f, 0.7f, 0.3f);

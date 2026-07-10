@@ -120,7 +120,7 @@ namespace Calloatti.SyncModsPro
       _orderedRows.Clear();
       _activeFilters.Clear();
       _isStrictOn = true;
-      _filterBySavedEnabled = false;
+      _filterByTargetState = false;
 
       int calculatedTotalWidth = GetTotalTableWidth();
 
@@ -314,6 +314,25 @@ namespace Calloatti.SyncModsPro
       UpdateEnabledStats();
 
       SwitchView(0);
+
+      // Give the new controller the container, the raw list, and the tab button. It handles the rest.
+      new DependencyViewController(_loc).Initialize(_dependencyView, modTable, _btnAudit);
+
+      // --- ADDED: Dynamic Size Matcher ---
+      // This waits for Unity to finish calculating the layout math, 
+      // then forces the other panels to match the exact dimensions of the Main View.
+      _mainView.RegisterCallback<GeometryChangedEvent>(evt =>
+      {
+        if (evt.newRect.height > 0 && evt.newRect.width > 0)
+        {
+          _historyView.style.height = evt.newRect.height;
+          _historyView.style.width = evt.newRect.width;
+
+          _dependencyView.style.height = evt.newRect.height;
+          _dependencyView.style.width = evt.newRect.width;
+        }
+      });
+      // -----------------------------------
 
       return _rootElement;
     }

@@ -41,6 +41,7 @@ namespace Calloatti.SyncModsPro
     public ModState CurrentState { get; set; }
     public ModState SavedState { get; set; }
     public ModState TargetState { get; set; }
+    public ModState SyncState { get; set; }
 
     public ModStatus Status { get; set; }
 
