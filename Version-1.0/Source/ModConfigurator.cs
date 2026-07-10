@@ -11,6 +11,8 @@ namespace Calloatti.SyncModsPro
     {
       Bind<MainMenuPanelPatchInitializer>().AsSingleton();
       Bind<ModListBox>().AsSingleton();
+      Bind<WorkshopIdManager>().AsSingleton();
+      Bind<WorkshopManager>().AsSingleton();
     }
   }
 }

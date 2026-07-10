@@ -53,7 +53,7 @@ namespace Calloatti.SyncModsPro
           computedVersionFolder = $"{mod.ModDirectory.OriginName}\\{mod.ModDirectory.Directory.Name}";
         }
 
-        string computedSteamId = ModSteamIdHelper.GetSteamId(mod);
+        string computedSteamId = _workshopIdManager.GetSteamId(mod);
         ModSource originValue = mod.ModDirectory.IsUserMod ? ModSource.Local : ModSource.Steam;
 
         entries.Add(new ModRecord
@@ -94,7 +94,7 @@ namespace Calloatti.SyncModsPro
         {
           if (!foundSavedModIds.Contains(savedMod.Id))
           {
-            string computedSteamId = ModSteamIdHelper.GetSteamId(savedMod.Id);
+            string computedSteamId = _workshopIdManager.GetSteamId(savedMod.Id);
             entries.Add(new ModRecord
             {
               UniqueRowKey = savedMod.Id,

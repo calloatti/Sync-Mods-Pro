@@ -46,10 +46,12 @@ namespace Calloatti.SyncModsPro
     private readonly ValidatingGameLoader _validatingGameLoader;
     private readonly PanelStack _panelStack;
     private readonly KeyboardListener _keyboardListener;
+    private readonly WorkshopManager _workshopManager;      // NEW
+    private readonly WorkshopIdManager _workshopIdManager;  // NEW
 
     private Label _syncWarningLabel;
 
-    public ModListBox(ILoc loc, ModRepository modRepository, DialogBoxShower dialogBoxShower, GameSceneLoader gameSceneLoader, GameSaveRepository gameSaveRepository, ValidatingGameLoader validatingGameLoader, PanelStack panelStack, KeyboardListener keyboardListener)
+    public ModListBox(ILoc loc, ModRepository modRepository, DialogBoxShower dialogBoxShower, GameSceneLoader gameSceneLoader, GameSaveRepository gameSaveRepository, ValidatingGameLoader validatingGameLoader, PanelStack panelStack, KeyboardListener keyboardListener, WorkshopManager workshopManager, WorkshopIdManager workshopIdManager)
     {
       _loc = loc;
       _modRepository = modRepository;
@@ -59,8 +61,9 @@ namespace Calloatti.SyncModsPro
       _validatingGameLoader = validatingGameLoader;
       _panelStack = panelStack;
       _keyboardListener = keyboardListener;
+      _workshopManager = workshopManager;       // NEW
+      _workshopIdManager = workshopIdManager;   // NEW
     }
-
     public void Load()
     {
       Instance = this;
@@ -342,6 +345,8 @@ namespace Calloatti.SyncModsPro
 
       // Give the new controller the container, the raw list, and the tab button. It handles the rest.
       new DependencyViewController(_loc).Initialize(_dependencyView, modTable, _btnAudit);
+
+      new WorkshopViewController(_loc, _workshopManager).Initialize(_historyView, modTable, _btnHistory);
 
       // --- ADDED: Dynamic Size Matcher ---
       // This waits for Unity to finish calculating the layout math, 

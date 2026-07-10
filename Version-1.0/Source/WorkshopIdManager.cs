@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using Timberborn.Modding;
+using Timberborn.SingletonSystem;
 using UnityEngine;
 
 namespace Calloatti.SyncModsPro
@@ -22,15 +24,12 @@ namespace Calloatti.SyncModsPro
     public string OptionalModsMinimumVersion { get; set; }
   }
 
-  public static class RosettaDatabase
+  public class WorkshopIdManager : ILoadableSingleton
   {
-    private static readonly List<RosettaEntry> _entries = new List<RosettaEntry>();
-    private static bool _isLoaded = false;
+    private readonly List<RosettaEntry> _entries = new List<RosettaEntry>();
 
-    private static void EnsureLoaded()
+    public void Load()
     {
-      if (_isLoaded) return;
-
       _entries.Clear();
 
       try
@@ -41,7 +40,6 @@ namespace Calloatti.SyncModsPro
         {
           string[] lines = File.ReadAllLines(rosettaPath);
 
-          // Skip the first line (header)
           for (int i = 1; i < lines.Length; i++)
           {
             string line = lines[i];
@@ -49,8 +47,6 @@ namespace Calloatti.SyncModsPro
 
             string[] parts = line.Split('\t');
 
-            // Map parts to the entry, checking length to avoid IndexOutOfRangeException 
-            // if trailing tabs are missing on empty columns.
             RosettaEntry entry = new RosettaEntry
             {
               PublishedFileID = parts.Length > 0 ? parts[0].Trim() : "",
@@ -68,7 +64,6 @@ namespace Calloatti.SyncModsPro
 
             _entries.Add(entry);
           }
-          _isLoaded = true;
         }
         else
         {
@@ -81,31 +76,78 @@ namespace Calloatti.SyncModsPro
       }
     }
 
-    /// <summary>
-    /// Returns all parsed entries allowing you to run custom LINQ queries against the Rosetta data.
-    /// </summary>
-    public static IReadOnlyList<RosettaEntry> GetAllEntries()
+    public IReadOnlyList<RosettaEntry> GetAllEntries()
     {
-      EnsureLoaded();
       return _entries.AsReadOnly();
     }
 
-    /// <summary>
-    /// Returns the Steam ID (PublishedFileID) of the mod that is most compatible with the current game version.
-    /// If no strictly compatible version is found, falls back to returning the Steam ID of the highest version available.
-    /// </summary>
-    public static string GetMostCompatibleSteamId(string modId)
+    public string GetSteamId(Mod mod)
     {
-      EnsureLoaded();
+      if (mod == null || mod.Manifest == null) return null;
+      string modId = mod.Manifest.Id;
 
+      if (!mod.ModDirectory.IsUserMod)
+      {
+        if (ulong.TryParse(mod.ModDirectory.OriginName, out _))
+        {
+          return mod.ModDirectory.OriginName;
+        }
+      }
+
+      string originPath = mod.ModDirectory.OriginPath ?? "";
+      string versionPath = mod.ModDirectory.Path ?? "";
+
+      List<string> potentialWorkshopPaths = new List<string>();
+      if (!string.IsNullOrEmpty(originPath)) potentialWorkshopPaths.Add(Path.Combine(originPath, "workshop_data.json"));
+      if (!string.IsNullOrEmpty(versionPath)) potentialWorkshopPaths.Add(Path.Combine(versionPath, "workshop_data.json"));
+
+      foreach (string wsPath in potentialWorkshopPaths)
+      {
+        if (File.Exists(wsPath))
+        {
+          try
+          {
+            string content = File.ReadAllText(wsPath);
+            JObject json = JObject.Parse(content);
+            JToken token = json.GetValue("ItemId", StringComparison.OrdinalIgnoreCase);
+
+            if (token != null && token.Type != JTokenType.Null)
+            {
+              string parsedId = token.ToString();
+              if (!string.IsNullOrEmpty(parsedId) && parsedId != "0")
+              {
+                return parsedId;
+              }
+            }
+          }
+          catch (Exception e)
+          {
+            Debug.LogWarning($"[Calloatti.SyncModsPro] Mod '{modId}': Error parsing workshop_data.json at '{wsPath}': {e.Message}");
+          }
+        }
+      }
+
+      if (!string.IsNullOrEmpty(modId))
+      {
+        return GetMostCompatibleSteamId(modId);
+      }
+
+      return null;
+    }
+
+    public string GetSteamId(string missingModId)
+    {
+      if (string.IsNullOrEmpty(missingModId)) return null;
+      return GetMostCompatibleSteamId(missingModId);
+    }
+
+    private string GetMostCompatibleSteamId(string modId)
+    {
       var allEntriesForMod = _entries
           .Where(e => e.Id.Equals(modId, StringComparison.OrdinalIgnoreCase))
           .ToList();
 
-      if (allEntriesForMod.Count == 0)
-      {
-        return null; // Mod doesn't exist in Rosetta
-      }
+      if (allEntriesForMod.Count == 0) return null;
 
       var currentGameVersion = Timberborn.Versioning.GameVersions.CurrentVersion;
 
@@ -120,16 +162,13 @@ namespace Calloatti.SyncModsPro
             }
             catch
             {
-              // Modder provided a malformed MinimumGameVersion string
               return false;
             }
           })
           .ToList();
 
-      // If we found compatible versions, sort those. Otherwise, sort all entries as a fallback.
       List<RosettaEntry> targetList = compatibleEntries.Count > 0 ? compatibleEntries : allEntriesForMod;
 
-      // Sort descending: highest MinimumGameVersion first
       targetList.Sort((a, b) =>
       {
         try
@@ -141,8 +180,8 @@ namespace Calloatti.SyncModsPro
           bool bGteA = verB.IsEqualOrHigherThan(verA);
 
           if (aGteB && bGteA) return 0;
-          if (aGteB) return -1; // a > b, so a comes first
-          return 1;             // b > a, so b comes first
+          if (aGteB) return -1;
+          return 1;
         }
         catch
         {

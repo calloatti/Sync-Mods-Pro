@@ -512,7 +512,7 @@ namespace Calloatti.SyncModsPro
 
             workshopIcon.RegisterCallback<ClickEvent>(evt =>
             {
-              this.HandleCloudIconClick(data.SteamId, data.ModName);
+              _workshopManager.PromptSubscriptionChange(data.SteamId, data.ModName);
             });
 
             iconColumnContainer.Add(workshopIcon);
