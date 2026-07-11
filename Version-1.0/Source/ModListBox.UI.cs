@@ -35,8 +35,11 @@ namespace Calloatti.SyncModsPro
     private List<RowUIElements> _orderedRows = new List<RowUIElements>();
 
     private HashSet<ModStatus> _activeFilters = new HashSet<ModStatus>();
-    private bool _filterByTargetState = false;
-    private Toggle _filterByTargetStateToggle;
+    private bool _filterChecked = false;
+    private bool _filterUnchecked = false;
+    private Toggle _filterCheckedToggle;
+    private Toggle _filterUncheckedToggle;
+    private Label _enabledStatsLabel;
     private Dictionary<ModStatus, Toggle> _statusFilterToggles = new Dictionary<ModStatus, Toggle>();
 
     private class RowUIElements
@@ -51,7 +54,7 @@ namespace Calloatti.SyncModsPro
 
     private void UpdateEnabledStats()
     {
-      if (_filterByTargetStateToggle == null) return;
+      if (_enabledStatsLabel == null) return;
 
       int savedEnabledCount = 0;
       int targetEnabledCount = 0;
@@ -73,8 +76,8 @@ namespace Calloatti.SyncModsPro
         dynamicStatusCounts[data.Status]++;
       }
 
-      // Update the main enabled stats toggle
-      _filterByTargetStateToggle.text = $"Mods ({targetEnabledCount}/{savedEnabledCount})";
+      // Update the main enabled stats label
+      _enabledStatsLabel.text = $"Mods ({targetEnabledCount}/{savedEnabledCount})";
 
       // Update the specific status filter toggles in the top bar
       foreach (var kvp in _statusFilterToggles)
@@ -82,7 +85,13 @@ namespace Calloatti.SyncModsPro
         string locKey = $"Calloatti.SyncModsPro.Status.{kvp.Key}";
         string labelText = _loc.T(locKey);
 
-        labelText += $" ({dynamicStatusCounts[kvp.Key]})";
+        // Retrieve the flag we saved into the dictionary -> toggle earlier
+        bool showCount = kvp.Value.userData is bool b && b;
+
+        if (showCount)
+        {
+          labelText += $" ({dynamicStatusCounts[kvp.Key]})";
+        }
 
         kvp.Value.text = labelText;
       }
@@ -172,11 +181,13 @@ namespace Calloatti.SyncModsPro
       filtersContainer.style.alignItems = Align.Center;
       filtersContainer.style.justifyContent = Justify.FlexEnd;
 
-      var masterStatuses = new Dictionary<string, ModStatus>
+      // CHANGED: Dictionary now maps to a Tuple containing the Status and the ShowCount flag
+      var masterStatuses = new Dictionary<string, (ModStatus Status, bool ShowCount)>
       {
-        { "Calloatti.SyncModsPro.Status.Disabled", ModStatus.Disabled },
-        { "Calloatti.SyncModsPro.Status.Missing", ModStatus.Missing },
-        { "Calloatti.SyncModsPro.Status.New", ModStatus.New },
+        { "Calloatti.SyncModsPro.Status.Restart", (ModStatus.Restart, false) },
+        { "Calloatti.SyncModsPro.Status.Disabled", (ModStatus.Disabled, true) },
+        { "Calloatti.SyncModsPro.Status.Missing", (ModStatus.Missing, true) },
+        { "Calloatti.SyncModsPro.Status.New", (ModStatus.New, true) },
       };
 
       Dictionary<ModStatus, int> staticCounts = new Dictionary<ModStatus, int>();
@@ -193,7 +204,8 @@ namespace Calloatti.SyncModsPro
       foreach (var kvp in masterStatuses)
       {
         string statusKey = kvp.Key;
-        ModStatus targetStatus = kvp.Value;
+        ModStatus targetStatus = kvp.Value.Status;
+        bool showCount = kvp.Value.ShowCount; // Extract the flag from the dictionary
 
         Toggle statusToggle = new Toggle();
         statusToggle.AddToClassList("game-toggle");
@@ -202,12 +214,16 @@ namespace Calloatti.SyncModsPro
         statusToggle.style.fontSize = 13;
         statusToggle.viewDataKey = statusKey;
 
+        // Store the flag on the UI element itself so UpdateEnabledStats can read it later
+        statusToggle.userData = showCount;
 
-        // Only append the count if it is NOT the Match status
         string labelText = _loc.T(statusKey);
 
-        labelText += $" ({staticCounts[targetStatus]})";
-   
+        if (showCount)
+        {
+          labelText += $" ({staticCounts[targetStatus]})";
+        }
+
         statusToggle.text = labelText;
 
         statusToggle.SetValueWithoutNotify(false);
@@ -218,14 +234,13 @@ namespace Calloatti.SyncModsPro
           {
             _activeFilters.Add(targetStatus);
 
-            // Mutually Exclusive: Turn off the main Mods toggle if any status is checked
-            if (_filterByTargetState)
+            // Mutually Exclusive: Turn off the Checked/Unchecked toggles if any status is checked
+            if (_filterChecked || _filterUnchecked)
             {
-              _filterByTargetState = false;
-              if (_filterByTargetStateToggle != null)
-              {
-                _filterByTargetStateToggle.SetValueWithoutNotify(false);
-              }
+              _filterChecked = false;
+              _filterUnchecked = false;
+              if (_filterCheckedToggle != null) _filterCheckedToggle.SetValueWithoutNotify(false);
+              if (_filterUncheckedToggle != null) _filterUncheckedToggle.SetValueWithoutNotify(false);
             }
           }
           else
@@ -240,19 +255,22 @@ namespace Calloatti.SyncModsPro
         filtersContainer.Add(statusToggle);
       }
 
-      _filterByTargetStateToggle = new Toggle();
-      _filterByTargetStateToggle.AddToClassList("game-toggle");
-      _filterByTargetStateToggle.style.scale = new StyleScale(new Vector2(0.923f, 0.923f));
-      _filterByTargetStateToggle.style.marginLeft = 4;
-      _filterByTargetStateToggle.style.fontSize = 13;
-      _filterByTargetStateToggle.SetValueWithoutNotify(false);
-      _filterByTargetStateToggle.RegisterValueChangedCallback(evt =>
+      _filterCheckedToggle = new Toggle();
+      _filterCheckedToggle.AddToClassList("game-toggle");
+      _filterCheckedToggle.style.scale = new StyleScale(new Vector2(0.923f, 0.923f));
+      _filterCheckedToggle.style.marginLeft = 4;
+      _filterCheckedToggle.style.fontSize = 13;
+      _filterCheckedToggle.text = "Checked";
+      _filterCheckedToggle.SetValueWithoutNotify(false);
+      _filterCheckedToggle.RegisterValueChangedCallback(evt =>
       {
-        _filterByTargetState = evt.newValue;
+        _filterChecked = evt.newValue;
 
         if (evt.newValue)
         {
-          // Mutually Exclusive: Turn off all status toggles if the main Mods toggle is checked
+          _filterUnchecked = false;
+          _filterUncheckedToggle.SetValueWithoutNotify(false);
+
           _activeFilters.Clear();
           foreach (var toggle in _statusFilterToggles.Values)
           {
@@ -263,7 +281,42 @@ namespace Calloatti.SyncModsPro
         ApplyFilters();
       });
 
-      filtersContainer.Add(_filterByTargetStateToggle);
+      _filterUncheckedToggle = new Toggle();
+      _filterUncheckedToggle.AddToClassList("game-toggle");
+      _filterUncheckedToggle.style.scale = new StyleScale(new Vector2(0.923f, 0.923f));
+      _filterUncheckedToggle.style.marginLeft = 4;
+      _filterUncheckedToggle.style.fontSize = 13;
+      _filterUncheckedToggle.text = "Unchecked";
+      _filterUncheckedToggle.SetValueWithoutNotify(false);
+      _filterUncheckedToggle.RegisterValueChangedCallback(evt =>
+      {
+        _filterUnchecked = evt.newValue;
+
+        if (evt.newValue)
+        {
+          _filterChecked = false;
+          _filterCheckedToggle.SetValueWithoutNotify(false);
+
+          _activeFilters.Clear();
+          foreach (var toggle in _statusFilterToggles.Values)
+          {
+            toggle.SetValueWithoutNotify(false);
+          }
+        }
+
+        ApplyFilters();
+      });
+
+      _enabledStatsLabel = new Label("Mods (0/0)");
+      _enabledStatsLabel.AddToClassList("text--default");
+      _enabledStatsLabel.style.fontSize = 12;
+      _enabledStatsLabel.style.marginLeft = 8;
+      _enabledStatsLabel.style.marginTop = 1;
+
+
+      filtersContainer.Add(_filterCheckedToggle);
+      filtersContainer.Add(_filterUncheckedToggle);
+      filtersContainer.Add(_enabledStatsLabel);
       topBar.Add(filtersContainer);
       return topBar;
     }
@@ -276,9 +329,16 @@ namespace Calloatti.SyncModsPro
       {
         bool isVisible = false;
 
-        if (_filterByTargetState)
+        if (_filterChecked)
         {
           if (rowUI.Data.TargetState == ModState.Enabled || rowUI.Data.CurrentState == ModState.Missing)
+          {
+            isVisible = true;
+          }
+        }
+        else if (_filterUnchecked)
+        {
+          if (rowUI.Data.TargetState == ModState.Disabled && rowUI.Data.CurrentState != ModState.Missing)
           {
             isVisible = true;
           }

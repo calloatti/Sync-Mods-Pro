@@ -75,13 +75,13 @@ namespace Calloatti.SyncModsPro
     private void HandleRestartClick()
     {
       Debug.Log("[SyncModsPro] Restart clicked.");
-      ModRestarter.RequestStandardRestart();
+      GameRestarter.RequestStandardRestart();
     }
 
     private void HandleRestartLoadClick()
     {
       Debug.Log("[SyncModsPro] Restart & Load clicked.");
-      ModRestarter.RequestRestartAndLoad(_currentSaveReference);
+      GameRestarter.RequestRestartAndLoad(_currentSaveReference);
     }
 
     private void HandleSaveLabelClick()

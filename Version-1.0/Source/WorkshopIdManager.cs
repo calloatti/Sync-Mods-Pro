@@ -36,7 +36,7 @@ namespace Calloatti.SyncModsPro
       try
       {
         string defaultRosettaPath = Path.Combine(ModStarter.ModPath, "rosetta.txt");
-        string rosettaPath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro_Rosetta.txt");
+        string rosettaPath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro.Rosetta.txt");
 
         if (!File.Exists(rosettaPath))
         {

@@ -47,7 +47,24 @@ namespace Calloatti.SyncModsPro
     {
       _loc = loc;
       _dialogBoxShower = dialogBoxShower;
-      _logFilePath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro_Workshop.log");
+
+      // Define both paths to handle migration
+      string oldLogFilePath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro_Workshop.log");
+      _logFilePath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro.Workshop.log");
+
+      // Backward compatibility check to seamlessly rename the file if it exists on disk
+      try
+      {
+        if (File.Exists(oldLogFilePath) && !File.Exists(_logFilePath))
+        {
+          File.Move(oldLogFilePath, _logFilePath);
+          Debug.Log($"[SyncModsPro] Successfully migrated workshop history file name to: '{_logFilePath}'");
+        }
+      }
+      catch (Exception ex)
+      {
+        Debug.LogWarning($"[SyncModsPro] Exception during workshop log migration: {ex.Message}");
+      }
     }
 
     private class TrackedWorkshopCall
@@ -139,7 +156,6 @@ namespace Calloatti.SyncModsPro
       try
       {
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        // Note: Removed the \n at the end because WriteAllLines adds newlines automatically
         string logEntry = $"[{timestamp}] {action} | {steamId} | {modName} | {result}";
 
         List<string> lines = new List<string>();
@@ -167,6 +183,7 @@ namespace Calloatti.SyncModsPro
         Debug.LogWarning($"[SyncModsPro] Failed to write to Workshop log: {e.Message}");
       }
     }
+
     private void OnSubscribeResult(RemoteStorageSubscribePublishedFileResult_t callback, bool ioFailure)
     {
       TrackedWorkshopCall matchingCall = _inFlightWorkshopCalls.Find(c =>

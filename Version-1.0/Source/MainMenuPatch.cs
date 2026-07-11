@@ -63,7 +63,7 @@ namespace Calloatti.SyncModsPro
       // 4. Click Event
       restartButton.RegisterCallback<ClickEvent>(evt => {
         UnityEngine.Debug.Log("SyncModsPro: Restarting...");
-        ModRestarter.RequestStandardRestart();
+        GameRestarter.RequestStandardRestart();
       });
 
       // 5. Inject and Compact

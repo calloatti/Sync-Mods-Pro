@@ -39,7 +39,7 @@ namespace Calloatti.SyncModsPro
         string targetUrl = "https://raw.githubusercontent.com/calloatti/Sync-Mods-Pro/refs/heads/main/Version-1.0/rosetta.txt";
 
         // Save directly to the player data folder as requested
-        string targetSavePath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro_Rosetta.txt");
+        string targetSavePath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro.Rosetta.txt");
 
         // Check if the file exists and is less than 8 hours old
         if (File.Exists(targetSavePath))

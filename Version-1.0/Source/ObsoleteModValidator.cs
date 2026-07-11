@@ -71,7 +71,7 @@ namespace Calloatti.SyncModsPro
           .SetMessage(message)
           .SetConfirmButton(() =>
           {
-            ModRestarter.RequestStandardRestart();
+            GameRestarter.RequestStandardRestart();
           }, _loc.T("Calloatti.SyncModsPro.Button.Restart"))
           .Show();
       }

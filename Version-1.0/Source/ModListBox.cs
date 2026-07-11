@@ -123,10 +123,14 @@ namespace Calloatti.SyncModsPro
       _orderedRows.Clear();
       _activeFilters.Clear();
       _isStrictOn = true;
-      _filterByTargetState = false;
+
+      // CHANGED: Replace _filterByTargetState with the new mutually exclusive variables
+      _filterChecked = false;
+      _filterUnchecked = false;
 
       int calculatedTotalWidth = GetTotalTableWidth();
 
+      // ... remainder of the method remains unchanged
       // 1. Transparent Root Wrapper
       _rootElement = new VisualElement();
       _rootElement.style.flexDirection = FlexDirection.Column;
