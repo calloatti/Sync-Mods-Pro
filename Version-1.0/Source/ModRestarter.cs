@@ -81,24 +81,22 @@ namespace Calloatti.SyncModsPro
         string argString = string.Join(" ", Array.ConvertAll(args, a => $"\"{a}\""));
 
         string psCommand = $"Wait-Process -Id {currentPid} -ErrorAction SilentlyContinue; & '{exePath}' {argString}";
-        LogDirect($"Piping PowerShell payload: {psCommand}");
+        LogDirect($"Encoding PowerShell payload to preserve formatting: {psCommand}");
+
+        // Convert command to Base64 (UTF-16LE) to safely bypass all Windows quote parsing rules
+        byte[] bytes = System.Text.Encoding.Unicode.GetBytes(psCommand);
+        string encodedCommand = Convert.ToBase64String(bytes);
 
         psi.FileName = "powershell.exe";
-        psi.Arguments = "-NoProfile -WindowStyle Hidden";
-        psi.RedirectStandardInput = true;
-        psi.UseShellExecute = false;
-        psi.CreateNoWindow = true;
+        psi.Arguments = $"-NoProfile -WindowStyle Hidden -EncodedCommand {encodedCommand}";
+        psi.RedirectStandardInput = false;
+        psi.UseShellExecute = true; // Forces OS-level execution context to fix MyDocuments
+        psi.WindowStyle = ProcessWindowStyle.Hidden;
+        psi.WorkingDirectory = rootPath; // Locks the environment to the game root
 
         try
         {
-          Process p = Process.Start(psi);
-          using (StreamWriter sw = p.StandardInput)
-          {
-            if (sw.BaseStream.CanWrite)
-            {
-              sw.WriteLine(psCommand);
-            }
-          }
+          Process.Start(psi);
           LogDirect("PowerShell background process successfully deployed.");
         }
         catch (Exception ex)

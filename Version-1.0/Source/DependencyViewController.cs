@@ -29,6 +29,21 @@ namespace Calloatti.SyncModsPro
     {
       _root.Clear();
 
+      // --- NEW TITLE PANEL INJECTION ---
+      VisualElement titleBar = new VisualElement();
+      titleBar.style.flexDirection = FlexDirection.Row;
+      titleBar.style.alignItems = Align.Center;
+      titleBar.style.marginBottom = 20f;
+      titleBar.style.marginTop = 0f;
+
+      Label panelTitleLabel = new Label("Mod Dependency Matrices & Issues");
+      panelTitleLabel.AddToClassList("text--default");
+      panelTitleLabel.style.unityFontStyleAndWeight = FontStyle.Normal;
+      panelTitleLabel.style.marginLeft = 20;
+      titleBar.Add(panelTitleLabel);
+      _root.Add(titleBar);
+      // ---------------------------------
+
       // Pre-sort the entire master list alphabetically by ModName
       List<ModRecord> sortedMods = _allMods.OrderBy(m => m.ModName).ToList();
 
@@ -138,7 +153,7 @@ namespace Calloatti.SyncModsPro
         noDepsLeft.style.color = new StyleColor(new Color(0.6f, 0.6f, 0.6f));
         noDepsLeft.style.fontSize = 12;
         noDepsLeft.style.marginTop = 15;
-        leftCol.Add(noDepsLeft);
+        leftCol.Add(noDepsLeft); // Fixed variable reference here
       }
 
       // 3. Gather all valid mods for the Middle Column (Only Missing Dependencies + Mods Required By Others)
@@ -199,7 +214,6 @@ namespace Calloatti.SyncModsPro
           middleHeaderRow.Add(suffixLabel);
           middleCol.Add(middleHeaderRow);
 
-          // We know this key exists because middleColModIds is built strictly from dependentsMap.Keys
           if (dependentsMap.ContainsKey(targetId))
           {
             // Sort the sub-list alphabetically before printing
@@ -235,7 +249,6 @@ namespace Calloatti.SyncModsPro
       // 4. Build the Right Column (Issues & Health Check Grouped by Dependency)
       bool hasIssues = false;
 
-      // Iterate through all known dependencies in the reverse lookup map
       List<string> sortedReqIds = dependentsMap.Keys.ToList();
       sortedReqIds.Sort((a, b) =>
       {
@@ -250,13 +263,11 @@ namespace Calloatti.SyncModsPro
       {
         ModRecord reqMod = sortedMods.Find(r => r.ModId == reqId && r.Source != ModSource.Missing && r.DupStatus != 0);
 
-        // If the dependency is already enabled, there is no issue here.
         if (reqMod != null && reqMod.TargetState == ModState.Enabled)
         {
           continue;
         }
 
-        // The dependency is missing or disabled. Let's see if any ENABLED mod requires it.
         List<ModRecord> enabledDependents = new List<ModRecord>();
         foreach (var dep in dependentsMap[reqId])
         {
@@ -266,7 +277,6 @@ namespace Calloatti.SyncModsPro
           }
         }
 
-        // If at least one enabled mod needs this missing/disabled dependency, we flag an issue
         if (enabledDependents.Count > 0)
         {
           hasIssues = true;
@@ -276,7 +286,7 @@ namespace Calloatti.SyncModsPro
 
           string reqName = reqMod != null ? reqMod.ModName : reqId;
           string actionVerb = reqMod != null ? "Enable" : "Missing";
-          Color actionColor = reqMod != null ? new Color(0.9f, 0.9f, 0.2f) : new Color(0.9f, 0.5f, 0.1f); // Yellow for Enable, Orange for Missing
+          Color actionColor = reqMod != null ? new Color(0.9f, 0.9f, 0.2f) : new Color(0.9f, 0.5f, 0.1f);
 
           Label titleLabel = new Label($"[{actionVerb}] {reqName} required by:");
           titleLabel.AddToClassList("text--default");
@@ -284,14 +294,13 @@ namespace Calloatti.SyncModsPro
           titleLabel.style.fontSize = 12;
           issueBlock.Add(titleLabel);
 
-          // Sort the enabled dependents alphabetically
           enabledDependents = enabledDependents.OrderBy(m => m.ModName).ToList();
 
           foreach (var ed in enabledDependents)
           {
             Label l = new Label($"↳ {ed.ModName}");
             l.AddToClassList("text--default");
-            l.style.color = new StyleColor(new Color(0.9f, 0.2f, 0.2f)); // Red context to show the dependent mod is broken
+            l.style.color = new StyleColor(new Color(0.9f, 0.2f, 0.2f));
             l.style.fontSize = 12;
             l.style.marginLeft = 15;
             issueBlock.Add(l);
@@ -305,7 +314,7 @@ namespace Calloatti.SyncModsPro
       {
         Label okLabel = new Label("Everything looks OK!\nNo dependency issues found.");
         okLabel.AddToClassList("text--default");
-        okLabel.style.color = new StyleColor(new Color(0.2f, 0.8f, 0.2f)); // Green
+        okLabel.style.color = new StyleColor(new Color(0.2f, 0.8f, 0.2f));
         okLabel.style.fontSize = 12;
         okLabel.style.marginTop = 15;
         rightCol.Add(okLabel);
@@ -325,7 +334,6 @@ namespace Calloatti.SyncModsPro
     {
       if (mod.RequiredMods == null) return;
 
-      // Sort the dependencies alphabetically by ID before digging deeper
       var sortedReqs = mod.RequiredMods.OrderBy(r => r.Id).ToList();
 
       foreach (var req in sortedReqs)
@@ -350,7 +358,7 @@ namespace Calloatti.SyncModsPro
         Color statusColor;
         if (!activeContext)
         {
-          statusColor = new Color(0.6f, 0.6f, 0.6f); // Neutral grey if the parent mod isn't active
+          statusColor = new Color(0.6f, 0.6f, 0.6f);
         }
         else
         {

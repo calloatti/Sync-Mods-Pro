@@ -9,7 +9,7 @@ namespace Calloatti.SyncModsPro
   public partial class ModListBox
   {
     // --- DEBUG CONFIGURATION FLAG ---
-    private static readonly bool _debugMode = true;
+    private static readonly bool _debugMode = false;
 
     private void ExportModObjectDiagnostics(Mod mod)
     {

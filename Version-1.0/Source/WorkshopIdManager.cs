@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Timberborn.Modding;
+using Timberborn.PlayerDataSystem;
 using Timberborn.SingletonSystem;
 using UnityEngine;
 
@@ -34,7 +35,16 @@ namespace Calloatti.SyncModsPro
 
       try
       {
-        string rosettaPath = Path.Combine(ModStarter.ModPath, "rosetta.txt");
+        string defaultRosettaPath = Path.Combine(ModStarter.ModPath, "rosetta.txt");
+        string rosettaPath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro_Rosetta.txt");
+
+        if (!File.Exists(rosettaPath))
+        {
+          if (File.Exists(defaultRosettaPath))
+          {
+            File.Copy(defaultRosettaPath, rosettaPath);
+          }
+        }
 
         if (File.Exists(rosettaPath))
         {

@@ -36,6 +36,21 @@ namespace Calloatti.SyncModsPro
       if (_root == null) return;
       _root.Clear();
 
+      // --- NEW TITLE PANEL INJECTION ---
+      VisualElement titleBar = new VisualElement();
+      titleBar.style.flexDirection = FlexDirection.Row;
+      titleBar.style.alignItems = Align.Center;
+      titleBar.style.marginBottom = 20f;
+      titleBar.style.marginTop = 0f;
+
+      Label panelTitleLabel = new Label("Steam Workshop History");
+      panelTitleLabel.AddToClassList("text--default");
+      panelTitleLabel.style.unityFontStyleAndWeight = FontStyle.Normal;
+      panelTitleLabel.style.marginLeft = 20;
+      titleBar.Add(panelTitleLabel);
+      _root.Add(titleBar);
+      // ---------------------------------
+
       List<WorkshopLogEntry> logEntries = _workshopManager.GetLogEntries();
 
       ScrollView scrollView = CreateScrollView();
@@ -56,8 +71,8 @@ namespace Calloatti.SyncModsPro
       headerRow.Add(CreateCell("Date/Time", 140, headerColor));
       headerRow.Add(CreateCell("Action", 100, headerColor));
       headerRow.Add(CreateCell("Steam ID", 90, headerColor));
-      headerRow.Add(CreateCell("Mod Name", 260, headerColor, true));
-      headerRow.Add(CreateCell("Result", 100, headerColor));
+      headerRow.Add(CreateCell("Mod Name", 160, headerColor, true));
+      headerRow.Add(CreateCell("Result", 240, headerColor));
       headerRow.Add(CreateCell("Manage", 160, headerColor));
 
       scrollView.Add(headerRow);
@@ -99,8 +114,8 @@ namespace Calloatti.SyncModsPro
           dataRow.Add(CreateCell(entry.Timestamp, 140, rowColor));
           dataRow.Add(CreateCell(entry.Action, 100, rowColor));
           dataRow.Add(CreateCell(entry.SteamId, 90, rowColor));
-          dataRow.Add(CreateCell(entry.ModName, 260, rowColor, true));
-          dataRow.Add(CreateCell(entry.Result, 100, resultColor));
+          dataRow.Add(CreateCell(entry.ModName, 160, rowColor, true));
+          dataRow.Add(CreateCell(entry.Result, 240, resultColor));
 
           VisualElement buttonContainer = new VisualElement();
           buttonContainer.style.width = 160;
@@ -120,8 +135,6 @@ namespace Calloatti.SyncModsPro
             actionBtn.style.maxWidth = 150;
             actionBtn.style.overflow = Overflow.Hidden;
             actionBtn.style.textOverflow = TextOverflow.Ellipsis;
-            //actionBtn.style.height = 25;
-            //actionBtn.style.width = 100;
             actionBtn.style.fontSize = 12;
             actionBtn.style.marginTop = 0;
             actionBtn.style.marginBottom = 0;

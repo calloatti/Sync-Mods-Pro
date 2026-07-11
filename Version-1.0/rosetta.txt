@@ -1568,7 +1568,7 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3729984713	TankEvaporation		Tank Evaporation	Tank Evaporation	1.0.2	1.0.0.0	Harmony			
 3729984713	TankEvaporation		Tank Evaporation	Tank Evaporation	1.0.2	1.0.0.0	eMka.ModSettings			
 3729986914	Redic.Punktails		PunkTails [ModContest1]	PunkTails [ModContest1]	0.1	1.0.0.0				
-3730008369	Modcontest1_market		ModContest1_Market	[ModContest1] Market	1.0	1.0.0.0				
+3730008369	Modcontest1_market		ModContest1_Market	ModContest1_Market	1.0	1.0.0.0				
 3730009785	RuthlessTex.ModMenu		Mod Menu [ModContest1]	Mod Menu [ModContest1]	0.2.6	1.0.13.0				
 3730111049	RuthlessTex.MainMenu		Main Menu [ModContest1]	Main Menu [ModContest1]	0.1.0	1.0.13.0				
 3730119803	WaterPhysicsMod		Water Physics Mod	Water Physics Mod [ModContest1]	1.0.0	0.6.0.0				
@@ -1647,3 +1647,11 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3756402916	Kerst.TaskPriorities		[TTM] Timberborn Task Manager	[TTM] Timberborn Task Manager	0.7.0	1.0.0.0				
 3756656421	T3MP		More More More Performance! (T3MP)	More More More Performance! (T3MP)	1.0.0	1.0.13.1	Harmony	2.4.1		
 3757116911	Cholleville.CasthordeExperimental		Casthorde (Experimental)	Casthorde (Experimental)	2.0.3	1.0.0.0	Harmony	2.4.1		
+3757263480	PopPerf.Profiler		Population Performance Profiler	Population Performance Profiler	1.0.0	1.0.0.0	Harmony			
+3757263480	PopPerf.Profiler		Population Performance Profiler	Population Performance Profiler	1.0.0	1.0.0.0	eMka.ModSettings			
+3759045354	BeaverChroniclesWaterfallEventPack	version-1.0	Beaver Chronicles Waterfall Event Pack	Beaver Chronicles Waterfall Event Pack	10.0.0	1.0.0	BeaverChronicles	10.1.0		
+3759045354	BeaverChroniclesWaterfallEventPack	version-1.1	Beaver Chronicles Waterfall Event Pack	Beaver Chronicles Waterfall Event Pack	11.0.0	1.1.0	BeaverChronicles	11.0.0		
+3760187852	calloatti.syncmodspro	Version-1.0	Sync Mods Pro	Sync Mods Pro	1.1.0	1.0.0.0	Harmony			
+3760937316	DisableHauling	version-1.1	Disable Hauling	Disable Hauling	11.0.0	1.1.0	ModdableTimberborn			
+3761295060	ConveyorBelt	version-1.1	Conveyor Belts	Conveyor Belts	11.1.1	1.1.0	ModdableTimberborn			
+3762391401	AllBuildingsTransferPower	version-1.1	All Buildings Transfer Power	All Buildings Transfer Power	11.0.0	1.1.0	ModdableTimberborn			
