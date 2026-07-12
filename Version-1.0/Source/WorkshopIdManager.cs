@@ -77,12 +77,12 @@ namespace Calloatti.SyncModsPro
         }
         else
         {
-          Debug.LogWarning($"[Calloatti.SyncModsPro] rosetta.txt not found at: '{rosettaPath}'.");
+          Debug.LogWarning($"[SyncModsPro] rosetta.txt not found at: '{rosettaPath}'.");
         }
       }
       catch (Exception e)
       {
-        Debug.LogWarning($"[Calloatti.SyncModsPro] Exception while loading rosetta.txt: {e.Message}");
+        Debug.LogWarning($"[SyncModsPro] Exception while loading rosetta.txt: {e.Message}");
       }
     }
 
@@ -96,6 +96,7 @@ namespace Calloatti.SyncModsPro
       if (mod == null || mod.Manifest == null) return null;
       string modId = mod.Manifest.Id;
 
+      // 1. Check if the folder name itself is the Steam ID
       if (!mod.ModDirectory.IsUserMod)
       {
         if (ulong.TryParse(mod.ModDirectory.OriginName, out _))
@@ -111,6 +112,7 @@ namespace Calloatti.SyncModsPro
       if (!string.IsNullOrEmpty(originPath)) potentialWorkshopPaths.Add(Path.Combine(originPath, "workshop_data.json"));
       if (!string.IsNullOrEmpty(versionPath)) potentialWorkshopPaths.Add(Path.Combine(versionPath, "workshop_data.json"));
 
+      // 2. Check local Steam workshop_data.json files
       foreach (string wsPath in potentialWorkshopPaths)
       {
         if (File.Exists(wsPath))
@@ -132,14 +134,15 @@ namespace Calloatti.SyncModsPro
           }
           catch (Exception e)
           {
-            Debug.LogWarning($"[Calloatti.SyncModsPro] Mod '{modId}': Error parsing workshop_data.json at '{wsPath}': {e.Message}");
+            Debug.LogWarning($"[SyncModsPro] Mod '{modId}': Error parsing workshop_data.json at '{wsPath}': {e.Message}");
           }
         }
       }
 
+      // 3. Fallback to Rosetta if all local physical checks fail
       if (!string.IsNullOrEmpty(modId))
       {
-        return GetMostCompatibleSteamId(modId);
+        return GetSteamIdFromRosetta(modId);
       }
 
       return null;
@@ -147,59 +150,34 @@ namespace Calloatti.SyncModsPro
 
     public string GetSteamId(string missingModId)
     {
+      // Missing mods have no physical files, so they immediately use Rosetta
       if (string.IsNullOrEmpty(missingModId)) return null;
-      return GetMostCompatibleSteamId(missingModId);
+      return GetSteamIdFromRosetta(missingModId);
     }
 
-    private string GetMostCompatibleSteamId(string modId)
+    public bool IsDuplicate(string modId)
     {
-      var allEntriesForMod = _entries
+      if (string.IsNullOrEmpty(modId)) return false;
+
+      var uniqueIds = _entries
           .Where(e => e.Id.Equals(modId, StringComparison.OrdinalIgnoreCase))
+          .Select(e => e.PublishedFileID)
+          .Distinct()
           .ToList();
 
-      if (allEntriesForMod.Count == 0) return null;
+      return uniqueIds.Count > 1;
+    }
 
-      var currentGameVersion = Timberborn.Versioning.GameVersions.CurrentVersion;
-
-      var compatibleEntries = allEntriesForMod
-          .Where(e =>
-          {
-            if (string.IsNullOrEmpty(e.MinimumGameVersion)) return false;
-            try
-            {
-              var minVer = Timberborn.Versioning.Version.Create(e.MinimumGameVersion);
-              return currentGameVersion.IsEqualOrHigherThan(minVer);
-            }
-            catch
-            {
-              return false;
-            }
-          })
-          .ToList();
-
-      List<RosettaEntry> targetList = compatibleEntries.Count > 0 ? compatibleEntries : allEntriesForMod;
-
-      targetList.Sort((a, b) =>
+    private string GetSteamIdFromRosetta(string modId)
+    {
+      if (IsDuplicate(modId))
       {
-        try
-        {
-          var verA = Timberborn.Versioning.Version.Create(a.MinimumGameVersion);
-          var verB = Timberborn.Versioning.Version.Create(b.MinimumGameVersion);
+        Debug.LogWarning($"[SyncModsPro] Warning: Auto sub/unsub disabled for '{modId}' due to multiple SteamIDs existing for this ModId.");
+        return null;
+      }
 
-          bool aGteB = verA.IsEqualOrHigherThan(verB);
-          bool bGteA = verB.IsEqualOrHigherThan(verA);
-
-          if (aGteB && bGteA) return 0;
-          if (aGteB) return -1;
-          return 1;
-        }
-        catch
-        {
-          return 0;
-        }
-      });
-
-      return targetList[0].PublishedFileID;
+      var entry = _entries.FirstOrDefault(e => e.Id.Equals(modId, StringComparison.OrdinalIgnoreCase));
+      return entry?.PublishedFileID;
     }
   }
 }

@@ -105,10 +105,15 @@ namespace Calloatti.SyncModsPro
 
       foreach (var rowUI in _orderedRows)
       {
-        // Check if the row is visible and if the first letter matches the pressed key
-        if (rowUI.Root.style.display == DisplayStyle.Flex &&
-            !string.IsNullOrEmpty(rowUI.Data.ModName) &&
-            char.ToLowerInvariant(rowUI.Data.ModName[0]) == searchChar)
+        if (rowUI.Root.style.display != DisplayStyle.Flex) continue;
+
+        // Dynamically select the correct property based on the active sort column
+        string targetString = rowUI.Data.ModName;
+        if (_currentSortColumn == "Id") targetString = rowUI.Data.ModId;
+        else if (_currentSortColumn == "VersionFolder") targetString = rowUI.Data.VersionFolder;
+
+        // Check if the first letter matches the pressed key
+        if (!string.IsNullOrEmpty(targetString) && char.ToLowerInvariant(targetString[0]) == searchChar)
         {
           ScrollToRowAtTop(rowUI.Root);
           break; // Stop at the very first match we find

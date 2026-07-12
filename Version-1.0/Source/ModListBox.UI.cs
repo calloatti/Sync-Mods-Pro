@@ -42,6 +42,13 @@ namespace Calloatti.SyncModsPro
     private Label _enabledStatsLabel;
     private Dictionary<ModStatus, Toggle> _statusFilterToggles = new Dictionary<ModStatus, Toggle>();
 
+    // --- NEW FIELDS FOR HEADER SORTING ---
+    private Label _headerNameLabel;
+    private Label _headerIdLabel;
+    private Label _headerFolderLabel;
+    private string _currentSortColumn = "";
+    // -------------------------------------
+
     private class RowUIElements
     {
       public ModRecord Data;
@@ -338,7 +345,7 @@ namespace Calloatti.SyncModsPro
         }
         else if (_filterUnchecked)
         {
-          if (rowUI.Data.TargetState == ModState.Disabled && rowUI.Data.CurrentState != ModState.Missing)
+          if (rowUI.Data.TargetState == ModState.Disabled)
           {
             isVisible = true;
           }
@@ -566,12 +573,27 @@ namespace Calloatti.SyncModsPro
             workshopIcon.style.height = 20;
             workshopIcon.AddToClassList("mod-item__icon--cloud");
 
+            // If the mod is physically located in a Steam folder, they are subscribed. Otherwise, they are not.
+            string tooltipText = data.Source == ModSource.Steam ? "Unsubscribe to this mod" : "Subscribe to this mod";
+
             workshopIcon.pickingMode = PickingMode.Position;
-            workshopIcon.RegisterCallback<PointerEnterEvent>(evt => workshopIcon.style.unityBackgroundImageTintColor = new StyleColor(Color.gray));
-            workshopIcon.RegisterCallback<PointerLeaveEvent>(evt => workshopIcon.style.unityBackgroundImageTintColor = new StyleColor(Color.white));
+
+            workshopIcon.RegisterCallback<PointerEnterEvent>(evt =>
+            {
+              // Values over 1.0f create a bright/bloom effect in UI Toolkit
+              workshopIcon.style.unityBackgroundImageTintColor = new StyleColor(new Color(1.0f, 0.85f, 0.5f, 1f));
+              CustomTooltipManager.ShowTooltip(workshopIcon, tooltipText);
+            });
+
+            workshopIcon.RegisterCallback<PointerLeaveEvent>(evt =>
+            {
+              workshopIcon.style.unityBackgroundImageTintColor = new StyleColor(Color.white);
+              CustomTooltipManager.HideTooltip();
+            });
 
             workshopIcon.RegisterCallback<ClickEvent>(evt =>
             {
+              CustomTooltipManager.HideTooltip(); // Clear tooltip before opening dialog
               _workshopManager.PromptSubscriptionChange(data.SteamId, data.ModName);
             });
 
@@ -593,6 +615,20 @@ namespace Calloatti.SyncModsPro
       Label cSavVer = CreateCell(savVer, SavedVerWidth, color);
       Label cCurVer = CreateCell(curVer, CurrentVerWidth, color);
       Label cStatus = CreateCell(status, StatusWidth, color);
+
+      // --- ADDED: Header Interception and Setup ---
+      if (isHeader)
+      {
+        _currentSortColumn = "";
+        _headerNameLabel = cName;
+        _headerIdLabel = cId;
+        _headerFolderLabel = cFolder;
+
+        AttachHeaderSortBehavior(_headerNameLabel, "Name");
+        AttachHeaderSortBehavior(_headerIdLabel, "Id");
+        AttachHeaderSortBehavior(_headerFolderLabel, "VersionFolder");
+      }
+      // ------------------------------------------
 
       Label cCurrent = CreateCell(currentStr, StateColWidth, color);
       Label cSaved = CreateCell(savedStr, StateColWidth, color);
@@ -768,6 +804,55 @@ namespace Calloatti.SyncModsPro
       lbl.style.overflow = Overflow.Hidden;
       lbl.style.textOverflow = TextOverflow.Ellipsis;
       return lbl;
+    }
+
+    // --- NEW: Header Click Sorting Methods ---
+    private void AttachHeaderSortBehavior(Label label, string columnName)
+    {
+      label.pickingMode = PickingMode.Position;
+
+      label.RegisterCallback<ClickEvent>(evt =>
+      {
+        SortByColumn(columnName);
+      });
+    }
+
+    private void SortByColumn(string columnName)
+    {
+      if (_currentSortColumn == columnName) return;
+
+      _currentSortColumn = columnName;
+
+      // Reset text strings strictly via Localization to drop the arrows
+      _headerNameLabel.text = _loc.T("Calloatti.SyncModsPro.Column.Name");
+      _headerIdLabel.text = _loc.T("Calloatti.SyncModsPro.Column.Id");
+      _headerFolderLabel.text = _loc.T("Calloatti.SyncModsPro.Column.VersionFolder");
+
+      // Sort Ascending (A-Z) and append Arrow Symbol
+      if (columnName == "Name")
+      {
+        _orderedRows.Sort((a, b) => string.Compare(a.Data.ModName, b.Data.ModName, StringComparison.OrdinalIgnoreCase));
+        _headerNameLabel.text += " ▲";
+      }
+      else if (columnName == "Id")
+      {
+        _orderedRows.Sort((a, b) => string.Compare(a.Data.ModId, b.Data.ModId, StringComparison.OrdinalIgnoreCase));
+        _headerIdLabel.text += " ▲";
+      }
+      else if (columnName == "VersionFolder")
+      {
+        _orderedRows.Sort((a, b) => string.Compare(a.Data.VersionFolder, b.Data.VersionFolder, StringComparison.OrdinalIgnoreCase));
+        _headerFolderLabel.text += " ▲";
+      }
+
+      // Re-Adding elements inside UI Toolkit moves them dynamically to the back of the list without deleting them
+      foreach (var rowUI in _orderedRows)
+      {
+        _scrollView.Add(rowUI.Root);
+      }
+
+      // Re-triggers layout evaluation to fix standard Odd/Even row background coloring
+      ApplyFilters();
     }
   }
 }
