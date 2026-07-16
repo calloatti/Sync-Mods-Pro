@@ -1655,3 +1655,8 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3760937316	DisableHauling	version-1.1	Disable Hauling	Disable Hauling	11.0.0	1.1.0	ModdableTimberborn			
 3761295060	ConveyorBelt	version-1.1	Conveyor Belts	Conveyor Belts	11.1.1	1.1.0	ModdableTimberborn			
 3762391401	AllBuildingsTransferPower	version-1.1	All Buildings Transfer Power	All Buildings Transfer Power	11.0.0	1.1.0	ModdableTimberborn			
+3764852972	UnstableCoreChallenge	version-1.0	Unstable Core Challenge	Unstable Core Challenge	10.0.0	1.0.0	eMka.ModSettings			
+3764852972	UnstableCoreChallenge	version-1.0	Unstable Core Challenge	Unstable Core Challenge	10.0.0	1.0.0	ModdableTimberborn			
+3764852972	UnstableCoreChallenge	version-1.1	Unstable Core Challenge	Unstable Core Challenge	11.0.0	1.1.0	eMka.ModSettings			
+3764852972	UnstableCoreChallenge	version-1.1	Unstable Core Challenge	Unstable Core Challenge	11.0.0	1.1.0	ModdableTimberborn			
+3764852972	UnstableCoreChallenge	version-1.1	Unstable Core Challenge	Unstable Core Challenge	11.0.0	1.1.0	DistroStorage			
