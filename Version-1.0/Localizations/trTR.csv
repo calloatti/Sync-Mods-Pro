@@ -1,0 +1,57 @@
+ID,Text,Comment
+Calloatti.SyncModsPro.Button.Cancel,"İptal",
+Calloatti.SyncModsPro.Button.Confirm,"Tamam",
+Calloatti.SyncModsPro.Button.LoadGame,"Oyunu Yükle",
+Calloatti.SyncModsPro.Button.OK,"Tamam",
+Calloatti.SyncModsPro.Button.Restart,"Yeniden Başlat",
+Calloatti.SyncModsPro.Button.RestartLoad,"Yeniden Başlat + Yükle",
+Calloatti.SyncModsPro.Button.SaveProfile,"Profili Kaydet",
+Calloatti.SyncModsPro.Button.StrictFlipOff,"Kesin KAPALI",
+Calloatti.SyncModsPro.Button.StrictFlipOn,"Kesin AÇIK",
+Calloatti.SyncModsPro.Button.Sync,"Senkronize Et",
+Calloatti.SyncModsPro.Column.Active,"Aktif",
+Calloatti.SyncModsPro.Column.CurrentState,"Güncel",
+Calloatti.SyncModsPro.Column.CurrentVersion,"Mod Sürümü",
+Calloatti.SyncModsPro.Column.Enabled,"Etkin",
+Calloatti.SyncModsPro.Column.Id,"Mod Kimliği",
+Calloatti.SyncModsPro.Column.MinGameVer,"Oyun Sürümü",
+Calloatti.SyncModsPro.Column.Name,"Mod Adı",
+Calloatti.SyncModsPro.Column.SavedState,"Kaydedildi",
+Calloatti.SyncModsPro.Column.SavedVersion,"Kayıt Sürümü",
+Calloatti.SyncModsPro.Column.Status,"Durum",
+Calloatti.SyncModsPro.Column.TargetState,"Hedef",
+Calloatti.SyncModsPro.Column.VersionFolder,"Sürüm Klasörü",
+Calloatti.SyncModsPro.Confirmation,"Kaydedilmiş oyunu yüklemek istediğinize emin misiniz?",
+Calloatti.SyncModsPro.Info,"Mevcut mod listesi, kaydedilmiş oyunun mod listesiyle eşleşiyor.",
+Calloatti.SyncModsPro.MissingMod.Description,"Bu mod sabit diskinizde bulunamadı.","Description shown for a saved mod that is not installed locally."
+Calloatti.SyncModsPro.ObsoleteMods.Warning,"Aşağıdaki modlar tespit edildi ve çakışmaları önlemek için otomatik olarak devre dışı bırakıldı. Bu değişiklikleri uygulamak için oyunun yeniden başlatılması gerekiyor:{0}",
+Calloatti.SyncModsPro.Profile.SaveFailure,"Mod profili kaydedilemedi. Ayrıntılar için konsol günlük dosyalarını kontrol edin.","Dialog message shown when exporting the current mod profile fails."
+Calloatti.SyncModsPro.Profile.SaveSuccess,"Mod profili, 'Mod Profilleri' yerleşimi klasörüne başarıyla kaydedildi!","Dialog message shown when exporting the current mod profile succeeds."
+Calloatti.SyncModsPro.ShowAll,"Tümünü Göster",
+Calloatti.SyncModsPro.Status.Disabled,"Devre Dışı",
+Calloatti.SyncModsPro.Status.Duplicate,"Kopya",
+Calloatti.SyncModsPro.Status.HideNotApplicable,"N/A'yı Gizle",
+Calloatti.SyncModsPro.Status.Match,"Eşleşme",
+Calloatti.SyncModsPro.Status.Missing,"Eksik",
+Calloatti.SyncModsPro.Status.New,"Yeni",
+Calloatti.SyncModsPro.Status.NotApplicable,"N/A",
+Calloatti.SyncModsPro.Status.Restart,"Yeniden Başlat",
+Calloatti.SyncModsPro.Steam.DialogTitle,"Steam Workshop Senkronizasyonu","Title for Steam Workshop subscription result dialogs."
+Calloatti.SyncModsPro.Steam.SubscribeIoFailure,"Steam sunucularıyla iletişim başarısız oldu: <b>{0}</b> ({1}) abone olunurken","Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
+Calloatti.SyncModsPro.Steam.SubscribePrompt,"<b>{0}</b> abone olunsun mu?","Steam confirmation prompt. {0} is the mod name."
+Calloatti.SyncModsPro.Steam.SubscribeRejected,"Steam abonelik talebini reddetti: <b>{0}</b>. Hata Kodu: {1}","Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code."
+Calloatti.SyncModsPro.Steam.SubscribeSuccess,"<b>{0}</b> başarıyla abone olundu. Steam istemcisi kısa süre içinde dosyaları indirmeye başlayacak. Değişikliklerin uygulanması için <b>Oyunu Yeniden Başlatmanız</b> gerekiyor.","Steam subscribe success message. {0} is the mod name."
+Calloatti.SyncModsPro.Steam.UnknownMod,"Bilinmeyen Mod","Fallback mod name used when a Steam callback cannot be matched to a tracked mod."
+Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,"Steam sunucularıyla iletişim başarısız oldu: <b>{0}</b> ({1}) abonelik iptal edilirken","Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
+Calloatti.SyncModsPro.Steam.UnsubscribePrompt,"<b>{0}</b> aboneliği iptal edilsin mi?","Steam confirmation prompt. {0} is the mod name."
+Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam abonelik iptal talebini reddetti: <b>{0}</b>. Hata Kodu: {1}","Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code."
+Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"<b>{0}</b> aboneliği başarıyla iptal edildi. Dosyalar <b>Oyun Yeniden Başlatıldığında</b> tamamen temizlenecek.","Steam unsubscribe success message. {0} is the mod name."
+Calloatti.SyncModsPro.SyncDialogboxText,"Modlar senkronize edildi, şimdi oyunu yeniden başlatın.",
+Calloatti.SyncModsPro.Tooltip.LoadGame,"Bu kayıt dosyasını mevcut aktif mod yapılandırmanızla şimdi yükleyin. (Modlar eksikse sorunlara neden olabilir!)",
+Calloatti.SyncModsPro.Tooltip.Restart,"Oyunu hemen yeniden başlatın. Mod değişiklikleri etkili olacaktır.",
+Calloatti.SyncModsPro.Tooltip.RestartLoad,"Oyunu yeniden başlatın ve oyun başlatmayı bitirdiğinde bu belirli kayıt dosyasını otomatik olarak yükleyin.",
+Calloatti.SyncModsPro.Tooltip.SaveProfile,"Mevcut aktif mod yapılandırmanızı Mod Profilleri Yerleşimi'nde kaydedilmiş bir oyun olarak dışa aktarın.",
+Calloatti.SyncModsPro.Tooltip.StrictFlip,"Şu anda etkin olan ek modları Etkinleştirin/Devre Dışı Bırakın.",
+Calloatti.SyncModsPro.Tooltip.Sync,"Modları senkronize et. YENİDEN BAŞLATMA GEREKLİ.",
+Calloatti.SyncModsPro.Warning,"Mevcut mod listesi, kaydedilmiş oyunun mod listesiyle eşleşmiyor.",
+Calloatti.SyncModsPro.Warning.RestartRequired,"Değişiklikler oyun yeniden başlatılana kadar etkili olmayacaktır.",
