@@ -2,6 +2,7 @@ using HarmonyLib;
 using System;
 using Timberborn.GameSaveRepositorySystem;
 using Timberborn.GameSaveRepositorySystemUI;
+using Timberborn.Modding;
 using Timberborn.SaveMetadataSystem;
 using UnityEngine;
 
@@ -23,48 +24,36 @@ namespace Calloatti.SyncModsPro
 
         SaveMetadata metadata = deserializer.ReadFromSaveFile(saveReference, serializer);
 
-        // Pass the callback directly to the panel so it can resume the native load sequence
-        ModListBox.Instance.Open(metadata, saveReference, continueCallback);
+        if (ModStarter.Config.GetBool("OnlyOpenOnMismatch"))
+        {
+          if (ModsAreCompatible(metadata, __instance._modRepository))
+          {
+            continueCallback();
+            return false;
+          }
+        }
 
-        // Return false to block vanilla ONLY when our panel successfully triggers
+        ModListBox.Instance.Open(metadata, saveReference, continueCallback);
         return false;
       }
 
       Debug.LogWarning("[SyncModsPro] ModListBox is missing! Falling back to vanilla SaveModsValidator.");
       return true;
     }
-  }
 
-  // ====================================================================
-  // PATCH 2: Show Saved Mods (Excluded via Prepare)
-  // ====================================================================
-  [HarmonyPatch(typeof(GameSaveModBox), "Show")]
-  public static class GameSaveModBoxPatch
-  {
-    // Harmony will run this and skip ONLY this class
-    static bool Prepare()
+    private static bool ModsAreCompatible(SaveMetadata metadata, ModRepository modRepository)
     {
-      return false;
-    }
-
-    [HarmonyPrefix]
-    public static bool Prefix(GameSaveModBox __instance, GameSaveItem gameSaveItem)
-    {
-      if (ModListBox.Instance != null)
+      if (metadata?.Mods != null)
       {
-        GameSaveDeserializer deserializer = __instance._gameSaveDeserializer;
-        SaveMetadataSerializer serializer = __instance._saveMetadataSerializer;
-
-        SaveMetadata metadata = deserializer.ReadFromSaveFile(gameSaveItem.SaveReference, serializer);
-
-        // Pass null for the callback since we are just looking at the mods, not loading the game
-        ModListBox.Instance.Open(metadata, gameSaveItem.SaveReference, null);
-
-        return false;
+        foreach (var modRef in metadata.Mods)
+        {
+          if (modRepository.ModIsNotEnabled(modRef.Id) ||
+              modRepository.ModIsOnDifferentVersion(modRef.Id, modRef.Version))
+            return false;
+        }
       }
-
-      Debug.LogWarning("[SyncModsPro] ModListBox is missing! Falling back to vanilla GameSaveModBox.");
       return true;
     }
   }
+
 }

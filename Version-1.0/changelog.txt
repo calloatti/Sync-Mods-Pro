@@ -1,3 +1,10 @@
+Game Version: 1.0.0.0 - Mod Version: 1.1.6
+- Add OnlyOpenOnMismatch setting
+- Fix event handler leak in WorkshopViewController
+- Wrap Steam API calls in try-catch
+- Remove dead GameSaveModBoxPatch
+- Localize all config labels/tooltips
+--------------------------------------------------------------------------------
 Game Version: 1.0.0.0 - Mod Version: 1.1.5
 - SimpleConfig UI integration
 --------------------------------------------------------------------------------

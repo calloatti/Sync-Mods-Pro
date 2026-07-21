@@ -1,57 +1,66 @@
 ID,Text,Comment
+human-made-translation,"human-made-translation",
 Calloatti.SyncModsPro.Button.Cancel,"Скасувати",
-Calloatti.SyncModsPro.Button.Confirm,"ОК",
+Calloatti.SyncModsPro.Button.Confirm,"OK",
 Calloatti.SyncModsPro.Button.LoadGame,"Завантажити гру",
-Calloatti.SyncModsPro.Button.OK,"ОК",
-Calloatti.SyncModsPro.Button.Restart,"Перезапустити",
-Calloatti.SyncModsPro.Button.RestartLoad,"Перезапустити + Завантажити",
-Calloatti.SyncModsPro.Button.SaveProfile,"Зберегти профіль",
-Calloatti.SyncModsPro.Button.StrictFlipOff,"Строгий ВИМК",
-Calloatti.SyncModsPro.Button.StrictFlipOn,"Строгий УВІМК",
-Calloatti.SyncModsPro.Button.Sync,"Синхронізувати",
-Calloatti.SyncModsPro.Column.Active,"Активний",
-Calloatti.SyncModsPro.Column.CurrentState,"Поточний",
-Calloatti.SyncModsPro.Column.CurrentVersion,"Версія моду",
-Calloatti.SyncModsPro.Column.Enabled,"Увімкнено",
-Calloatti.SyncModsPro.Column.Id,"ID моду",
-Calloatti.SyncModsPro.Column.MinGameVer,"Версія гри",
-Calloatti.SyncModsPro.Column.Name,"Назва моду",
-Calloatti.SyncModsPro.Column.SavedState,"Збережено",
-Calloatti.SyncModsPro.Column.SavedVersion,"Збережена версія",
-Calloatti.SyncModsPro.Column.Status,"Статус",
-Calloatti.SyncModsPro.Column.TargetState,"Ціль",
-Calloatti.SyncModsPro.Column.VersionFolder,"Папка версії",
-Calloatti.SyncModsPro.Confirmation,"Ви впевнені, що хочете завантажити збережену гру?",
-Calloatti.SyncModsPro.Info,"Поточний список модів відповідає списку модів збереженої гри.",
-Calloatti.SyncModsPro.MissingMod.Description,"Цей модуль відсутній на вашому жорсткому диску.","Description shown for a saved mod that is not installed locally."
-Calloatti.SyncModsPro.ObsoleteMods.Warning,"Наступні моди було виявлено та автоматично вимкнено для запобігання конфліктам. Гру потрібно перезапустити, щоб застосувати ці зміни:{0}",
-Calloatti.SyncModsPro.Profile.SaveFailure,"Не вдалося зберегти профіль модів. Перевірте файли журналу консолі для отримання деталей.","Dialog message shown when exporting the current mod profile fails."
-Calloatti.SyncModsPro.Profile.SaveSuccess,"Профіль модів успішно збережено в папці поселення 'Mod Profiles'!","Dialog message shown when exporting the current mod profile succeeds."
-Calloatti.SyncModsPro.ShowAll,"Показати все",
-Calloatti.SyncModsPro.Status.Disabled,"Вимкнено",
-Calloatti.SyncModsPro.Status.Duplicate,"Дублікат",
-Calloatti.SyncModsPro.Status.HideNotApplicable,"Приховати N/A",
-Calloatti.SyncModsPro.Status.Match,"Збіг",
-Calloatti.SyncModsPro.Status.Missing,"Відсутній",
-Calloatti.SyncModsPro.Status.New,"Новий",
-Calloatti.SyncModsPro.Status.NotApplicable,"N/A",
-Calloatti.SyncModsPro.Status.Restart,"Перезапуск",
-Calloatti.SyncModsPro.Steam.DialogTitle,"Синхронізація Steam Workshop","Title for Steam Workshop subscription result dialogs."
-Calloatti.SyncModsPro.Steam.SubscribeIoFailure,"Не вдалося зв'язатися з серверами Steam під час підписки на: <b>{0}</b> ({1})","Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
-Calloatti.SyncModsPro.Steam.SubscribePrompt,"Підписатися на <b>{0}</b>?","Steam confirmation prompt. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.SubscribeRejected,"Steam відхилив запит на підписку для: <b>{0}</b>. Код помилки: {1}","Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code."
-Calloatti.SyncModsPro.Steam.SubscribeSuccess,"Успішно підписано на: <b>{0}</b>. Клієнт Steam незабаром почне завантаження файлів. Ви повинні <b>Перезапустити Гру</b>, щоб зміни набули чинності.","Steam subscribe success message. {0} is the mod name."
+Calloatti.SyncModsPro.Button.OK,"OK",
+Calloatti.SyncModsPro.Button.Restart,Перезапустити,
+Calloatti.SyncModsPro.Button.RestartLoad,Перезапустити й завантажити,
+Calloatti.SyncModsPro.Button.SaveProfile,Зберегти профіль,
+Calloatti.SyncModsPro.Button.StrictFlipOff,"Суворий режим: ВИМК.",
+Calloatti.SyncModsPro.Button.StrictFlipOn,"Суворий режим: УВІМК.",
+Calloatti.SyncModsPro.Button.Sync,Синхронізувати,
+Calloatti.SyncModsPro.Column.Active,Активний,
+Calloatti.SyncModsPro.Column.CurrentState,Поточний,
+Calloatti.SyncModsPro.Column.CurrentVersion,Версія моду,
+Calloatti.SyncModsPro.Column.Enabled,Увімкнено,
+Calloatti.SyncModsPro.Column.Id,ID моду,
+Calloatti.SyncModsPro.Column.MinGameVer,Версія гри,
+Calloatti.SyncModsPro.Column.Name,Назва моду,
+Calloatti.SyncModsPro.Column.SavedState,У збереженні,
+Calloatti.SyncModsPro.Column.SavedVersion,Версія збереження,
+Calloatti.SyncModsPro.Column.Status,Стан,
+Calloatti.SyncModsPro.Column.TargetState,Цільовий,
+Calloatti.SyncModsPro.Column.VersionFolder,Папка версії,
+Calloatti.SyncModsPro.Confirmation,"Ви впевнені, що хочете завантажити це збереження?",
+Calloatti.SyncModsPro.Info,"Поточний список модів збігається зі списком модів у збереженні.",
+Calloatti.SyncModsPro.MissingMod.Description,"Цей мод відсутній на вашому комп'ютері.","Description shown for a saved mod that is not installed locally."
+Calloatti.SyncModsPro.ObsoleteMods.Warning,"Виявлено такі застарілі моди. Їх автоматично вимкнено, щоб запобігти конфліктам. Для застосування змін потрібно перезапустити гру:{0}",
+Calloatti.SyncModsPro.Profile.SaveFailure,"Не вдалося зберегти профіль модів. Докладніше дивіться в журналі консолі.","Dialog message shown when exporting the current mod profile fails."
+Calloatti.SyncModsPro.Profile.SaveSuccess,"Профіль модів успішно збережено в папці поселення «Mod Profiles»!","Dialog message shown when exporting the current mod profile succeeds."
+Calloatti.SyncModsPro.ShowAll,Показати всі,
+Calloatti.SyncModsPro.Status.Disabled,Вимкнено,
+Calloatti.SyncModsPro.Status.Duplicate,Дублікат,
+Calloatti.SyncModsPro.Status.HideNotApplicable,"Приховати Н/З",
+Calloatti.SyncModsPro.Status.Match,Збігається,
+Calloatti.SyncModsPro.Status.Missing,Відсутній,
+Calloatti.SyncModsPro.Status.New,Новий,
+Calloatti.SyncModsPro.Status.NotApplicable,"Н/З",
+Calloatti.SyncModsPro.Status.Restart,Перезапуск,
+Calloatti.SyncModsPro.Steam.DialogTitle,"Синхронізація з Майстернею Steam","Title for Steam Workshop subscription result dialogs."
+Calloatti.SyncModsPro.Steam.SubscribeIoFailure,"Не вдалося зв'язатися із серверами Steam під час підписки на: <b>{0}</b> ({1})","Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
+Calloatti.SyncModsPro.Steam.SubscribePrompt,"Підписатися на {0}?","Steam confirmation prompt. {0} is the mod name."
+Calloatti.SyncModsPro.Steam.SubscribeRejected,"Steam відхилив запит на підписку на <b>{0}</b>. Код помилки: {1}.","Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code."
+Calloatti.SyncModsPro.Steam.SubscribeSuccess,"Підписку на <b>{0}</b> успішно оформлено. Клієнт Steam незабаром почне завантаження файлів. Щоб зміни набули чинності, <b>перезапустіть гру</b>.","Steam subscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.Steam.UnknownMod,"Невідомий мод","Fallback mod name used when a Steam callback cannot be matched to a tracked mod."
-Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,"Не вдалося зв'язатися з серверами Steam під час скасування підписки на: <b>{0}</b> ({1})","Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
-Calloatti.SyncModsPro.Steam.UnsubscribePrompt,"Скасувати підписку на <b>{0}</b>?","Steam confirmation prompt. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam відхилив запит на скасування підписки для: <b>{0}</b>. Код помилки: {1}","Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code."
-Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Підписку на <b>{0}</b> успішно скасовано. Файли будуть повністю видалені після <b>Перезапуску Гри</b>.","Steam unsubscribe success message. {0} is the mod name."
-Calloatti.SyncModsPro.SyncDialogboxText,"Моди синхронізовано, перезапустіть гру зараз.",
-Calloatti.SyncModsPro.Tooltip.LoadGame,"Завантажте цей файл збереження зараз з вашою поточною активною конфігурацією модів. (Може спричинити проблеми, якщо моди відсутні!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Перезапустіть гру негайно. Зміни модів набудуть чинності.",
-Calloatti.SyncModsPro.Tooltip.RestartLoad,"Перезапустіть гру та автоматично завантажте цей конкретний файл збереження після завершення завантаження гри.",
-Calloatti.SyncModsPro.Tooltip.SaveProfile,"Експортуйте вашу поточну активну конфігурацію модів як збережену гру в поселенні Профілів Модів.",
-Calloatti.SyncModsPro.Tooltip.StrictFlip,"Увімкнути/Вимкнути додаткові моди, які зараз увімкнено.",
-Calloatti.SyncModsPro.Tooltip.Sync,"Синхронізувати моди. ПОТРІБЕН ПЕРЕЗАПУСК.",
-Calloatti.SyncModsPro.Warning,"Поточний список модів не відповідає списку модів збереженої гри.",
-Calloatti.SyncModsPro.Warning.RestartRequired,"Зміни не набудуть чинності до перезапуску гри.",
+Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,"Не вдалося зв'язатися із серверами Steam під час скасування підписки на <b>{0}</b> ({1})","Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
+Calloatti.SyncModsPro.Steam.UnsubscribePrompt,"Скасувати підписку на {0}?","Steam confirmation prompt. {0} is the mod name."
+Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam відхилив запит на скасування підписки на <b>{0}</b>. Код помилки: {1}.","Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code."
+Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Підписку на <b>{0}</b> успішно скасовано. Файли буде повністю видалено після <b>перезапуску гри</b>.","Steam unsubscribe success message. {0} is the mod name."
+Calloatti.SyncModsPro.SyncDialogboxText,"Моди синхронізовано. Тепер перезапустіть гру.",
+Calloatti.SyncModsPro.Tooltip.LoadGame,"Негайно завантажити це збереження з поточною конфігурацією активних модів. (Якщо деякі моди відсутні, можуть виникнути проблеми!)",
+Calloatti.SyncModsPro.Tooltip.Restart,"Негайно перезапустити гру. Зміни модів буде застосовано.",
+Calloatti.SyncModsPro.Tooltip.RestartLoad,"Перезапустити гру та автоматично завантажити це збереження після завершення запуску.",
+Calloatti.SyncModsPro.Tooltip.SaveProfile,"Експортувати поточну конфігурацію активних модів як профіль у поселенні «Mod Profiles».",
+Calloatti.SyncModsPro.Tooltip.StrictFlip,"Увімкнути або вимкнути додаткові моди, які зараз активні.",
+Calloatti.SyncModsPro.Tooltip.Sync,"Синхронізувати моди. ПОТРІБНО ПЕРЕЗАПУСТИТИ ГРУ.",
+Calloatti.SyncModsPro.Warning,"Поточний список модів не збігається зі списком модів у збереженні.",
+Calloatti.SyncModsPro.Warning.RestartRequired,"Зміни набудуть чинності лише після перезапуску гри.",
+Calloatti.Config.SyncModsPro.ShowIdColumn.Label,"Показати стовпець ID",
+Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,"Відображає стовпець унікального ID моду в списку перевірки.",
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,"Показати стовпець папки версії",
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,"Відображає шлях до каталогу/підпапки, де знаходиться мод.",
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Показати стовпець мін. версії гри",
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Відображає мінімальну версію гри, необхідну маніфестом моду.",
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Відкривати лише при невідповідності модів",
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Показувати панель Sync Mods лише коли моди відсутні або мають невідповідність версій з файлом збереження.",

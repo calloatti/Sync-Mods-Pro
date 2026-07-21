@@ -46,8 +46,9 @@ namespace Calloatti.SyncModsPro
     private readonly ValidatingGameLoader _validatingGameLoader;
     private readonly PanelStack _panelStack;
     private readonly KeyboardListener _keyboardListener;
-    private readonly WorkshopManager _workshopManager;      // NEW
-    private readonly WorkshopIdManager _workshopIdManager;  // NEW
+    private readonly WorkshopManager _workshopManager;
+    private readonly WorkshopIdManager _workshopIdManager;
+    private WorkshopViewController _currentWorkshopViewController;
 
     private Label _syncWarningLabel;
 
@@ -350,7 +351,9 @@ namespace Calloatti.SyncModsPro
       // Give the new controller the container, the raw list, and the tab button. It handles the rest.
       new DependencyViewController(_loc).Initialize(_dependencyView, modTable, _btnAudit);
 
-      new WorkshopViewController(_loc, _workshopManager).Initialize(_historyView, modTable, _btnHistory);
+      _currentWorkshopViewController?.Cleanup();
+      _currentWorkshopViewController = new WorkshopViewController(_loc, _workshopManager);
+      _currentWorkshopViewController.Initialize(_historyView, modTable, _btnHistory);
 
       // --- ADDED: Dynamic Size Matcher ---
       // This waits for Unity to finish calculating the layout math, 

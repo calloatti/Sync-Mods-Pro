@@ -26,9 +26,12 @@ namespace Calloatti.SyncModsPro
 
       historyTabButton.RegisterCallback<ClickEvent>(evt => BuildView());
 
-      // Auto-rebuild the view when Steam confirms an action
-      _workshopManager.OnHistoryUpdated -= BuildView;
       _workshopManager.OnHistoryUpdated += BuildView;
+    }
+
+    public void Cleanup()
+    {
+      _workshopManager.OnHistoryUpdated -= BuildView;
     }
 
     private void BuildView()

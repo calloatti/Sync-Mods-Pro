@@ -290,12 +290,12 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3322428023	Battery.Flywheels	version-0.7.8.1	Flywheels	Flywheels	3.0.1.94	0.7.8.1	TimberApi	0.7.5.0		
 3322428023	Battery.Flywheels	version-0.7.9.3	Flywheels	Flywheels	3.1.0.61	0.7.9.3	TimberApi	0.7.12.2		
 3322428023	Battery.Flywheels	version-0.7.9.3	Flywheels	Flywheels	3.1.0.61	0.7.9.3	TimberApi.UIBuilder	1.0.2.0		
-3324234282	Timberborn.IgorZ.Automation	version-0.7.9	Automation	Advanced Automation	3.0.2	0.7.9.0	Harmony	2.3.3		
-3324234282	Timberborn.IgorZ.Automation	version-0.7.9	Automation	Advanced Automation	3.0.2	0.7.9.0	TimberApi	0.7.12.1		
-3324234282	Timberborn.IgorZ.Automation	version-0.7.9	Automation	Advanced Automation	3.0.2	0.7.9.0	eMka.ModSettings	0.7.2.0		
-3324234282	Timberborn.IgorZ.Automation	version-1.0	Automation	Advanced Automation	3.5.2	1.0.12.0	Harmony	2.3.3		
-3324234282	Timberborn.IgorZ.Automation	version-1.0	Automation	Advanced Automation	3.5.2	1.0.12.0	eMka.ModSettings	1.0.6.0		
-3324234282	Timberborn.IgorZ.Automation	version-1.0	Automation	Advanced Automation	3.5.2	1.0.12.0	Timberborn.IgorZ.CustomTools	1.1.1		
+3324234282	Timberborn.IgorZ.Automation	version-0.7.9	Automation	Automation	3.0.2	0.7.9.0	Harmony	2.3.3		
+3324234282	Timberborn.IgorZ.Automation	version-0.7.9	Automation	Automation	3.0.2	0.7.9.0	TimberApi	0.7.12.1		
+3324234282	Timberborn.IgorZ.Automation	version-0.7.9	Automation	Automation	3.0.2	0.7.9.0	eMka.ModSettings	0.7.2.0		
+3324234282	Timberborn.IgorZ.Automation	version-1.0	Automation	Automation	3.5.2	1.0.12.0	Harmony	2.3.3		
+3324234282	Timberborn.IgorZ.Automation	version-1.0	Automation	Automation	3.5.2	1.0.12.0	eMka.ModSettings	1.0.6.0		
+3324234282	Timberborn.IgorZ.Automation	version-1.0	Automation	Automation	3.5.2	1.0.12.0	Timberborn.IgorZ.CustomTools	1.1.1		
 3331500753	Tobbert.FerrisWheel		Ferris Wheel	[To be updated] Ferris Wheel	2.0.1	0.6.0.0				
 3334584916	Cordial.Mods.CutterTool	version-0.6	Cutter Tool	Cutter Tool	0.1.6	0.6.7.0	TimberApi	0.7.8.0		
 3334584916	Cordial.Mods.CutterTool	version-0.7	Cutter Tool	Cutter Tool	0.7.1.0	0.7.0.0	TimberApi	0.7.11.0		
@@ -329,8 +329,8 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3341210959	Hytone.SimpleFloodgateTriggers	version-1.0	SimpleFloodgateTriggers	SimpleFloodgateTriggers	10.0.3	1.0.0.0	Harmony	2.3.3		
 3341210959	Hytone.SimpleFloodgateTriggers	version-1.0	SimpleFloodgateTriggers	SimpleFloodgateTriggers	10.0.3	1.0.0.0	TimberApi.UIBuilder	1.0.0.0		
 3341274783	Tobbert.DutchWindmill		Dutch Windmill	[To be updated] Dutch Windmill	2.0.1	0.6.0.0				
-3341374073	Tobbert.MorePlatforms		More Platforms	[To be updated] More Platforms	2.0.2	0.6.0.0	Harmony	2.3.3		
-3341374073	Tobbert.MorePlatforms		More Platforms	[To be updated] More Platforms	2.0.2	0.6.0.0	TimberApi	0.7.0.1		
+3341374073	Tobbert.MorePlatforms		More Platforms	More Platforms	2.0.2	0.6.0.0	Harmony	2.3.3		
+3341374073	Tobbert.MorePlatforms		More Platforms	More Platforms	2.0.2	0.6.0.0	TimberApi	0.7.0.1		
 3343029129	Cordial.Mods.PlantingOverride	version-0.6	Planting Override	Planting Override	0.5.0	0.6.7.0	TimberApi	0.7.8.0		
 3343029129	Cordial.Mods.PlantingOverride	version-0.6	Planting Override	Planting Override	0.5.0	0.6.7.0	Harmony	0.0.0.1		
 3343029129	Cordial.Mods.PlantingOverride	version-0.7	Planting Override	Planting Override	0.7.2.0	0.7.1.1	TimberApi	0.7.11.0		
@@ -1662,3 +1662,8 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3764852972	UnstableCoreChallenge	version-1.1	Unstable Core Challenge	Unstable Core Challenge	11.0.0	1.1.0	DistroStorage			
 3764926973	BruceTheLoon.ForestPath	version-1.0	Forest Path	Forest Path	1.0.1.0	1.0.6.0				
 3764926973	BruceTheLoon.ForestPath	version-1.1	Forest Path	Forest Path	1.0.1.0	1.1.0.0				
+3766893705	PowerLines	version-1.1	Power Lines	Power Lines	11.0.0	1.1.1	TimberUi			
+3766893705	PowerLines	version-1.1	Power Lines	Power Lines	11.0.0	1.1.1	Harmony			
+3767230586	ExampleBuilding.WaterFilter		Water Filter	Water Filter	0.2	1.1.0.0				
+3768021599	tangbohu.zycxfl	version-1.0	资源重新分类(顶部栏)	Reclassify Resources (Top Bar)	1.1	1.0				
+3768567229	Timberborn.IgorZ.DualDistrictStorage	version-1.1	Dual District Storage	Dual District Storage	1.0.0	1.1.0.0	Harmony	2.3.3		

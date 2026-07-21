@@ -96,8 +96,16 @@ namespace Calloatti.SyncModsPro
       }
       else
       {
-        uint itemStateFlags = SteamUGC.GetItemState(fileId);
-        isSubscribed = (itemStateFlags & (uint)EItemState.k_EItemStateSubscribed) != 0;
+        try
+        {
+          uint itemStateFlags = SteamUGC.GetItemState(fileId);
+          isSubscribed = (itemStateFlags & (uint)EItemState.k_EItemStateSubscribed) != 0;
+        }
+        catch (Exception ex)
+        {
+          Debug.LogWarning($"[SyncModsPro] Steam API call failed in PromptSubscriptionChange: {ex.Message}");
+          isSubscribed = false;
+        }
       }
 
       string promptLocKey = isSubscribed ? SteamUnsubscribePromptLocKey : SteamSubscribePromptLocKey;
@@ -127,28 +135,42 @@ namespace Calloatti.SyncModsPro
         IsUnsubscribe = unsubscribe
       };
 
-      if (unsubscribe)
+      try
       {
-        SteamAPICall_t apiCall = SteamUGC.UnsubscribeItem(fileId);
-        callRecord.UnsubscribeListener = CallResult<RemoteStorageUnsubscribePublishedFileResult_t>.Create(OnUnsubscribeResult);
-        callRecord.UnsubscribeListener.Set(apiCall);
-        _inFlightWorkshopCalls.Add(callRecord);
-        Debug.Log($"[SyncModsPro] Tracking Unsubscribe call for '{modDisplayName}' ({steamIdStr})");
+        if (unsubscribe)
+        {
+          SteamAPICall_t apiCall = SteamUGC.UnsubscribeItem(fileId);
+          callRecord.UnsubscribeListener = CallResult<RemoteStorageUnsubscribePublishedFileResult_t>.Create(OnUnsubscribeResult);
+          callRecord.UnsubscribeListener.Set(apiCall);
+          _inFlightWorkshopCalls.Add(callRecord);
+          Debug.Log($"[SyncModsPro] Tracking Unsubscribe call for '{modDisplayName}' ({steamIdStr})");
+        }
+        else
+        {
+          SteamAPICall_t apiCall = SteamUGC.SubscribeItem(fileId);
+          callRecord.SubscribeListener = CallResult<RemoteStorageSubscribePublishedFileResult_t>.Create(OnSubscribeResult);
+          callRecord.SubscribeListener.Set(apiCall);
+          _inFlightWorkshopCalls.Add(callRecord);
+          Debug.Log($"[SyncModsPro] Tracking Subscribe call for '{modDisplayName}' ({steamIdStr})");
+        }
       }
-      else
+      catch (Exception ex)
       {
-        SteamAPICall_t apiCall = SteamUGC.SubscribeItem(fileId);
-        callRecord.SubscribeListener = CallResult<RemoteStorageSubscribePublishedFileResult_t>.Create(OnSubscribeResult);
-        callRecord.SubscribeListener.Set(apiCall);
-        _inFlightWorkshopCalls.Add(callRecord);
-        Debug.Log($"[SyncModsPro] Tracking Subscribe call for '{modDisplayName}' ({steamIdStr})");
+        Debug.LogWarning($"[SyncModsPro] Steam API call failed in ExecuteSubscriptionChange: {ex.Message}");
       }
     }
 
     private void DownloadNow(PublishedFileId_t fileId, string steamIdStr)
     {
-      bool downloadTriggered = SteamUGC.DownloadItem(fileId, bHighPriority: true);
-      Debug.Log($"[SyncModsPro] Direct Download call processed for item '{steamIdStr}' (Dispatched: {downloadTriggered})");
+      try
+      {
+        bool downloadTriggered = SteamUGC.DownloadItem(fileId, bHighPriority: true);
+        Debug.Log($"[SyncModsPro] Direct Download call processed for item '{steamIdStr}' (Dispatched: {downloadTriggered})");
+      }
+      catch (Exception ex)
+      {
+        Debug.LogWarning($"[SyncModsPro] Steam API call failed in DownloadNow: {ex.Message}");
+      }
     }
 
     private void LogWorkshopAction(string action, string steamId, string modName, string result)
@@ -317,8 +339,16 @@ namespace Calloatti.SyncModsPro
               }
               else if (ulong.TryParse(steamIdStr, out ulong parsedId))
               {
-                uint itemStateFlags = SteamUGC.GetItemState(new PublishedFileId_t(parsedId));
-                isSubscribed = (itemStateFlags & (uint)EItemState.k_EItemStateSubscribed) != 0;
+                try
+                {
+                  uint itemStateFlags = SteamUGC.GetItemState(new PublishedFileId_t(parsedId));
+                  isSubscribed = (itemStateFlags & (uint)EItemState.k_EItemStateSubscribed) != 0;
+                }
+                catch (Exception ex)
+                {
+                  Debug.LogWarning($"[SyncModsPro] Steam API call failed in GetLogEntries: {ex.Message}");
+                  isSubscribed = false;
+                }
               }
 
               entries.Add(new WorkshopLogEntry
