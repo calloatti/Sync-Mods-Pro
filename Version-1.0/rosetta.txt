@@ -1485,7 +1485,7 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3721163780	Timberborn.Mejiro.SpeedControler		Mejiro Speed Controler	Mejiro Speed Controler	1.0.0.0	1.0.0.0	eMka.ModSettings	0.7.2.0		
 3721272706	Aaron.UnlockableMapEditorItems		Buildable Map Editor Items [ModContest1]	Buildable Map Editor Items [ModContest1]	1.0.0.0	1.0.0.0	Harmony			
 3721578793	Timberborn.Mejiro.LinearCycleDuration		Mejiro Linear Cycle Duration	Mejiro Linear Cycle Duration	1.0.0.0	1.0.0.0	Harmony	2.4.1		
-3721671926	BobGenders	version-1.0	Bobingabout	[ModContest1] Genders: A procreation overhaul	1.0.13.2	1.0.13.0				
+3721671926	BobGenders	version-1.0	Bobingabout	Genders: A procreation overhaul	1.0.13.2	1.0.13.0				
 3721718127	TonWolfe.TradeOffice	version-1.0.13.0	Trade Office [ModContest1]	Trade Office [ModContest1]	1.0.4	1.0.13.0	Harmony			
 3721718127	TonWolfe.TradeOffice	version-1.0.13.0	Trade Office [ModContest1]	Trade Office [ModContest1]	1.0.4	1.0.13.0	eMka.ModSettings			
 3721718127	TonWolfe.TradeOffice	version-1.0.13.0	Trade Office [ModContest1]	Trade Office [ModContest1]	1.0.4	1.0.13.0	TimberUi			
@@ -1667,3 +1667,7 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3767230586	ExampleBuilding.WaterFilter		Water Filter	Water Filter	0.2	1.1.0.0				
 3768021599	tangbohu.zycxfl	version-1.0	资源重新分类(顶部栏)	Reclassify Resources (Top Bar)	1.1	1.0				
 3768567229	Timberborn.IgorZ.DualDistrictStorage	version-1.1	Dual District Storage	Dual District Storage	1.0.0	1.1.0.0	Harmony	2.3.3		
+3769100762	Community.ModGroups		Mod Groups & Order	Mod Groups & Order	1.9.1.6	0.6.0.0				
+3769170554	Scrubfire.DedicatedFluidRoutes		Dedicated Fluid Routes	Dedicated Fluid Routes	1.0.0.0	1.1.0.0	Harmony			
+3769445840	WipWatch	version-1.0	WIP Watch	WIP Watch	0.6.4	1.0.0.0				
+3769863867	Calloatti.BannerTweaks	Version-1.0	Banner Tweaks	Banner Tweaks	1.0.1	1.0.0.0	Harmony			
