@@ -1373,7 +1373,6 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3692799996	P01550n.EarlyAutomation		Early Automation	Early Automation	0.2	1.0.0.0				
 3692842115	sleels.PerrinStatue		Dog Statue	Dog Statue	0.1	1.0.0.0				
 3692941620	TailsAndBanners.Shima-tail		Shima-tail	Shima-tail	0.1	1.0.0.0				
-3693431809	Lapantouflemagic.TexturePack		Lapantouflemagics Texture Pack	Lapantouflemagics Texture Pack	1.1.5	0.7.8.0				
 3694708678	TailsAndBanners.EuropeanFlags		European Flags	*Tail decals* Flags of the World: Europe	0.1	1.0.0.0				
 3694893348	BruceTheLoon.SilenceOfTheCarousels	version-1.0.0	Silence of the Carousels	Silence of the Carousels	1.0.0.0	1.0				
 3695659857	Calloatti.BotStorage		Bot Storage	Bot Storage	1.0.4	1.0.12.5	Harmony			
@@ -1662,6 +1661,8 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3764852972	UnstableCoreChallenge	version-1.1	Unstable Core Challenge	Unstable Core Challenge	11.0.0	1.1.0	DistroStorage			
 3764926973	BruceTheLoon.ForestPath	version-1.0	Forest Path	Forest Path	1.0.1.0	1.0.6.0				
 3764926973	BruceTheLoon.ForestPath	version-1.1	Forest Path	Forest Path	1.0.1.0	1.1.0.0				
+3765935439	Aoernis.ChooChoo	version-1.1	Choo!Choo! - Full Steam Ahead	Choo!Choo! - Full Steam Ahead	1.1.0	1.1.0.0	Harmony	2.3.3		
+3765935439	Aoernis.ChooChoo	version-1.1	Choo!Choo! - Full Steam Ahead	Choo!Choo! - Full Steam Ahead	1.1.0	1.1.0.0	TimberUi	10.1.6		
 3766893705	PowerLines	version-1.1	Power Lines	Power Lines	11.0.0	1.1.1	TimberUi			
 3766893705	PowerLines	version-1.1	Power Lines	Power Lines	11.0.0	1.1.1	Harmony			
 3767230586	ExampleBuilding.WaterFilter		Water Filter	Water Filter	0.2	1.1.0.0				
@@ -1671,3 +1672,30 @@ PublishedFileID	Id	Directory_Name	Name	Title	Version	MinimumGameVersion	Required
 3769170554	Scrubfire.DedicatedFluidRoutes		Dedicated Fluid Routes	Dedicated Fluid Routes	1.0.0.0	1.1.0.0	Harmony			
 3769445840	WipWatch	version-1.0	WIP Watch	WIP Watch	0.6.4	1.0.0.0				
 3769863867	Calloatti.BannerTweaks	Version-1.0	Banner Tweaks	Banner Tweaks	1.0.1	1.0.0.0	Harmony			
+3771621424	BruceTheLoon.HoneyTimeFix	version-1.0	Honey Time Fix	Honey Time Fix	1.0.0.0	1.0	Helpik.HoneyTime			
+3771714407	PaperMill20PaperPerLog		Paper Mill: 20 Paper per Log	Paper Mill: 20 Paper per Log	2.0.0	1.0.0.0				
+3772031080	Aoernis.ChooChooCompatLeafCoats		Choo!Choo! - Leaf Coats Compatibility	Choo!Choo! - Leaf Coats Compatibility	1.0.0	1.0.12.0	LeafCoats			
+3772031080	Aoernis.ChooChooCompatLeafCoats		Choo!Choo! - Leaf Coats Compatibility	Choo!Choo! - Leaf Coats Compatibility	1.0.0	1.0.12.0	Aoernis.ChooChoo			
+3772031347	Aoernis.ChooChooCompatEmberpelts		Choo!Choo! - Emberpelts Compatibility	Choo!Choo! - Emberpelts Compatibility	1.0.0	1.0.12.0	Emberpelts			
+3772031347	Aoernis.ChooChooCompatEmberpelts		Choo!Choo! - Emberpelts Compatibility	Choo!Choo! - Emberpelts Compatibility	1.0.0	1.0.12.0	Aoernis.ChooChoo			
+3772037998	List-a-Mole	version-1.0.8	List a Mole	List a Mole	1.0.9.00	1.0.8.0	XtraPlzNoCrashes	10.2.0		
+3772037998	List-a-Mole	version-1.0.8	List a Mole	List a Mole	1.0.9.00	1.0.8.0	Lapantouflemagic.TexturePack	1.3.0		
+3772037998	List-a-Mole	version-1.1	List a Mole	List a Mole	1.0.9.01	1.0.8.0	XtraPlzNoCrashes	10.2.0		
+3772037998	List-a-Mole	version-1.1	List a Mole	List a Mole	1.0.9.01	1.0.8.0	Lapantouflemagic.TexturePack	1.3.0		
+3772751248	EmberpeltsAmenitiesExtension	version-1.0	Emberpelts: Amenities Extension	Emberpelts: Amenities Extension	1.0.13.0	1.0.13.0	Emberpelts	1.0.12.0		
+3772751248	EmberpeltsAmenitiesExtension	version-1.0	Emberpelts: Amenities Extension	Emberpelts: Amenities Extension	1.0.13.0	1.0.13.0			BobingaboutBeaverFactionSplitNeeds	
+3772751248	EmberpeltsAmenitiesExtension	version-1.1	Emberpelts: Amenities Extension	Emberpelts: Amenities Extension	1.1.1.0	1.1.1.0	Emberpelts	1.1.1.0		
+3772751248	EmberpeltsAmenitiesExtension	version-1.1	Emberpelts: Amenities Extension	Emberpelts: Amenities Extension	1.1.1.0	1.1.1.0			BobingaboutBeaverFactionSplitNeeds	
+3772752503	CharcoalBeavers	version-1.0	Charcoal Beavers	Charcoal Beavers	1.0.13.0	1.0.13.0	Emberpelts	1.0.12.0		
+3772752503	CharcoalBeavers	version-1.0	Charcoal Beavers	Charcoal Beavers	1.0.13.0	1.0.13.0	EmberpeltsFoodExtension	1.0.12.0		
+3772752503	CharcoalBeavers	version-1.0	Charcoal Beavers	Charcoal Beavers	1.0.13.0	1.0.13.0	EmberpeltsAmenitiesExtension	1.0.12.0		
+3772752503	CharcoalBeavers	version-1.1	Charcoal Beavers	Charcoal Beavers	1.1.1.0	1.1.1.0	Emberpelts	1.1.1.0		
+3772752503	CharcoalBeavers	version-1.1	Charcoal Beavers	Charcoal Beavers	1.1.1.0	1.1.1.0	EmberpeltsFoodExtension	1.1.1.0		
+3772752503	CharcoalBeavers	version-1.1	Charcoal Beavers	Charcoal Beavers	1.1.1.0	1.1.1.0	EmberpeltsAmenitiesExtension	1.1.1.0		
+3773091182	BuildingRenovations	version-1.1	Building Renovations	Building Renovations	11.0.0	1.1.1	ModdableTimberborn	11.0.5		
+3773091182	BuildingRenovations	version-1.1	Building Renovations	Building Renovations	11.0.0	1.1.1	DistroStorage			
+3773092092	MoreBuildingRenovations	version-1.1	More Building Renovations	More Building Renovations	11.0.0	1.1.1	BuildingRenovations			
+3773092820	StockpileBalancer	version-1.1	Storage Balancer	Storage Balancer	11.0.0	1.1.1	BuildingRenovations			
+3773280870	Calloatti.TheBeaverRetriever	Version-1.0	The Beaver Retriever	The Beaver Retriever	1.0.0	1.0.0.0	Harmony			
+3773457764	WipWatch	version-1.0	WIP Watch	WIP Watch	0.6.4	1.0.0.0				
+3773478445	Defog.RemoveFog		Remove Fog	Remove Fog	0.1	1.0.0.0				
