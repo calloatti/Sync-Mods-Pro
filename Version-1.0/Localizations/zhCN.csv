@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam拒绝了 <b>{0}</b> 的�
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"成功取消订阅: <b>{0}</b>。文件将在<b>游戏重新启动</b>时完全清除。","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Mod已同步，请重新启动游戏。",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"立即使用当前活跃的Mod配置加载此存档文件。(如果Mod缺失可能会导致问题！)",
-Calloatti.SyncModsPro.Tooltip.Restart,"立即重新启动游戏。Mod更改将生效。",
+Calloatti.SyncModsPro.Tooltip.Restart,"立即重新启动游戏。Mod更改将生效。点击时按住 SHIFT 可跳过模组管理器对话框。",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"重新启动游戏，并在启动完成后自动加载此特定存档文件。",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"立即重新启动游戏。点击时按住 SHIFT 可跳过模组管理器对话框。",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"将您当前的活跃Mod配置作为存档导出到Mod配置定居点。",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"启用/禁用当前已启用的额外Mod。",
 Calloatti.SyncModsPro.Tooltip.Sync,"同步Mod。需要重新启动。",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"显示最低游戏版本列
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"显示Mod清单所需的最低游戏版本。",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"仅在Mod不匹配时打开",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"仅在Mod缺失或与存档文件版本不匹配时显示Sync Mods面板。",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"跳过试验版对话框",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"启动时跳过试验版的警告对话框。",

@@ -72,10 +72,18 @@ namespace Calloatti.SyncModsPro
       }
     }
 
-    private void HandleRestartClick()
+    private void HandleRestartClick(ClickEvent evt)
     {
-      Debug.Log("[SyncModsPro] Restart clicked.");
-      GameRestarter.RequestStandardRestart();
+      if (evt.shiftKey)
+      {
+        Debug.Log("[SyncModsPro] Restart clicked (skip mod manager).");
+        GameRestarter.RequestSkipModManagerRestart();
+      }
+      else
+      {
+        Debug.Log("[SyncModsPro] Restart clicked.");
+        GameRestarter.RequestStandardRestart();
+      }
     }
 
     private void HandleRestartLoadClick()

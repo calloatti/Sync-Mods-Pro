@@ -417,7 +417,7 @@ namespace Calloatti.SyncModsPro
         evt => HandleSaveProfileClick(),
         evt => HandleStrictFlipClick(createdButtons[1]),
         evt => HandleSyncClick(modTable),
-        evt => HandleRestartClick(),
+        evt => HandleRestartClick(evt),
         evt => HandleRestartLoadClick(),
         evt => OnUIConfirmed()
       };

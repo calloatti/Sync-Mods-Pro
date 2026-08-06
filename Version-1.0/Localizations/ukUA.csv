@@ -49,8 +49,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam відхилив запи
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Підписку на <b>{0}</b> успішно скасовано. Файли буде повністю видалено після <b>перезапуску гри</b>.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Моди синхронізовано. Тепер перезапустіть гру.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Негайно завантажити це збереження з поточною конфігурацією активних модів. (Якщо деякі моди відсутні, можуть виникнути проблеми!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Негайно перезапустити гру. Зміни модів буде застосовано.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Негайно перезапустити гру. Зміни модів буде застосовано. Утримуйте SHIFT під час натискання, щоб пропустити діалог менеджера модів.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Перезапустити гру та автоматично завантажити це збереження після завершення запуску.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Негайно перезапустити гру. Утримуйте SHIFT під час натискання, щоб пропустити діалог менеджера модів.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Експортувати поточну конфігурацію активних модів як профіль у поселенні «Mod Profiles».",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Увімкнути або вимкнути додаткові моди, які зараз активні.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Синхронізувати моди. ПОТРІБНО ПЕРЕЗАПУСТИТИ ГРУ.",
@@ -64,3 +65,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Показати стовп
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Відображає мінімальну версію гри, необхідну маніфестом моду.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Відкривати лише при невідповідності модів",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Показувати панель Sync Mods лише коли моди відсутні або мають невідповідність версій з файлом збереження.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Пропускати експериментальне діалогове вікно",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Пропускає діалогове вікно попередження експериментальної гілки під час запуску.",

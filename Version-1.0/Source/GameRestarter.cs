@@ -35,6 +35,14 @@ namespace Calloatti.SyncModsPro
     }
 
     /// <summary>
+    /// Restarts the application, skipping the mod manager (bypasses mod validation/load screen).
+    /// </summary>
+    public static void RequestSkipModManagerRestart()
+    {
+      ExecuteRestartSequence(new[] { "-skipModManager" });
+    }
+
+    /// <summary>
     /// Constructs target launch parameters and flags to skip managers and load a save automatically on boot.
     /// </summary>
     public static void RequestRestartAndLoad(SaveReference saveReference)

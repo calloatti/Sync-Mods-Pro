@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam ha rifiutato la richiesta
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Disiscrizione riuscita da: <b>{0}</b>. I file verranno eliminati completamente al <b>Riavvio del Gioco</b>.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Mod sincronizzati, riavvia il gioco ora.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Carica questo file di salvataggio ora con la tua configurazione mod attiva. (Potrebbe causare problemi se mancano dei mod!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Riavvia il gioco immediatamente. Le modifiche ai mod avranno effetto.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Riavvia il gioco immediatamente. Le modifiche ai mod avranno effetto. Tieni premuto MAIUSC mentre fai clic per saltare la finestra del gestore dei mod.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Riavvia il gioco e carica automaticamente questo file di salvataggio specifico quando il gioco ha terminato l'avvio.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Riavvia il gioco immediatamente. Tieni premuto MAIUSC mentre fai clic per saltare la finestra del gestore dei mod.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Esporta la tua configurazione mod attiva corrente come partita salvata nell'Insediamento Profili Mod.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Abilita/Disabilita mod extra attualmente abilitati.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Sincronizza mod. RIAVVIO RICHIESTO.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Mostra colonna versione min
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Mostra la versione minima del gioco richiesta dal manifest del mod.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Apri solo in caso di mancata corrispondenza mod",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Mostra il pannello Sync Mods solo quando i mod sono mancanti o hanno versioni non corrispondenti con il file di salvataggio.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Salta la finestra di dialogo sperimentale",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Salta la finestra di avviso della versione sperimentale all'avvio.",

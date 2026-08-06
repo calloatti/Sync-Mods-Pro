@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam이 구독 취소 요청�
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"<b>{0}</b> 구독 취소 성공. <b>게임 재시작</b> 시 파일이 완전히 제거됩니다.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"모드가 동기화되었습니다. 지금 게임을 재시작하세요.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"현재 활성 모드 구성으로 이 저장 파일을 지금 로드하세요. (모드가 누락된 경우 문제가 발생할 수 있습니다!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"게임을 즉시 재시작합니다. 모드 변경 사항이 적용됩니다.",
+Calloatti.SyncModsPro.Tooltip.Restart,"게임을 즉시 재시작합니다. 모드 변경 사항이 적용됩니다. 클릭할 때 Shift 키를 누른 채 클릭하면 모드 관리자 대화 상자를 건너뜁니다.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"게임을 재시작하고 부팅이 완료되면 이 특정 저장 파일을 자동으로 로드합니다.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"게임을 즉시 재시작합니다. 클릭할 때 Shift 키를 누른 채 클릭하면 모드 관리자 대화 상자를 건너뜁니다.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"현재 활성 모드 구성을 Mod 프로파일 정착지에 저장된 게임으로 내보냅니다.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"현재 활성화된 추가 모드를 활성화/비활성화합니다.",
 Calloatti.SyncModsPro.Tooltip.Sync,"모드 동기화. 재시작 필요.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"최소 게임 버전 열 �
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Mod 매니페스트에 필요한 최소 게임 버전을 표시합니다.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Mod 불일치 시에만 열기",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Mod가 누락되었거나 저장 파일과 버전 불일치가 있는 경우에만 Sync Mods 패널을 표시합니다.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"실험판 대화 상자 건너뛰기",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"시작 시 실험판 경고 대화 상자를 건너뜁니다.",

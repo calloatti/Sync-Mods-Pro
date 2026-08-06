@@ -1,3 +1,10 @@
+* Game Version: 1.0.0.0 - Mod Version: 1.1.9
+- Changed rosetta.txt download URL
+* Game Version: 1.0.0.0 - Mod Version: 1.1.8
+- Add tooltip to main menu Restart button
+* Game Version: 1.0.0.0 - Mod Version: 1.1.7
+- Hold SHIFT while clicking Restart to skip the mod manager
+- Add SkipExperimentalDialog setting to bypass the experimental branch dialog
 * Game Version: 1.0.0.0 - Mod Version: 1.1.6
 - Add OnlyOpenOnMismatch setting
 - Fix event handler leak in WorkshopViewController

@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam abonelik iptal talebini r
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"<b>{0}</b> aboneliği başarıyla iptal edildi. Dosyalar <b>Oyun Yeniden Başlatıldığında</b> tamamen temizlenecek.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Modlar senkronize edildi, şimdi oyunu yeniden başlatın.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Bu kayıt dosyasını mevcut aktif mod yapılandırmanızla şimdi yükleyin. (Modlar eksikse sorunlara neden olabilir!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Oyunu hemen yeniden başlatın. Mod değişiklikleri etkili olacaktır.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Oyunu hemen yeniden başlatın. Mod değişiklikleri etkili olacaktır. Mod yöneticisi iletişim kutusunu atlamak için tıklarken SHIFT tuşunu basılı tutun.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Oyunu yeniden başlatın ve oyun başlatmayı bitirdiğinde bu belirli kayıt dosyasını otomatik olarak yükleyin.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Oyunu hemen yeniden başlatın. Mod yöneticisi iletişim kutusunu atlamak için tıklarken SHIFT tuşunu basılı tutun.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Mevcut aktif mod yapılandırmanızı Mod Profilleri Yerleşimi'nde kaydedilmiş bir oyun olarak dışa aktarın.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Şu anda etkin olan ek modları Etkinleştirin/Devre Dışı Bırakın.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Modları senkronize et. YENİDEN BAŞLATMA GEREKLİ.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Min. Oyun Sürümü Sütunu
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Mod manifestosu tarafından gereken minimum oyun sürümünü görüntüler.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Yalnızca mod uyuşmazlığında aç",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Sync Mods panelini yalnızca modlar eksik olduğunda veya kayıt dosyasıyla sürüm uyuşmazlığı olduğunda göster.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Deneysel iletişim kutusunu atla",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Başlangıçta deneysel sürüm uyarı iletişim kutusunu atlar.",

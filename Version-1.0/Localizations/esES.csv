@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam rechazó la solicitud de 
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Suscripción cancelada exitosamente de: <b>{0}</b>. Los archivos se eliminarán por completo al <b>Reiniciar el Juego</b>.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Mods sincronizados, reinicie el juego ahora.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Cargue este archivo de guardado ahora con su configuración de mods activa actual. (¡Puede causar problemas si faltan mods!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Reinicie el juego inmediatamente. Los cambios de mods surtirán efecto.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Reinicie el juego inmediatamente. Los cambios de mods surtirán efecto. Mantenga pulsada MAYÚS al hacer clic para omitir el diálogo del administrador de mods.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Reinicie el juego y cargue automáticamente este archivo de guardado específico cuando el juego termine de iniciarse.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Reinicie el juego inmediatamente. Mantenga pulsada MAYÚS al hacer clic para omitir el diálogo del administrador de mods.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Exporte su configuración de mods activa actual como un juego guardado en el Asentamiento de Perfiles de Mod.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Activar/Desactivar mods adicionales que están actualmente activados.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Sincronizar mods. REINICIO REQUERIDO.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Mostrar columna de versión
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Muestra la versión mínima del juego requerida por el manifiesto del mod.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Abrir solo en caso de discrepancia de mods",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Solo mostrar el panel de Sync Mods cuando falten mods o haya discrepancias de versión con el archivo guardado.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Omitir diálogo experimental",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Omita el diálogo de advertencia de la rama experimental al iniciar.",

@@ -7,7 +7,7 @@ Include ..\AGENTS.md
 - **Namespace:** `Calloatti.SyncModsPro`
 - **ModId:** `calloatti.syncmodspro`
 - **Framework:** Harmony, Bindito DI
-- **Publicizer:** includes `Timberborn.CoreUI`, `Timberborn.Modding`
+- **Publicizer:** includes `Timberborn.CoreUI`, `Timberborn.Modding`, `Timberborn.MainMenuScene`
 - **Min Game Version:** 1.0.0.0 — uses `timberborn-decompiled-1.0.*`
 
 ## What This Mod Does
@@ -22,7 +22,8 @@ Professional version of Sync Mods with enhanced mod management: profile manageme
 | `ModProfileManager.cs` | Profile management |
 | `ModSyncEngine.cs` | Core sync engine |
 | `ModPatches.cs` | Harmony patches |
-| `MainMenuPatch.cs` | Main menu UI patches |
+| `MainMenuPatch.cs` | Main menu UI patches — injects a Restart button; SHIFT-click skips the mod manager dialog; tooltip via vanilla `ITooltipRegistrar` (`Tooltip.RestartShiftClick` loc key) |
+| `ExperimentalDialogPatch.cs` | Bypasses the experimental welcome dialog (configurable via `SkipExperimentalDialog`) |
 | `ModListBox.cs` | Mod list box container |
 | `ModListBox.Actions.cs` | Mod list actions |
 | `ModListBox.Data.cs` | Mod list data handling |

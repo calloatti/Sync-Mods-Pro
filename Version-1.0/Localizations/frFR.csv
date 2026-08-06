@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam a rejeté la demande de d
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Désabonnement réussi de : <b>{0}</b>. Les fichiers seront complètement supprimés lors du <b>Redémarrage du Jeu</b>.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Mods synchronisés, redémarrez le jeu maintenant.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Chargez ce fichier de sauvegarde maintenant avec votre configuration de mods active actuelle. (Peut causer des problèmes si des mods sont manquants !)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Redémarrez le jeu immédiatement. Les modifications des mods prendront effet.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Redémarrez le jeu immédiatement. Les modifications des mods prendront effet. Maintenez MAJ enfoncée en cliquant pour ignorer la boîte de dialogue du gestionnaire de mods.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Redémarrez le jeu et chargez automatiquement ce fichier de sauvegarde spécifique lorsque le jeu aura fini de démarrer.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Redémarrez le jeu immédiatement. Maintenez MAJ enfoncée en cliquant pour ignorer la boîte de dialogue du gestionnaire de mods.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Exportez votre configuration de mods active actuelle en tant que jeu sauvegardé dans la colonie Profils de Mod.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Activer/Désactiver les mods supplémentaires actuellement activés.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Synchroniser les mods. REDÉMARRAGE REQUIS.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Afficher la colonne de vers
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Affiche la version minimale du jeu requise par le manifeste du mod.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Ouvrir uniquement en cas d'incompatibilité de mods",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Afficher le panneau Sync Mods uniquement lorsque des mods sont manquants ou ont des versions incompatibles avec le fichier de sauvegarde.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Ignorer la boîte de dialogue expérimentale",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Ignore la boîte de dialogue d'avertissement de la branche expérimentale au démarrage.",

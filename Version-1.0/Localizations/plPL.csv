@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam odrzucił żądanie anulo
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Pomyślnie anulowano subskrypcję: <b>{0}</b>. Pliki zostaną całkowicie usunięte po <b>Uruchomieniu Gry Ponownie</b>.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Mody zsynchronizowane, uruchom grę ponownie.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Załaduj ten plik zapisu teraz z bieżącą aktywną konfiguracją modów. (Może powodować problemy, jeśli brakuje modów!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Uruchom grę ponownie natychmiast. Zmiany modów zostaną zastosowane.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Uruchom grę ponownie natychmiast. Zmiany modów zostaną zastosowane. Przytrzymaj klawisz SHIFT podczas klikania, aby pominąć okno menedżera modów.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Uruchom grę ponownie i automatycznie załaduj ten konkretny plik zapisu po zakończeniu uruchamiania gry.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Uruchom grę ponownie natychmiast. Przytrzymaj klawisz SHIFT podczas klikania, aby pominąć okno menedżera modów.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Wyeksportuj bieżącą aktywną konfigurację modów jako zapisany stan gry w osadzie Profili Modów.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Włącz/Wyłącz dodatkowe mody, które są obecnie włączone.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Synchronizuj mody. WYMAGANY PONOWNY URUCHOM.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Pokaż kolumnę minimalnej 
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Wyświetla minimalną wersję gry wymaganą przez manifest moda.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Otwórz tylko przy niezgodności modów",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Pokaż panel Sync Mods tylko wtedy, gdy brakuje modów lub występują niezgodności wersji z plikiem zapisu.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Pomiń okno eksperymentalne",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Pomija okno ostrzeżenia wersji eksperymentalnej przy starcie.",

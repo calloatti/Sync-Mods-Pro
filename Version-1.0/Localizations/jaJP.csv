@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steamが購読解除リクエ�
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"<b>{0}</b> の購読解除に成功しました。ファイルは<b>ゲーム再起動</b>時に完全に削除されます。","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Modが同期されました。ゲームを再起動してください。",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"現在のアクティブなMod構成でこのセーブファイルを今すぐロードします。（Modが不足していると問題が発生する可能性があります！）",
-Calloatti.SyncModsPro.Tooltip.Restart,"ゲームをすぐに再起動します。Modの変更が反映されます。",
+Calloatti.SyncModsPro.Tooltip.Restart,"ゲームをすぐに再起動します。Modの変更が反映されます。クリック時にShiftキーを押したままクリックすると、Modマネージャーのダイアログをスキップします。",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"ゲームを再起動し、起動完了後にこの特定のセーブファイルを自動的にロードします。",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"ゲームをすぐに再起動します。クリック時にShiftキーを押したままクリックすると、Modマネージャーのダイアログをスキップします。",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"現在のアクティブなMod構成をModプロファイル集落のセーブデータとしてエクスポートします。",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"現在有効な追加Modを有効/無効にします。",
 Calloatti.SyncModsPro.Tooltip.Sync,"Modを同期します。再起動が必要です。",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"最小ゲームバージョ
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Modマニフェストで必要な最小ゲームバージョンを表示します。",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Mod不一致時のみ開く",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Modが不足している場合、または保存ファイルとバージョンが一致しない場合にのみSync Modsパネルを表示します。",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"試験版ダイアログをスキップ",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"起動時に試験版の警告ダイアログをスキップします。",

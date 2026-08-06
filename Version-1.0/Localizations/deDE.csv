@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam hat die Kündigungsanfrag
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Erfolgreich vom Abonnement abgemeldet: <b>{0}</b>. Dateien werden vollständig nach <b>Spielneustart</b> gelöscht.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Mods synchronisiert, starten Sie das Spiel jetzt neu.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Laden Sie diese Spielstanddatei jetzt mit Ihrer aktuellen aktiven Mod-Konfiguration. (Kann Probleme verursachen, wenn Mods fehlen!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Starten Sie das Spiel sofort neu. Mod-Änderungen werden wirksam.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Starten Sie das Spiel sofort neu. Mod-Änderungen werden wirksam. Halten Sie beim Klicken die UMSCHALTTASTE gedrückt, um den Mod-Manager-Dialog zu überspringen.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Starten Sie das Spiel neu und laden Sie automatisch diesen spezifischen Spielstand, wenn das Spiel fertig gebootet hat.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Starten Sie das Spiel sofort neu. Halten Sie beim Klicken die UMSCHALTTASTE gedrückt, um den Mod-Manager-Dialog zu überspringen.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Exportieren Sie Ihre aktuelle aktive Mod-Konfiguration als gespeichertes Spiel in der Mod-Profile-Siedlung.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Aktivieren/Deaktivieren zusätzlicher Mods, die derzeit aktiviert sind.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Mods synchronisieren. NEUSTART ERFORDERLICH.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Min. Spielversionspalte anz
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Zeigt die Mindestspielversion an, die vom Mod-Manifest benötigt wird.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Nur bei Mod-Konflikt öffnen",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Das Sync-Mods-Panel nur anzeigen, wenn Mods fehlen oder Versionen nicht mit der Speicherdatei übereinstimmen.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Experimentellen Dialog überspringen",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Überspringt das Warnungsdialogfeld des experimentellen Zweigs beim Start.",

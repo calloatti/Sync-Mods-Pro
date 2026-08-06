@@ -36,7 +36,7 @@ namespace Calloatti.SyncModsPro
       try
       {
         // Define your target URL
-        string targetUrl = "https://raw.githubusercontent.com/calloatti/Sync-Mods-Pro/refs/heads/main/Version-1.0/rosetta.txt";
+        string targetUrl = "https://raw.githubusercontent.com/calloatti/rosetta_steam/refs/heads/main/data/rosetta.txt";
 
         // Save directly to the player data folder as requested
         string targetSavePath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "SyncModsPro.Rosetta.txt");

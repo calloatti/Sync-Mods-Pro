@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam ปฏิเสธคำ�
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"ยกเลิกการสมัครรับสำเร็จจาก: <b>{0}</b> ไฟล์จะถูกล้างอย่างสมบูรณ์เมื่อ<b>เริ่มเกมใหม่</b>","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"ซิงค์ Mod แล้ว โปรดเริ่มเกมใหม่",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"โหลดไฟล์บันทึกนี้ตอนนี้ด้วยการกำหนดค่า Mod ที่ใช้งานอยู่ในปัจจุบันของคุณ (อาจทำให้เกิดปัญหาหาก Mod หายไป!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"เริ่มเกมใหม่ทันที การเปลี่ยนแปลง Mod จะมีผล",
+Calloatti.SyncModsPro.Tooltip.Restart,"เริ่มเกมใหม่ทันที การเปลี่ยนแปลง Mod จะมีผล กดปุ่ม SHIFT ค้างไว้ขณะคลิกเพื่อข้ามหน้าต่างตัวจัดการ Mod",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"เริ่มเกมใหม่และโหลดไฟล์บันทึกนี้โดยอัตโนมัติเมื่อเกมบูทเสร็จ",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"เริ่มเกมใหม่ทันที กดปุ่ม SHIFT ค้างไว้ขณะคลิกเพื่อข้ามหน้าต่างตัวจัดการ Mod",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"ส่งออกการกำหนดค่า Mod ที่ใช้งานอยู่ในปัจจุบันของคุณเป็นเกมที่บันทึกไว้ในนิคมโปรไฟล์ Mod",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"เปิด/ปิด Mod พิเศษที่เปิดใช้งานอยู่ในปัจจุบัน",
 Calloatti.SyncModsPro.Tooltip.Sync,"ซิงค์ Mod ต้องเริ่มใหม่",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"แสดงคอลัม
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"แสดงเวอร์ชันเกมขั้นต่ำที่ต้องการโดย Manifest ของ Mod",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"เปิดเฉพาะเมื่อ Mod ไม่ตรงกัน",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"แสดงแผง Sync Mods เฉพาะเมื่อ Mod หายไปหรือมีเวอร์ชันไม่ตรงกับไฟล์บันทึก",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"ข้ามกล่องโต้ตอบทดลอง",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"ข้ามกล่องโต้ตอบคำเตือนของรุ่นทดลองเมื่อเริ่มต้น",

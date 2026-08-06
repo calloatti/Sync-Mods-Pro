@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 using Timberborn.MainMenuPanels;
 using Timberborn.Localization;
 using Timberborn.SingletonSystem;
+using Timberborn.TooltipSystem;
 using System;
 using System.Reflection;
 using System.Linq;
@@ -14,12 +15,19 @@ namespace Calloatti.SyncModsPro
   public static class MainMenuPanelPatch
   {
     private const string RestartButtonLocKey = "Calloatti.SyncModsPro.Button.Restart";
+    private const string RestartButtonTooltipLocKey = "Calloatti.SyncModsPro.Tooltip.RestartShiftClick";
 
     private static ILoc _loc;
+    private static ITooltipRegistrar _tooltipRegistrar;
 
     public static void SetLoc(ILoc loc)
     {
       _loc = loc;
+    }
+
+    public static void SetTooltipRegistrar(ITooltipRegistrar tooltipRegistrar)
+    {
+      _tooltipRegistrar = tooltipRegistrar;
     }
 
     private static void Postfix(MainMenuPanel __instance, VisualElement __result)
@@ -44,6 +52,9 @@ namespace Calloatti.SyncModsPro
       // Localization
       restartButton.text = _loc.T(RestartButtonLocKey);
 
+      // Vanilla-style tooltip informing about the SHIFT click skip feature
+      _tooltipRegistrar?.RegisterLocalizable(restartButton, RestartButtonTooltipLocKey);
+
       // 3. Copy Styles
       int sheetCount = exitButton.styleSheets.count;
       for (int i = 0; i < sheetCount; i++)
@@ -62,8 +73,16 @@ namespace Calloatti.SyncModsPro
 
       // 4. Click Event
       restartButton.RegisterCallback<ClickEvent>(evt => {
-        UnityEngine.Debug.Log("SyncModsPro: Restarting...");
-        GameRestarter.RequestStandardRestart();
+        if (evt.shiftKey)
+        {
+          UnityEngine.Debug.Log("SyncModsPro: Restarting (skip mod manager)...");
+          GameRestarter.RequestSkipModManagerRestart();
+        }
+        else
+        {
+          UnityEngine.Debug.Log("SyncModsPro: Restarting...");
+          GameRestarter.RequestStandardRestart();
+        }
       });
 
       // 5. Inject and Compact
@@ -102,9 +121,10 @@ namespace Calloatti.SyncModsPro
 
   public class MainMenuPanelPatchInitializer : ILoadableSingleton
   {
-    public MainMenuPanelPatchInitializer(ILoc loc)
+    public MainMenuPanelPatchInitializer(ILoc loc, ITooltipRegistrar tooltipRegistrar)
     {
       MainMenuPanelPatch.SetLoc(loc);
+      MainMenuPanelPatch.SetTooltipRegistrar(tooltipRegistrar);
     }
 
     public void Load()

@@ -48,8 +48,9 @@ Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam отклонил запр
 Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Успешно отписан от: <b>{0}</b>. Файлы будут полностью удалены после <b>Перезапуска Игры</b>.","Steam unsubscribe success message. {0} is the mod name."
 Calloatti.SyncModsPro.SyncDialogboxText,"Моды синхронизированы, перезапустите игру сейчас.",
 Calloatti.SyncModsPro.Tooltip.LoadGame,"Загрузите этот файл сохранения сейчас с вашей текущей активной конфигурацией модов. (Может вызвать проблемы, если моды отсутствуют!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Перезапустите игру немедленно. Изменения модов вступят в силу.",
+Calloatti.SyncModsPro.Tooltip.Restart,"Перезапустите игру немедленно. Изменения модов вступят в силу. Удерживайте SHIFT при нажатии, чтобы пропустить диалог менеджера модов.",
 Calloatti.SyncModsPro.Tooltip.RestartLoad,"Перезапустите игру и автоматически загрузите этот конкретный файл сохранения после завершения загрузки игры.",
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Перезапустите игру немедленно. Удерживайте SHIFT при нажатии, чтобы пропустить диалог менеджера модов.",
 Calloatti.SyncModsPro.Tooltip.SaveProfile,"Экспортируйте вашу текущую активную конфигурацию модов как сохраненную игру в поселении Профилей Модов.",
 Calloatti.SyncModsPro.Tooltip.StrictFlip,"Включить/Отключить дополнительные моды, которые в данный момент включены.",
 Calloatti.SyncModsPro.Tooltip.Sync,"Синхронизировать моды. ТРЕБУЕТСЯ ПЕРЕЗАПУСК.",
@@ -63,3 +64,5 @@ Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Показать столб
 Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Отображает минимальную версию игры, требуемую манифестом мода.",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Открывать только при несоответствии модов",
 Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Показывать панель Sync Mods только когда моды отсутствуют или имеют несоответствия версий с файлом сохранения.",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Пропускать экспериментальное диалоговое окно",
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Пропускает диалоговое окно предупреждения экспериментальной ветки при запуске.",

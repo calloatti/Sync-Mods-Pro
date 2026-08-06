@@ -35,3 +35,12 @@ Tooltip = Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip
 ControlType = "Toggle"
 RequiresRestart = false
 RequiresReload = false
+
+Key = "SkipExperimentalDialog"
+Type = "bool"
+DefaultValue = true
+Label = Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label
+Tooltip = Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip
+ControlType = "Toggle"
+RequiresRestart = false
+RequiresReload = false
