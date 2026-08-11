@@ -3,16 +3,11 @@
   <PropertyGroup>
     <AssemblyName>syncmodspro</AssemblyName>
     <RootNamespace>Calloatti.SyncModsPro</RootNamespace>
+    <TimberbornPath>C:\Program Files (x86)\Steam\steamapps\common\timberborn_main\Timberborn_Data\Managed</TimberbornPath>
   </PropertyGroup>
 
   <Import Project="CommonModSettings.props" />
 
-  <ItemGroup>
-    <Publicize Include="Timberborn.CoreUI" />
-    <Publicize Include="Timberborn.Modding" />
-    <Publicize Include="Timberborn.MainMenuScene" />
-  </ItemGroup>
-  
   <ItemGroup>
     <None Update="Data\save_metadata.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -32,3 +27,4 @@
   </ItemGroup>
 
 </Project>
+
