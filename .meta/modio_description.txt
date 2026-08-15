@@ -1,0 +1,20 @@
+<p>Seamlessly synchronize the game active mod list with a save file to easily manage missing, duplicate, and mismatched mods.</p>
+<h3 id="features">Features</h3>
+<p>One-Click Mod Matching: Automatically checks your save file and instantly turns on the exact mods you need to load that specific game, while turning off the ones you don't.<br />
+Subscribe to Missing Mods: If a save file requires mods you don't have installed, you can easily view and subscribe to them clicking the mod cloud icon.<br />
+Duplicate Handling: If you have multiple versions of the same mod installed, they are numbered and automatically the right version for your save file is selected.<br />
+Dependency Help: Shows you exactly which mods depend on each other, making it easy to see if an enabled mod is broken because it is missing a required helper mod.<br />
+Mod Loop Warnings: Alerts you visually if your mods are stuck in a dependency loop that would otherwise crash your game.<br />
+Steam Download History: Keeps a clean record of your recent Steam Workshop downloads and removals, letting you quickly re-subscribe or unsubscribe to them right inside the game menu.<br />
+Option in Settings to skip experimental dialog.<br />
+Shift-Click Restart Button to skip initial mod manager dialog.</p>
+<p>This mod combines the mods &quot;Sync Mods&quot; and &quot;Load Game Mod Validator&quot; into a single one, with more options and features for modders.</p>
+<p>You should disable/unsubscribe from those mods if using Sync Mods Pro.</p>
+<h3 id="settings">Settings:</h3>
+<p>Settings - Mod Settings (settings are saved in \PlayerData)</p>
+<hr />
+<p><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3682179025">Mods on Steam</a></p>
+<p><a href="https://mod.io/u/calloatti/?_sort=name">Mods on mod-dot-io</a></p>
+<p><a href="https://github.com/search?q=owner%3Acalloatti+sort%3Aname-asc+%22Timberborn+Mod%22&amp;type=repositories">Mods on Github</a></p>
+<p><a href="https://github.com/calloatti/ModZips">Mod zip files</a></p>
+

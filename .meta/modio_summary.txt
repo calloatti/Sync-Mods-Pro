@@ -1,0 +1,1 @@
+Seamlessly synchronize the game active mod list with a save file to easily manage missing, duplicate, and mismatched mods.

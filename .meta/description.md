@@ -1,0 +1,29 @@
+Seamlessly synchronize the game active mod list with a save file to easily manage missing, duplicate, and mismatched mods.
+
+### Features
+One-Click Mod Matching: Automatically checks your save file and instantly turns on the exact mods you need to load that specific game, while turning off the ones you don't.  
+Subscribe to Missing Mods: If a save file requires mods you don't have installed, you can easily view and subscribe to them clicking the mod cloud icon.  
+Duplicate Handling: If you have multiple versions of the same mod installed, they are numbered and automatically the right version for your save file is selected.  
+Dependency Help: Shows you exactly which mods depend on each other, making it easy to see if an enabled mod is broken because it is missing a required helper mod.  
+Mod Loop Warnings: Alerts you visually if your mods are stuck in a dependency loop that would otherwise crash your game.  
+Steam Download History: Keeps a clean record of your recent Steam Workshop downloads and removals, letting you quickly re-subscribe or unsubscribe to them right inside the game menu.  
+Option in Settings to skip experimental dialog.  
+Shift-Click Restart Button to skip initial mod manager dialog.
+
+This mod combines the mods "Sync Mods" and "Load Game Mod Validator" into a single one, with more options and features for modders.
+
+You should disable/unsubscribe from those mods if using Sync Mods Pro.
+
+### Settings:
+Settings - Mod Settings (settings are saved in \PlayerData)
+
+---
+
+[Mods on Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=3682179025)
+
+[Mods on mod-dot-io](https://mod.io/u/calloatti/?_sort=name)
+
+[Mods on Github](https://github.com/search?q=owner%3Acalloatti+sort%3Aname-asc+%22Timberborn+Mod%22&type=repositories)
+
+[Mod zip files](https://github.com/calloatti/ModZips)
+
