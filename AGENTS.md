@@ -40,3 +40,8 @@ Professional version of Sync Mods with enhanced mod management: profile manageme
 | `SaveFileUtility.cs` | Save file introspection |
 | `GameRestarter.cs` | Game restart utility |
 | `Calloatti.Util.cs` | Shared utility helpers |
+
+## Hard Rule
+DO NOT EVER TOUCH THE DEPLOY FOLDER.
+
+BUILD DOES EVERYTHING, NEVER EVER MESS WITH THE DEPLOY PROCESS.

@@ -1,68 +1,68 @@
 ID,Text,Comment
-Calloatti.SyncModsPro.Button.Cancel,"Cancelar",
-Calloatti.SyncModsPro.Button.Confirm,"OK",
-Calloatti.SyncModsPro.Button.LoadGame,"Cargar partida",
-Calloatti.SyncModsPro.Button.OK,"OK",
-Calloatti.SyncModsPro.Button.Restart,"Reiniciar",
-Calloatti.SyncModsPro.Button.RestartLoad,"Reiniciar + Cargar",
-Calloatti.SyncModsPro.Button.SaveProfile,"Guardar perfil",
-Calloatti.SyncModsPro.Button.StrictFlipOff,"DESACTIVADO estricto",
-Calloatti.SyncModsPro.Button.StrictFlipOn,"ACTIVADO estricto",
-Calloatti.SyncModsPro.Button.Sync,"Sincronizar",
-Calloatti.SyncModsPro.Column.Active,"Activo",
-Calloatti.SyncModsPro.Column.CurrentState,"Actual",
-Calloatti.SyncModsPro.Column.CurrentVersion,"Versión del mod",
-Calloatti.SyncModsPro.Column.Enabled,"Habilitado",
-Calloatti.SyncModsPro.Column.Id,"ID del mod",
-Calloatti.SyncModsPro.Column.MinGameVer,"Versión del juego",
-Calloatti.SyncModsPro.Column.Name,"Nombre del mod",
-Calloatti.SyncModsPro.Column.SavedState,"Guardado",
-Calloatti.SyncModsPro.Column.SavedVersion,"Versión guardada",
-Calloatti.SyncModsPro.Column.Status,"Estado",
-Calloatti.SyncModsPro.Column.TargetState,"Destino",
-Calloatti.SyncModsPro.Column.VersionFolder,"Carpeta de versión",
-Calloatti.SyncModsPro.Confirmation,"¿Está seguro de que desea cargar la partida guardada?",
-Calloatti.SyncModsPro.Info,"La lista de mods actual coincide con la lista de mods de la partida guardada.",
-Calloatti.SyncModsPro.MissingMod.Description,"Este mod falta en su disco duro.","Description shown for a saved mod that is not installed locally."
-Calloatti.SyncModsPro.ObsoleteMods.Warning,"Se detectaron los siguientes mods y se desactivaron automáticamente para evitar conflictos. El juego debe reiniciarse ahora para aplicar estos cambios:{0}",
-Calloatti.SyncModsPro.Profile.SaveFailure,"Error al guardar el perfil de mod. Consulte los archivos de registro de la consola para más detalles.","Dialog message shown when exporting the current mod profile fails."
-Calloatti.SyncModsPro.Profile.SaveSuccess,"¡Perfil de mod guardado exitosamente dentro de la carpeta 'Mod Profiles' del asentamiento!","Dialog message shown when exporting the current mod profile succeeds."
-Calloatti.SyncModsPro.ShowAll,"Mostrar todo",
-Calloatti.SyncModsPro.Status.Disabled,"Desactivado",
-Calloatti.SyncModsPro.Status.Duplicate,"Duplicado",
-Calloatti.SyncModsPro.Status.HideNotApplicable,"Ocultar N/A",
-Calloatti.SyncModsPro.Status.Match,"Coincidencia",
-Calloatti.SyncModsPro.Status.Missing,"Falta",
-Calloatti.SyncModsPro.Status.New,"Nuevo",
-Calloatti.SyncModsPro.Status.NotApplicable,"N/A",
-Calloatti.SyncModsPro.Status.Restart,"Reinicio",
-Calloatti.SyncModsPro.Steam.DialogTitle,"Sincronización de Steam Workshop","Title for Steam Workshop subscription result dialogs."
-Calloatti.SyncModsPro.Steam.SubscribeIoFailure,"Error al comunicarse con los servidores de Steam al suscribirse a: <b>{0}</b> ({1})","Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
-Calloatti.SyncModsPro.Steam.SubscribePrompt,"¿Suscribirse a <b>{0}</b>?","Steam confirmation prompt. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.SubscribeRejected,"Steam rechazó la solicitud de suscripción para: <b>{0}</b>. Código de error: {1}","Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code."
-Calloatti.SyncModsPro.Steam.SubscribeSuccess,"¡Suscrito exitosamente a: <b>{0}</b>! Steam comenzará a descargar los archivos en breve. Debe <b>Reiniciar el Juego</b> para que los cambios surtan efecto.","Steam subscribe success message. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.UnknownMod,"Mod desconocido","Fallback mod name used when a Steam callback cannot be matched to a tracked mod."
-Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,"Error al comunicarse con los servidores de Steam al cancelar la suscripción de: <b>{0}</b> ({1})","Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
-Calloatti.SyncModsPro.Steam.UnsubscribePrompt,"¿Cancelar suscripción de <b>{0}</b>?","Steam confirmation prompt. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steam rechazó la solicitud de cancelación de suscripción para: <b>{0}</b>. Código de error: {1}","Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code."
-Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"Suscripción cancelada exitosamente de: <b>{0}</b>. Los archivos se eliminarán por completo al <b>Reiniciar el Juego</b>.","Steam unsubscribe success message. {0} is the mod name."
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,Abrir solo en caso de discrepancia de mods,
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,Solo mostrar el panel de Sync Mods cuando falten mods o haya discrepancias de versión con el archivo guardado.,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,Mostrar columna de carpeta de versión,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,Muestra la ruta del directorio/subcarpeta donde se encuentra el mod.,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Label,Mostrar columna ID,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,Muestra la columna única de ID del mod en la lista de validación.,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,Mostrar columna de versión mínima del juego,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,Muestra la versión mínima del juego requerida por el manifiesto del mod.,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,Omitir diálogo experimental,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,Omita el diálogo de advertencia de la rama experimental al iniciar.,
+Calloatti.SyncModsPro.Button.Cancel,Cancelar,
+Calloatti.SyncModsPro.Button.Confirm,OK,
+Calloatti.SyncModsPro.Button.LoadGame,Cargar partida,
+Calloatti.SyncModsPro.Button.OK,OK,
+Calloatti.SyncModsPro.Button.Restart,Reiniciar,
+Calloatti.SyncModsPro.Button.RestartLoad,Reiniciar + Cargar,
+Calloatti.SyncModsPro.Button.SaveProfile,Guardar perfil,
+Calloatti.SyncModsPro.Button.StrictFlipOff,DESACTIVADO estricto,
+Calloatti.SyncModsPro.Button.StrictFlipOn,ACTIVADO estricto,
+Calloatti.SyncModsPro.Button.Sync,Sincronizar,
+Calloatti.SyncModsPro.Column.Active,Activo,
+Calloatti.SyncModsPro.Column.CurrentState,Actual,
+Calloatti.SyncModsPro.Column.CurrentVersion,Versión del mod,
+Calloatti.SyncModsPro.Column.Enabled,Habilitado,
+Calloatti.SyncModsPro.Column.Id,ID del mod,
+Calloatti.SyncModsPro.Column.MinGameVer,Versión del juego,
+Calloatti.SyncModsPro.Column.Name,Nombre del mod,
+Calloatti.SyncModsPro.Column.SavedState,Guardado,
+Calloatti.SyncModsPro.Column.SavedVersion,Versión guardada,
+Calloatti.SyncModsPro.Column.Status,Estado,
+Calloatti.SyncModsPro.Column.TargetState,Destino,
+Calloatti.SyncModsPro.Column.VersionFolder,Carpeta de versión,
+Calloatti.SyncModsPro.Confirmation,¿Está seguro de que desea cargar la partida guardada?,
+Calloatti.SyncModsPro.Info,La lista de mods actual coincide con la lista de mods de la partida guardada.,
+Calloatti.SyncModsPro.MissingMod.Description,Este mod falta en su disco duro.,Description shown for a saved mod that is not installed locally.
+Calloatti.SyncModsPro.ObsoleteMods.Warning,Se detectaron los siguientes mods y se desactivaron automáticamente para evitar conflictos. El juego debe reiniciarse ahora para aplicar estos cambios:{0},
+Calloatti.SyncModsPro.Profile.SaveFailure,Error al guardar el perfil de mod. Consulte los archivos de registro de la consola para más detalles.,Dialog message shown when exporting the current mod profile fails.
+Calloatti.SyncModsPro.Profile.SaveSuccess,¡Perfil de mod guardado exitosamente dentro de la carpeta 'Mod Profiles' del asentamiento!,Dialog message shown when exporting the current mod profile succeeds.
+Calloatti.SyncModsPro.ShowAll,Mostrar todo,
+Calloatti.SyncModsPro.Status.Disabled,Desactivado,
+Calloatti.SyncModsPro.Status.Duplicate,Duplicado,
+Calloatti.SyncModsPro.Status.HideNotApplicable,Ocultar N/A,
+Calloatti.SyncModsPro.Status.Match,Coincidencia,
+Calloatti.SyncModsPro.Status.Missing,Falta,
+Calloatti.SyncModsPro.Status.New,Nuevo,
+Calloatti.SyncModsPro.Status.NotApplicable,N/A,
+Calloatti.SyncModsPro.Status.Restart,Reinicio,
+Calloatti.SyncModsPro.Steam.DialogTitle,Sincronización de Steam Workshop,Title for Steam Workshop subscription result dialogs.
+Calloatti.SyncModsPro.Steam.SubscribeIoFailure,Error al comunicarse con los servidores de Steam al suscribirse a: <b>{0}</b> ({1}),Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.SubscribePrompt,¿Suscribirse a <b>{0}</b>?,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.SubscribeRejected,Steam rechazó la solicitud de suscripción para: <b>{0}</b>. Código de error: {1},Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.SubscribeSuccess,¡Suscrito exitosamente a: <b>{0}</b>! Steam comenzará a descargar los archivos en breve. Debe <b>Reiniciar el Juego</b> para que los cambios surtan efecto.,Steam subscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnknownMod,Mod desconocido,Fallback mod name used when a Steam callback cannot be matched to a tracked mod.
+Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,Error al comunicarse con los servidores de Steam al cancelar la suscripción de: <b>{0}</b> ({1}),Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.UnsubscribePrompt,¿Cancelar suscripción de <b>{0}</b>?,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnsubscribeRejected,Steam rechazó la solicitud de cancelación de suscripción para: <b>{0}</b>. Código de error: {1},Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,Suscripción cancelada exitosamente de: <b>{0}</b>. Los archivos se eliminarán por completo al <b>Reiniciar el Juego</b>.,Steam unsubscribe success message. {0} is the mod name.
 Calloatti.SyncModsPro.SyncDialogboxText,"Mods sincronizados, reinicie el juego ahora.",
-Calloatti.SyncModsPro.Tooltip.LoadGame,"Cargue este archivo de guardado ahora con su configuración de mods activa actual. (¡Puede causar problemas si faltan mods!)",
-Calloatti.SyncModsPro.Tooltip.Restart,"Reinicie el juego inmediatamente. Los cambios de mods surtirán efecto. Mantenga pulsada MAYÚS al hacer clic para omitir el diálogo del administrador de mods.",
-Calloatti.SyncModsPro.Tooltip.RestartLoad,"Reinicie el juego y cargue automáticamente este archivo de guardado específico cuando el juego termine de iniciarse.",
-Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"Reinicie el juego inmediatamente. Mantenga pulsada MAYÚS al hacer clic para omitir el diálogo del administrador de mods.",
-Calloatti.SyncModsPro.Tooltip.SaveProfile,"Exporte su configuración de mods activa actual como un juego guardado en el Asentamiento de Perfiles de Mod.",
-Calloatti.SyncModsPro.Tooltip.StrictFlip,"Activar/Desactivar mods adicionales que están actualmente activados.",
-Calloatti.SyncModsPro.Tooltip.Sync,"Sincronizar mods. REINICIO REQUERIDO.",
-Calloatti.SyncModsPro.Warning,"La lista de mods actual no coincide con la lista de mods de la partida guardada.",
-Calloatti.SyncModsPro.Warning.RestartRequired,"Los cambios no surtirán efecto hasta que se reinicie el juego.",
-Calloatti.Config.SyncModsPro.ShowIdColumn.Label,"Mostrar columna ID",
-Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,"Muestra la columna única de ID del mod en la lista de validación.",
-Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,"Mostrar columna de carpeta de versión",
-Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,"Muestra la ruta del directorio/subcarpeta donde se encuentra el mod.",
-Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"Mostrar columna de versión mínima del juego",
-Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Muestra la versión mínima del juego requerida por el manifiesto del mod.",
-Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Abrir solo en caso de discrepancia de mods",
-Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Solo mostrar el panel de Sync Mods cuando falten mods o haya discrepancias de versión con el archivo guardado.",
-Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"Omitir diálogo experimental",
-Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"Omita el diálogo de advertencia de la rama experimental al iniciar.",
+Calloatti.SyncModsPro.Tooltip.LoadGame,Cargue este archivo de guardado ahora con su configuración de mods activa actual. (¡Puede causar problemas si faltan mods!),
+Calloatti.SyncModsPro.Tooltip.Restart,Reinicie el juego inmediatamente. Los cambios de mods surtirán efecto. Mantenga pulsada MAYÚS al hacer clic para omitir el diálogo del administrador de mods.,
+Calloatti.SyncModsPro.Tooltip.RestartLoad,Reinicie el juego y cargue automáticamente este archivo de guardado específico cuando el juego termine de iniciarse.,
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,Reinicie el juego inmediatamente. Mantenga pulsada MAYÚS al hacer clic para omitir el diálogo del administrador de mods.,
+Calloatti.SyncModsPro.Tooltip.SaveProfile,Exporte su configuración de mods activa actual como un juego guardado en el Asentamiento de Perfiles de Mod.,
+Calloatti.SyncModsPro.Tooltip.StrictFlip,Activar/Desactivar mods adicionales que están actualmente activados.,
+Calloatti.SyncModsPro.Tooltip.Sync,Sincronizar mods. REINICIO REQUERIDO.,
+Calloatti.SyncModsPro.Warning,La lista de mods actual no coincide con la lista de mods de la partida guardada.,
+Calloatti.SyncModsPro.Warning.RestartRequired,Los cambios no surtirán efecto hasta que se reinicie el juego.,

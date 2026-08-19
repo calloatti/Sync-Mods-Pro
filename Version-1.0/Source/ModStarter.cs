@@ -25,7 +25,7 @@ namespace Calloatti.SyncModsPro
       ModPath = modEnvironment.ModPath;
 
       Config = new SimpleConfig(modEnvironment.ModPath);
-      new Harmony("calloatti.SyncModsPro").PatchAll();
+      new Harmony("calloatti.syncmodspro").PatchAll();
 
       // Dispatch the download to a background thread so the game initialization doesn't freeze
       Task.Run(() => DownloadFileAsync());

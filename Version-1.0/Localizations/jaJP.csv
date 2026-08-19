@@ -1,68 +1,68 @@
 ID,Text,Comment
-Calloatti.SyncModsPro.Button.Cancel,"キャンセル",
-Calloatti.SyncModsPro.Button.Confirm,"OK",
-Calloatti.SyncModsPro.Button.LoadGame,"ゲームをロード",
-Calloatti.SyncModsPro.Button.OK,"OK",
-Calloatti.SyncModsPro.Button.Restart,"再起動",
-Calloatti.SyncModsPro.Button.RestartLoad,"再起動 + ロード",
-Calloatti.SyncModsPro.Button.SaveProfile,"プロファイルを保存",
-Calloatti.SyncModsPro.Button.StrictFlipOff,"厳格オフ",
-Calloatti.SyncModsPro.Button.StrictFlipOn,"厳格オン",
-Calloatti.SyncModsPro.Button.Sync,"同期",
-Calloatti.SyncModsPro.Column.Active,"アクティブ",
-Calloatti.SyncModsPro.Column.CurrentState,"現在",
-Calloatti.SyncModsPro.Column.CurrentVersion,"Modバージョン",
-Calloatti.SyncModsPro.Column.Enabled,"有効",
-Calloatti.SyncModsPro.Column.Id,"Mod ID",
-Calloatti.SyncModsPro.Column.MinGameVer,"ゲームバージョン",
-Calloatti.SyncModsPro.Column.Name,"Mod名",
-Calloatti.SyncModsPro.Column.SavedState,"保存済み",
-Calloatti.SyncModsPro.Column.SavedVersion,"保存バージョン",
-Calloatti.SyncModsPro.Column.Status,"ステータス",
-Calloatti.SyncModsPro.Column.TargetState,"ターゲット",
-Calloatti.SyncModsPro.Column.VersionFolder,"バージョンフォルダ",
-Calloatti.SyncModsPro.Confirmation,"保存したゲームを読み込んでもよろしいですか？",
-Calloatti.SyncModsPro.Info,"現在のModリストは保存されたゲームのModリストと一致しています。",
-Calloatti.SyncModsPro.MissingMod.Description,"このModがハードドライブから見つかりません。","Description shown for a saved mod that is not installed locally."
-Calloatti.SyncModsPro.ObsoleteMods.Warning,"以下のModが検出され、競合を防ぐために自動的に無効化されました。これらの変更を適用するには、ゲームを再起動する必要があります:{0}",
-Calloatti.SyncModsPro.Profile.SaveFailure,"Modプロファイルの保存に失敗しました。詳細はコンソールログファイルを確認してください。","Dialog message shown when exporting the current mod profile fails."
-Calloatti.SyncModsPro.Profile.SaveSuccess,"Modプロファイルが「Mod Profiles」集落フォルダに正常に保存されました！","Dialog message shown when exporting the current mod profile succeeds."
-Calloatti.SyncModsPro.ShowAll,"すべて表示",
-Calloatti.SyncModsPro.Status.Disabled,"無効",
-Calloatti.SyncModsPro.Status.Duplicate,"重複",
-Calloatti.SyncModsPro.Status.HideNotApplicable,"N/Aを非表示",
-Calloatti.SyncModsPro.Status.Match,"一致",
-Calloatti.SyncModsPro.Status.Missing,"不足",
-Calloatti.SyncModsPro.Status.New,"新規",
-Calloatti.SyncModsPro.Status.NotApplicable,"N/A",
-Calloatti.SyncModsPro.Status.Restart,"再起動",
-Calloatti.SyncModsPro.Steam.DialogTitle,"Steamワークショップ同期","Title for Steam Workshop subscription result dialogs."
-Calloatti.SyncModsPro.Steam.SubscribeIoFailure,"Steamサーバーとの通信に失敗しました: <b>{0}</b> ({1}) の購読中","Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
-Calloatti.SyncModsPro.Steam.SubscribePrompt,"<b>{0}</b> を購読しますか？","Steam confirmation prompt. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.SubscribeRejected,"Steamが購読リクエストを拒否しました: <b>{0}</b>。エラーコード: {1}","Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code."
-Calloatti.SyncModsPro.Steam.SubscribeSuccess,"<b>{0}</b> の購読に成功しました。Steamクライアントがまもなくファイルのダウンロードを開始します。変更を適用するには<b>ゲームを再起動</b>する必要があります。","Steam subscribe success message. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.UnknownMod,"不明なMod","Fallback mod name used when a Steam callback cannot be matched to a tracked mod."
-Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,"Steamサーバーとの通信に失敗しました: <b>{0}</b> ({1}) の購読解除中","Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID."
-Calloatti.SyncModsPro.Steam.UnsubscribePrompt,"<b>{0}</b> の購読を解除しますか？","Steam confirmation prompt. {0} is the mod name."
-Calloatti.SyncModsPro.Steam.UnsubscribeRejected,"Steamが購読解除リクエストを拒否しました: <b>{0}</b>。エラーコード: {1}","Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code."
-Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,"<b>{0}</b> の購読解除に成功しました。ファイルは<b>ゲーム再起動</b>時に完全に削除されます。","Steam unsubscribe success message. {0} is the mod name."
-Calloatti.SyncModsPro.SyncDialogboxText,"Modが同期されました。ゲームを再起動してください。",
-Calloatti.SyncModsPro.Tooltip.LoadGame,"現在のアクティブなMod構成でこのセーブファイルを今すぐロードします。（Modが不足していると問題が発生する可能性があります！）",
-Calloatti.SyncModsPro.Tooltip.Restart,"ゲームをすぐに再起動します。Modの変更が反映されます。クリック時にShiftキーを押したままクリックすると、Modマネージャーのダイアログをスキップします。",
-Calloatti.SyncModsPro.Tooltip.RestartLoad,"ゲームを再起動し、起動完了後にこの特定のセーブファイルを自動的にロードします。",
-Calloatti.SyncModsPro.Tooltip.RestartShiftClick,"ゲームをすぐに再起動します。クリック時にShiftキーを押したままクリックすると、Modマネージャーのダイアログをスキップします。",
-Calloatti.SyncModsPro.Tooltip.SaveProfile,"現在のアクティブなMod構成をModプロファイル集落のセーブデータとしてエクスポートします。",
-Calloatti.SyncModsPro.Tooltip.StrictFlip,"現在有効な追加Modを有効/無効にします。",
-Calloatti.SyncModsPro.Tooltip.Sync,"Modを同期します。再起動が必要です。",
-Calloatti.SyncModsPro.Warning,"現在のModリストが保存されたゲームのModリストと一致しません。",
-Calloatti.SyncModsPro.Warning.RestartRequired,"変更はゲーム再起動まで反映されません。",
-Calloatti.Config.SyncModsPro.ShowIdColumn.Label,"ID列を表示",
-Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,"検証リストにModの一意のID列を表示します。",
-Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,"バージョンフォルダ列を表示",
-Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,"Modが配置されているディレクトリ/サブフォルダのパスを表示します。",
-Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,"最小ゲームバージョン列を表示",
-Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,"Modマニフェストで必要な最小ゲームバージョンを表示します。",
-Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,"Mod不一致時のみ開く",
-Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,"Modが不足している場合、または保存ファイルとバージョンが一致しない場合にのみSync Modsパネルを表示します。",
-Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,"試験版ダイアログをスキップ",
-Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,"起動時に試験版の警告ダイアログをスキップします。",
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,Mod不一致時のみ開く,
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,Modが不足している場合、または保存ファイルとバージョンが一致しない場合にのみSync Modsパネルを表示します。,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,バージョンフォルダ列を表示,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,Modが配置されているディレクトリ/サブフォルダのパスを表示します。,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Label,ID列を表示,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,検証リストにModの一意のID列を表示します。,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,最小ゲームバージョン列を表示,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,Modマニフェストで必要な最小ゲームバージョンを表示します。,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,試験版ダイアログをスキップ,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,起動時に試験版の警告ダイアログをスキップします。,
+Calloatti.SyncModsPro.Button.Cancel,キャンセル,
+Calloatti.SyncModsPro.Button.Confirm,OK,
+Calloatti.SyncModsPro.Button.LoadGame,ゲームをロード,
+Calloatti.SyncModsPro.Button.OK,OK,
+Calloatti.SyncModsPro.Button.Restart,再起動,
+Calloatti.SyncModsPro.Button.RestartLoad,再起動 + ロード,
+Calloatti.SyncModsPro.Button.SaveProfile,プロファイルを保存,
+Calloatti.SyncModsPro.Button.StrictFlipOff,厳格オフ,
+Calloatti.SyncModsPro.Button.StrictFlipOn,厳格オン,
+Calloatti.SyncModsPro.Button.Sync,同期,
+Calloatti.SyncModsPro.Column.Active,アクティブ,
+Calloatti.SyncModsPro.Column.CurrentState,現在,
+Calloatti.SyncModsPro.Column.CurrentVersion,Modバージョン,
+Calloatti.SyncModsPro.Column.Enabled,有効,
+Calloatti.SyncModsPro.Column.Id,Mod ID,
+Calloatti.SyncModsPro.Column.MinGameVer,ゲームバージョン,
+Calloatti.SyncModsPro.Column.Name,Mod名,
+Calloatti.SyncModsPro.Column.SavedState,保存済み,
+Calloatti.SyncModsPro.Column.SavedVersion,保存バージョン,
+Calloatti.SyncModsPro.Column.Status,ステータス,
+Calloatti.SyncModsPro.Column.TargetState,ターゲット,
+Calloatti.SyncModsPro.Column.VersionFolder,バージョンフォルダ,
+Calloatti.SyncModsPro.Confirmation,保存したゲームを読み込んでもよろしいですか？,
+Calloatti.SyncModsPro.Info,現在のModリストは保存されたゲームのModリストと一致しています。,
+Calloatti.SyncModsPro.MissingMod.Description,このModがハードドライブから見つかりません。,Description shown for a saved mod that is not installed locally.
+Calloatti.SyncModsPro.ObsoleteMods.Warning,以下のModが検出され、競合を防ぐために自動的に無効化されました。これらの変更を適用するには、ゲームを再起動する必要があります:{0},
+Calloatti.SyncModsPro.Profile.SaveFailure,Modプロファイルの保存に失敗しました。詳細はコンソールログファイルを確認してください。,Dialog message shown when exporting the current mod profile fails.
+Calloatti.SyncModsPro.Profile.SaveSuccess,Modプロファイルが「Mod Profiles」集落フォルダに正常に保存されました！,Dialog message shown when exporting the current mod profile succeeds.
+Calloatti.SyncModsPro.ShowAll,すべて表示,
+Calloatti.SyncModsPro.Status.Disabled,無効,
+Calloatti.SyncModsPro.Status.Duplicate,重複,
+Calloatti.SyncModsPro.Status.HideNotApplicable,N/Aを非表示,
+Calloatti.SyncModsPro.Status.Match,一致,
+Calloatti.SyncModsPro.Status.Missing,不足,
+Calloatti.SyncModsPro.Status.New,新規,
+Calloatti.SyncModsPro.Status.NotApplicable,N/A,
+Calloatti.SyncModsPro.Status.Restart,再起動,
+Calloatti.SyncModsPro.Steam.DialogTitle,Steamワークショップ同期,Title for Steam Workshop subscription result dialogs.
+Calloatti.SyncModsPro.Steam.SubscribeIoFailure,Steamサーバーとの通信に失敗しました: <b>{0}</b> ({1}) の購読中,Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.SubscribePrompt,<b>{0}</b> を購読しますか？,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.SubscribeRejected,Steamが購読リクエストを拒否しました: <b>{0}</b>。エラーコード: {1},Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.SubscribeSuccess,<b>{0}</b> の購読に成功しました。Steamクライアントがまもなくファイルのダウンロードを開始します。変更を適用するには<b>ゲームを再起動</b>する必要があります。,Steam subscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnknownMod,不明なMod,Fallback mod name used when a Steam callback cannot be matched to a tracked mod.
+Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,Steamサーバーとの通信に失敗しました: <b>{0}</b> ({1}) の購読解除中,Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.UnsubscribePrompt,<b>{0}</b> の購読を解除しますか？,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnsubscribeRejected,Steamが購読解除リクエストを拒否しました: <b>{0}</b>。エラーコード: {1},Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,<b>{0}</b> の購読解除に成功しました。ファイルは<b>ゲーム再起動</b>時に完全に削除されます。,Steam unsubscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.SyncDialogboxText,Modが同期されました。ゲームを再起動してください。,
+Calloatti.SyncModsPro.Tooltip.LoadGame,現在のアクティブなMod構成でこのセーブファイルを今すぐロードします。（Modが不足していると問題が発生する可能性があります！）,
+Calloatti.SyncModsPro.Tooltip.Restart,ゲームをすぐに再起動します。Modの変更が反映されます。クリック時にShiftキーを押したままクリックすると、Modマネージャーのダイアログをスキップします。,
+Calloatti.SyncModsPro.Tooltip.RestartLoad,ゲームを再起動し、起動完了後にこの特定のセーブファイルを自動的にロードします。,
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,ゲームをすぐに再起動します。クリック時にShiftキーを押したままクリックすると、Modマネージャーのダイアログをスキップします。,
+Calloatti.SyncModsPro.Tooltip.SaveProfile,現在のアクティブなMod構成をModプロファイル集落のセーブデータとしてエクスポートします。,
+Calloatti.SyncModsPro.Tooltip.StrictFlip,現在有効な追加Modを有効/無効にします。,
+Calloatti.SyncModsPro.Tooltip.Sync,Modを同期します。再起動が必要です。,
+Calloatti.SyncModsPro.Warning,現在のModリストが保存されたゲームのModリストと一致しません。,
+Calloatti.SyncModsPro.Warning.RestartRequired,変更はゲーム再起動まで反映されません。,
