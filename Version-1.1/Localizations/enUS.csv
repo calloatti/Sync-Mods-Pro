@@ -1,0 +1,68 @@
+ID,Text,Comment
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,Only open on mod mismatch,
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,Only show the Sync Mods panel when mods are missing or have version mismatches with the save file.,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,Show Version Folder Column,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,Display the directory/subfolder path where the mod is located.,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Label,Show ID Column,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,Display the unique Mod ID column in the validator list.,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,Show Min Game Ver Column,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,Display the Minimum Game Version required by the mod manifest.,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,Skip experimental dialog,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,Skip the experimental branch warning dialog on startup.,
+Calloatti.SyncModsPro.Button.Cancel,Cancel,
+Calloatti.SyncModsPro.Button.Confirm,OK,
+Calloatti.SyncModsPro.Button.LoadGame,Load Game,
+Calloatti.SyncModsPro.Button.OK,OK,
+Calloatti.SyncModsPro.Button.Restart,Restart,
+Calloatti.SyncModsPro.Button.RestartLoad,Restart + Load,
+Calloatti.SyncModsPro.Button.SaveProfile,Save Profile,
+Calloatti.SyncModsPro.Button.StrictFlipOff,Strict OFF,
+Calloatti.SyncModsPro.Button.StrictFlipOn,Strict ON,
+Calloatti.SyncModsPro.Button.Sync,Sync,
+Calloatti.SyncModsPro.Column.Active,Active,
+Calloatti.SyncModsPro.Column.CurrentState,Current,
+Calloatti.SyncModsPro.Column.CurrentVersion,Mod Ver,
+Calloatti.SyncModsPro.Column.Enabled,Enabled,
+Calloatti.SyncModsPro.Column.Id,Mod Id,
+Calloatti.SyncModsPro.Column.MinGameVer,Game Ver,
+Calloatti.SyncModsPro.Column.Name,Mod Name,
+Calloatti.SyncModsPro.Column.SavedState,Saved,
+Calloatti.SyncModsPro.Column.SavedVersion,Save Ver,
+Calloatti.SyncModsPro.Column.Status,Status,
+Calloatti.SyncModsPro.Column.TargetState,Target,
+Calloatti.SyncModsPro.Column.VersionFolder,Version Folder,
+Calloatti.SyncModsPro.Confirmation,Are you sure you want to load saved game?,
+Calloatti.SyncModsPro.Info,Current mods list matches the saved game mods list.,
+Calloatti.SyncModsPro.MissingMod.Description,This mod is missing from your hard drive.,Description shown for a saved mod that is not installed locally.
+Calloatti.SyncModsPro.ObsoleteMods.Warning,The following mods were detected and have been automatically disabled to prevent conflicts. The game must now restart to apply these changes:{0},
+Calloatti.SyncModsPro.Profile.SaveFailure,Failed to save mod profile. Check console log files for details.,Dialog message shown when exporting the current mod profile fails.
+Calloatti.SyncModsPro.Profile.SaveSuccess,Mod profile saved successfully inside the 'Mod Profiles' settlement folder!,Dialog message shown when exporting the current mod profile succeeds.
+Calloatti.SyncModsPro.ShowAll,Show All,
+Calloatti.SyncModsPro.Status.Disabled,Disabled,
+Calloatti.SyncModsPro.Status.Duplicate,Duplicate,
+Calloatti.SyncModsPro.Status.HideNotApplicable,Hide N/A,
+Calloatti.SyncModsPro.Status.Match,Match,
+Calloatti.SyncModsPro.Status.Missing,Missing,
+Calloatti.SyncModsPro.Status.New,New,
+Calloatti.SyncModsPro.Status.NotApplicable,N/A,
+Calloatti.SyncModsPro.Status.Restart,Restart,
+Calloatti.SyncModsPro.Steam.DialogTitle,Steam Workshop Sync,Title for Steam Workshop subscription result dialogs.
+Calloatti.SyncModsPro.Steam.SubscribeIoFailure,Failed to communicate with Steam servers while subscribing to: <b>{0}</b> ({1}),Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.SubscribePrompt,Subscribe to {0}?,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.SubscribeRejected,Steam rejected the subscription request for: <b>{0}</b>. Error Code: {1},Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.SubscribeSuccess,Successfully subscribed to: <b>{0}</b>. Steam client will begin downloading files shortly. You must <b>Restart the Game</b> for changes to apply.,Steam subscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnknownMod,Unknown Mod,Fallback mod name used when a Steam callback cannot be matched to a tracked mod.
+Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,Failed to communicate with Steam servers while unsubscribing from: <b>{0}</b> ({1}),Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.UnsubscribePrompt,Unsubscribe from {0}?,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnsubscribeRejected,Steam rejected the unsubscription request for: <b>{0}</b>. Error Code: {1},Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,Successfully unsubscribed from: <b>{0}</b>. Files will be cleared completely upon <b>Game Restart</b>.,Steam unsubscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.SyncDialogboxText,"Mods synced, restart the game now.",
+Calloatti.SyncModsPro.Tooltip.LoadGame,Load this save file right now with your current active mod configuration. (May cause issues if mods are missing!),
+Calloatti.SyncModsPro.Tooltip.Restart,Restart the game immediately. Mod changes will take effect.  Hold SHIFT while clicking to skip the mod manager dialog.,
+Calloatti.SyncModsPro.Tooltip.RestartLoad,Restart the game and automatically load this specific save file when the game finishes booting.,
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,Restart the game immediately. Hold SHIFT while clicking to skip the mod manager dialog.,
+Calloatti.SyncModsPro.Tooltip.SaveProfile,Export your current active mod configuration as a saved game in the Mod Profiles Settlement.,
+Calloatti.SyncModsPro.Tooltip.StrictFlip,Enable/Disable extra mods that are currently enabled.,
+Calloatti.SyncModsPro.Tooltip.Sync,Sync mods. RESTART REQUIRED.,
+Calloatti.SyncModsPro.Warning,Current mods list does not match the saved game mods list.,
+Calloatti.SyncModsPro.Warning.RestartRequired,Changes will not take effect until game restart.,

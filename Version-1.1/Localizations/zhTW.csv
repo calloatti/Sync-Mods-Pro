@@ -1,0 +1,68 @@
+ID,Text,Comment
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,僅在Mod不符時開啟,
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,僅在Mod遺失或與存檔檔案版本不符時顯示Sync Mods面板。,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,顯示版本資料夾欄,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,顯示Mod所在的目錄/子資料夾路徑。,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Label,顯示ID欄,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,在驗證清單中顯示唯一的Mod ID欄。,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,顯示最低遊戲版本欄,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,顯示Mod資訊清單所需的最低遊戲版本。,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,跳過實驗版對話框,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,啟動時跳過實驗版的警告對話框。,
+Calloatti.SyncModsPro.Button.Cancel,取消,
+Calloatti.SyncModsPro.Button.Confirm,確定,
+Calloatti.SyncModsPro.Button.LoadGame,載入遊戲,
+Calloatti.SyncModsPro.Button.OK,確定,
+Calloatti.SyncModsPro.Button.Restart,重新啟動,
+Calloatti.SyncModsPro.Button.RestartLoad,重新啟動 + 載入,
+Calloatti.SyncModsPro.Button.SaveProfile,儲存設定檔,
+Calloatti.SyncModsPro.Button.StrictFlipOff,嚴格關閉,
+Calloatti.SyncModsPro.Button.StrictFlipOn,嚴格開啟,
+Calloatti.SyncModsPro.Button.Sync,同步,
+Calloatti.SyncModsPro.Column.Active,活躍,
+Calloatti.SyncModsPro.Column.CurrentState,目前,
+Calloatti.SyncModsPro.Column.CurrentVersion,Mod版本,
+Calloatti.SyncModsPro.Column.Enabled,已啟用,
+Calloatti.SyncModsPro.Column.Id,Mod ID,
+Calloatti.SyncModsPro.Column.MinGameVer,遊戲版本,
+Calloatti.SyncModsPro.Column.Name,Mod名稱,
+Calloatti.SyncModsPro.Column.SavedState,已儲存,
+Calloatti.SyncModsPro.Column.SavedVersion,儲存版本,
+Calloatti.SyncModsPro.Column.Status,狀態,
+Calloatti.SyncModsPro.Column.TargetState,目標,
+Calloatti.SyncModsPro.Column.VersionFolder,版本資料夾,
+Calloatti.SyncModsPro.Confirmation,您確定要載入已儲存的遊戲嗎？,
+Calloatti.SyncModsPro.Info,目前的Mod清單與已儲存遊戲的Mod清單相符。,
+Calloatti.SyncModsPro.MissingMod.Description,此Mod在您的硬碟上遺失。,Description shown for a saved mod that is not installed locally.
+Calloatti.SyncModsPro.ObsoleteMods.Warning,偵測到以下Mod並已自動停用以防止衝突。遊戲必須重新啟動才能套用這些變更:{0},
+Calloatti.SyncModsPro.Profile.SaveFailure,儲存Mod設定檔失敗。請檢視主控台記錄檔以瞭解詳細資訊。,Dialog message shown when exporting the current mod profile fails.
+Calloatti.SyncModsPro.Profile.SaveSuccess,Mod設定檔已成功儲存至'Mod Profiles'定居點資料夾！,Dialog message shown when exporting the current mod profile succeeds.
+Calloatti.SyncModsPro.ShowAll,顯示全部,
+Calloatti.SyncModsPro.Status.Disabled,已停用,
+Calloatti.SyncModsPro.Status.Duplicate,重複,
+Calloatti.SyncModsPro.Status.HideNotApplicable,隱藏不適用,
+Calloatti.SyncModsPro.Status.Match,相符,
+Calloatti.SyncModsPro.Status.Missing,遺失,
+Calloatti.SyncModsPro.Status.New,新,
+Calloatti.SyncModsPro.Status.NotApplicable,不適用,
+Calloatti.SyncModsPro.Status.Restart,重新啟動,
+Calloatti.SyncModsPro.Steam.DialogTitle,Steam工作坊同步,Title for Steam Workshop subscription result dialogs.
+Calloatti.SyncModsPro.Steam.SubscribeIoFailure,訂閱時與Steam伺服器通訊失敗: <b>{0}</b> ({1}),Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.SubscribePrompt,訂閱 <b>{0}</b>？,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.SubscribeRejected,Steam拒絕了 <b>{0}</b> 的訂閱請求。錯誤代碼: {1},Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.SubscribeSuccess,成功訂閱: <b>{0}</b>。Steam客戶端將很快開始下載檔案。您必須<b>重新啟動遊戲</b>才能使變更生效。,Steam subscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnknownMod,未知Mod,Fallback mod name used when a Steam callback cannot be matched to a tracked mod.
+Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,取消訂閱時與Steam伺服器通訊失敗: <b>{0}</b> ({1}),Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.UnsubscribePrompt,取消訂閱 <b>{0}</b>？,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnsubscribeRejected,Steam拒絕了 <b>{0}</b> 的取消訂閱請求。錯誤代碼: {1},Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,成功取消訂閱: <b>{0}</b>。檔案將在<b>遊戲重新啟動</b>時完全清除。,Steam unsubscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.SyncDialogboxText,Mod已同步，請重新啟動遊戲。,
+Calloatti.SyncModsPro.Tooltip.LoadGame,立即使用目前活躍的Mod設定載入此存檔檔案。(如果Mod遺失可能會導致問題！),
+Calloatti.SyncModsPro.Tooltip.Restart,立即重新啟動遊戲。Mod變更將生效。點擊時按住 SHIFT 可跳過模組管理員對話方塊。,
+Calloatti.SyncModsPro.Tooltip.RestartLoad,重新啟動遊戲，並在啟動完成後自動載入此特定存檔檔案。,
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,立即重新啟動遊戲。點擊時按住 SHIFT 可跳過模組管理員對話方塊。,
+Calloatti.SyncModsPro.Tooltip.SaveProfile,將您目前的活躍Mod設定作為存檔匯出到Mod設定定居點。,
+Calloatti.SyncModsPro.Tooltip.StrictFlip,啟用/停用目前已啟用的額外Mod。,
+Calloatti.SyncModsPro.Tooltip.Sync,同步Mod。需要重新啟動。,
+Calloatti.SyncModsPro.Warning,目前的Mod清單與已儲存遊戲的Mod清單不符。,
+Calloatti.SyncModsPro.Warning.RestartRequired,變更在遊戲重新啟動之前不會生效。,

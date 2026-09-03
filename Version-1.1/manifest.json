@@ -2,7 +2,7 @@
   "Name": "Sync Mods Pro",
   "Version": "1.1.10",
   "Id": "calloatti.syncmodspro",
-  "MinimumGameVersion": "1.0.13.1",
+  "MinimumGameVersion": "1.1.2.4",
   "Description": "Seamlessly synchronize the game active mod list with a save file to easily manage missing, duplicate, and mismatched mods.",
   "RequiredMods": [{"Id": "Harmony", "MinVersion": "2.4.1"}],
   "OptionalMods": []

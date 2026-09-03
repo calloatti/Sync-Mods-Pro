@@ -1,0 +1,46 @@
+ConfigFileName = "SyncModsPro.txt"
+
+Key = "ShowIdColumn"
+Type = "bool"
+DefaultValue = true
+Label = Calloatti.Config.SyncModsPro.ShowIdColumn.Label
+Tooltip = Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip
+ControlType = "Toggle"
+RequiresRestart = false
+RequiresReload = false
+
+Key = "ShowFolderColumn"
+Type = "bool"
+DefaultValue = true
+Label = Calloatti.Config.SyncModsPro.ShowFolderColumn.Label
+Tooltip = Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip
+ControlType = "Toggle"
+RequiresRestart = false
+RequiresReload = false
+
+Key = "ShowMinVerColumn"
+Type = "bool"
+DefaultValue = false
+Label = Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label
+Tooltip = Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip
+ControlType = "Toggle"
+RequiresRestart = false
+RequiresReload = false
+
+Key = "OnlyOpenOnMismatch"
+Type = "bool"
+DefaultValue = false
+Label = Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label
+Tooltip = Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip
+ControlType = "Toggle"
+RequiresRestart = false
+RequiresReload = false
+
+Key = "SkipExperimentalDialog"
+Type = "bool"
+DefaultValue = true
+Label = Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label
+Tooltip = Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip
+ControlType = "Toggle"
+RequiresRestart = false
+RequiresReload = false

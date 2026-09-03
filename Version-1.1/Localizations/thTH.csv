@@ -1,0 +1,68 @@
+ID,Text,Comment
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Label,เปิดเฉพาะเมื่อ Mod ไม่ตรงกัน,
+Calloatti.Config.SyncModsPro.OnlyOpenOnMismatch.Tooltip,แสดงแผง Sync Mods เฉพาะเมื่อ Mod หายไปหรือมีเวอร์ชันไม่ตรงกับไฟล์บันทึก,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Label,แสดงคอลัมน์โฟลเดอร์เวอร์ชัน,
+Calloatti.Config.SyncModsPro.ShowFolderColumn.Tooltip,แสดงเส้นทางไดเรกทอรี/โฟลเดอร์ย่อยที่ Mod ตั้งอยู่,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Label,แสดงคอลัมน์รหัส,
+Calloatti.Config.SyncModsPro.ShowIdColumn.Tooltip,แสดงคอลัมน์รหัส Mod ที่ไม่ซ้ำกันในรายการตรวจสอบ,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Label,แสดงคอลัมน์เวอร์ชันเกมขั้นต่ำ,
+Calloatti.Config.SyncModsPro.ShowMinVerColumn.Tooltip,แสดงเวอร์ชันเกมขั้นต่ำที่ต้องการโดย Manifest ของ Mod,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Label,ข้ามกล่องโต้ตอบทดลอง,
+Calloatti.Config.SyncModsPro.SkipExperimentalDialog.Tooltip,ข้ามกล่องโต้ตอบคำเตือนของรุ่นทดลองเมื่อเริ่มต้น,
+Calloatti.SyncModsPro.Button.Cancel,ยกเลิก,
+Calloatti.SyncModsPro.Button.Confirm,ตกลง,
+Calloatti.SyncModsPro.Button.LoadGame,โหลดเกม,
+Calloatti.SyncModsPro.Button.OK,ตกลง,
+Calloatti.SyncModsPro.Button.Restart,เริ่มใหม่,
+Calloatti.SyncModsPro.Button.RestartLoad,เริ่มใหม่ + โหลด,
+Calloatti.SyncModsPro.Button.SaveProfile,บันทึกโปรไฟล์,
+Calloatti.SyncModsPro.Button.StrictFlipOff,ปิดอย่างเคร่งครัด,
+Calloatti.SyncModsPro.Button.StrictFlipOn,เปิดอย่างเคร่งครัด,
+Calloatti.SyncModsPro.Button.Sync,ซิงค์,
+Calloatti.SyncModsPro.Column.Active,ใช้งาน,
+Calloatti.SyncModsPro.Column.CurrentState,ปัจจุบัน,
+Calloatti.SyncModsPro.Column.CurrentVersion,เวอร์ชัน Mod,
+Calloatti.SyncModsPro.Column.Enabled,เปิดใช้งาน,
+Calloatti.SyncModsPro.Column.Id,รหัส Mod,
+Calloatti.SyncModsPro.Column.MinGameVer,เวอร์ชันเกม,
+Calloatti.SyncModsPro.Column.Name,ชื่อ Mod,
+Calloatti.SyncModsPro.Column.SavedState,บันทึกแล้ว,
+Calloatti.SyncModsPro.Column.SavedVersion,เวอร์ชันที่บันทึก,
+Calloatti.SyncModsPro.Column.Status,สถานะ,
+Calloatti.SyncModsPro.Column.TargetState,เป้าหมาย,
+Calloatti.SyncModsPro.Column.VersionFolder,โฟลเดอร์เวอร์ชัน,
+Calloatti.SyncModsPro.Confirmation,คุณแน่ใจหรือไม่ว่าต้องการโหลดเกมที่บันทึกไว้?,
+Calloatti.SyncModsPro.Info,รายการ Mod ปัจจุบันตรงกับรายการ Mod ของเกมที่บันทึกไว้,
+Calloatti.SyncModsPro.MissingMod.Description,Mod นี้หายไปจากฮาร์ดไดรฟ์ของคุณ,Description shown for a saved mod that is not installed locally.
+Calloatti.SyncModsPro.ObsoleteMods.Warning,ตรวจพบ Mod ต่อไปนี้และถูกปิดใช้งานโดยอัตโนมัติเพื่อป้องกันข้อขัดแย้ง เกมต้องเริ่มใหม่เพื่อใช้การเปลี่ยนแปลงเหล่านี้:{0},
+Calloatti.SyncModsPro.Profile.SaveFailure,ไม่สามารถบันทึกโปรไฟล์ Mod ได้ ตรวจสอบไฟล์บันทึกคอนโซลสำหรับรายละเอียด,Dialog message shown when exporting the current mod profile fails.
+Calloatti.SyncModsPro.Profile.SaveSuccess,บันทึกโปรไฟล์ Mod สำเร็จภายในโฟลเดอร์ 'Mod Profiles' ของนิคม!,Dialog message shown when exporting the current mod profile succeeds.
+Calloatti.SyncModsPro.ShowAll,แสดงทั้งหมด,
+Calloatti.SyncModsPro.Status.Disabled,ปิดใช้งาน,
+Calloatti.SyncModsPro.Status.Duplicate,ซ้ำ,
+Calloatti.SyncModsPro.Status.HideNotApplicable,ซ่อน N/A,
+Calloatti.SyncModsPro.Status.Match,ตรงกัน,
+Calloatti.SyncModsPro.Status.Missing,หายไป,
+Calloatti.SyncModsPro.Status.New,ใหม่,
+Calloatti.SyncModsPro.Status.NotApplicable,N/A,
+Calloatti.SyncModsPro.Status.Restart,เริ่มใหม่,
+Calloatti.SyncModsPro.Steam.DialogTitle,ซิงค์ Steam Workshop,Title for Steam Workshop subscription result dialogs.
+Calloatti.SyncModsPro.Steam.SubscribeIoFailure,ล้มเหลวในการสื่อสารกับเซิร์ฟเวอร์ Steam ขณะสมัครรับ: <b>{0}</b> ({1}),Steam subscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.SubscribePrompt,สมัครรับ <b>{0}</b>?,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.SubscribeRejected,Steam ปฏิเสธคำขอสมัครรับสำหรับ: <b>{0}</b> รหัสข้อผิดพลาด: {1},Steam subscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.SubscribeSuccess,สมัครรับสำเร็จ: <b>{0}</b> ไคลเอนต์ Steam จะเริ่มดาวน์โหลดไฟล์ในไม่ช้า คุณต้อง<b>เริ่มเกมใหม่</b>เพื่อให้การเปลี่ยนแปลงมีผล,Steam subscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnknownMod,Mod ไม่รู้จัก,Fallback mod name used when a Steam callback cannot be matched to a tracked mod.
+Calloatti.SyncModsPro.Steam.UnsubscribeIoFailure,ล้มเหลวในการสื่อสารกับเซิร์ฟเวอร์ Steam ขณะยกเลิกการสมัครรับจาก: <b>{0}</b> ({1}),Steam unsubscribe error. {0} is the mod name. {1} is the Steam Workshop item ID.
+Calloatti.SyncModsPro.Steam.UnsubscribePrompt,ยกเลิกการสมัครรับ <b>{0}</b>?,Steam confirmation prompt. {0} is the mod name.
+Calloatti.SyncModsPro.Steam.UnsubscribeRejected,Steam ปฏิเสธคำขอยกเลิกการสมัครรับสำหรับ: <b>{0}</b> รหัสข้อผิดพลาด: {1},Steam unsubscribe rejection. {0} is the mod name. {1} is the Steam error code.
+Calloatti.SyncModsPro.Steam.UnsubscribeSuccess,ยกเลิกการสมัครรับสำเร็จจาก: <b>{0}</b> ไฟล์จะถูกล้างอย่างสมบูรณ์เมื่อ<b>เริ่มเกมใหม่</b>,Steam unsubscribe success message. {0} is the mod name.
+Calloatti.SyncModsPro.SyncDialogboxText,ซิงค์ Mod แล้ว โปรดเริ่มเกมใหม่,
+Calloatti.SyncModsPro.Tooltip.LoadGame,โหลดไฟล์บันทึกนี้ตอนนี้ด้วยการกำหนดค่า Mod ที่ใช้งานอยู่ในปัจจุบันของคุณ (อาจทำให้เกิดปัญหาหาก Mod หายไป!),
+Calloatti.SyncModsPro.Tooltip.Restart,เริ่มเกมใหม่ทันที การเปลี่ยนแปลง Mod จะมีผล กดปุ่ม SHIFT ค้างไว้ขณะคลิกเพื่อข้ามหน้าต่างตัวจัดการ Mod,
+Calloatti.SyncModsPro.Tooltip.RestartLoad,เริ่มเกมใหม่และโหลดไฟล์บันทึกนี้โดยอัตโนมัติเมื่อเกมบูทเสร็จ,
+Calloatti.SyncModsPro.Tooltip.RestartShiftClick,เริ่มเกมใหม่ทันที กดปุ่ม SHIFT ค้างไว้ขณะคลิกเพื่อข้ามหน้าต่างตัวจัดการ Mod,
+Calloatti.SyncModsPro.Tooltip.SaveProfile,ส่งออกการกำหนดค่า Mod ที่ใช้งานอยู่ในปัจจุบันของคุณเป็นเกมที่บันทึกไว้ในนิคมโปรไฟล์ Mod,
+Calloatti.SyncModsPro.Tooltip.StrictFlip,เปิด/ปิด Mod พิเศษที่เปิดใช้งานอยู่ในปัจจุบัน,
+Calloatti.SyncModsPro.Tooltip.Sync,ซิงค์ Mod ต้องเริ่มใหม่,
+Calloatti.SyncModsPro.Warning,รายการ Mod ปัจจุบันไม่ตรงกับรายการ Mod ของเกมที่บันทึกไว้,
+Calloatti.SyncModsPro.Warning.RestartRequired,การเปลี่ยนแปลงจะไม่มีผลจนกว่าจะเริ่มเกมใหม่,
