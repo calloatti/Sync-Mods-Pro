@@ -1,2 +1,4 @@
-* Game Version: 1.0.0.0 - Mod Version: 1.1.9
-- Changed rosetta.txt download URL
+* Game Version: 1.1.2.4 - Mod Version: 1.1.10
+- Updated due to 1.1.2.4 release
+* Game Version: 1.0.13.1 - Mod Version: 1.1.10
+- Updated due to 1.1.2.4 release
